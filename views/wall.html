@@ -1,0 +1,69 @@
+<form method="POST" action="new">
+	<label>title:</label><input name="title" id="title" />
+	<label>text:</label><textarea name="text"></textarea>
+	<input type="submit" value="Add Item"/>
+</form>
+
+<table>
+  <tr>
+      <th>
+          Not Started 
+      </th>
+      <th>
+          In Progress 
+      </th>
+      <th>
+          Done 
+      </th>
+  </tr>
+  <tr>
+      <td>
+          <ul id="notStarted" class="tasks">
+	
+	
+	
+	
+	
+	{{each(i, list) list}}
+        <li id="${list.id}">
+        		<h3>${list.title}</h3>
+            <div class="desc">
+				${list.text}
+			</div>
+        </li>
+	
+	
+	{{/each}}
+              <li id="Save support description.">
+              		<h3>Save support description</h3>
+                  <div class="desc">
+                  	Make list items send their descrtion and link with each update <img src="http://www.clker.com/cliparts/c/2/I/7/X/w/male-teacher-2-th.png" />
+				</div>
+              </li>
+              <li id="bosh">
+                  <h3>Multi Format support</h3>
+                  <div class="desc">
+                  	do a simple List view. 
+					<ul class="subtasks">
+						<li>break walls down into seperate list resources</li>
+					</ul>
+                  </div>
+              </li>
+              <li id="posh">
+                  <h3>Posh</h3>
+                  <div class="desc">
+                      description type thing here.
+                  </div>
+              </li>
+          </ul>
+      </td>
+      <td>
+      <ul class="tasks" id="inprogress">
+      </ul>
+      <td>
+          <ul class="tasks" id="done">
+          </ul>
+      </td>
+  </tr>
+</table>
+<div id="chat">  <h2>  History:</h2></div>
