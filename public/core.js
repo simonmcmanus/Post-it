@@ -1,14 +1,12 @@
 var changeTasks = function(event, ui) {
-	console.log('ui item', ui.item.addClass('updated'));
 	var s =$(this).sortable('toArray').join(', ');
 	var $items = $(this).find('li');
 	var c = $items.length;
 	var list = [];
 	while (c--) {
 		var title = $items.eq(c).find('h3').html();
-		console.log($items.eq(c).find('div').html());
 		var updated = false;
-		if($items.eq(c).hasClass('updated')){
+		if($items.eq(c).hasClass('updated')){	
 			updated = true;
 		}
 		console.log($items.eq(c));

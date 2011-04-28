@@ -1,18 +1,18 @@
 html {	background:#666; }
 		#frame { 
-				border:1px solid #fff;
 				margin:1em;
 				padding:1em;
-				-webkit-border-radius: 0.5em;
-				-moz-border-radius: 0.5em;
-				border-radius: 0.5em;
-				background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#eee));
-				background: -moz-linear-gradient(top, #ddd, #eee);
-				/* For Internet Explorer 5.5 - 7 */
-				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ddd, endColorstr=#eee);
-				/* For Internet Explorer 8 */
-				-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ddd, endColorstr=#eee)";
+				border: #2e1a12 solid 20px;
+				    -webkit-border-image: url(/public/wood.png) 200 stretch;
+				    -moz-border-image: url(/public/wood.png) 200 stretch;
+				    border-image: url(/public/wood.png) 200 stretch;
+		
 		}	
+		
+		table {
+			background-image:url(http://static.webstarts.com/library/images/librarycore/corkBoard.jpg) !important;
+			
+		}
 		
 		h1 {
 			color:#fff;
@@ -20,13 +20,9 @@ html {	background:#666; }
 		}
 		table { width:100%; }
 		th {	font-size:3em;
-				background:#ddd;
-				color:#fff;
+			color:#fff;
 				vertical-align:top;
 				font-family:Arial;
-				-webkit-border-radius: 2em;
-				-moz-border-radius: 2em;
-				border-radius: 2em;
 
 			
 		}

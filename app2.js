@@ -10,8 +10,6 @@ var express = require('express')
 
 var ds = require('./mysql_store.js'); // set datastore
 
-
-
 var app = module.exports = express.createServer();
 
 app.set( "view engine", "html" );
@@ -24,9 +22,6 @@ app.configure( function(){
 	// allow forms to be posted
 	app.use( express.bodyParser() );
 });
-
-
-
 
 app.get('/', function(req, res){
 	res.send('<a href="/lists/smm/wall.html">see demo list</a>');
@@ -48,13 +43,12 @@ app.get('/lists/:file(*wall.html)', function(req, res){
 
 
 app.post('/lists/:file(*new)', function(req, res){
-//	var params = {};
-//	params.list = req.params.file.replace('new', '');
-	console.log(req.body);
+	var params = {};
+	params.list = req.params.file.replace('new', '');
 	ds.newList(req.body.title, req.body.text, function() {
 		// callback.
 	});
-	res.send('ok');
+	res.redirect('/lists/'+params.list+'/wall.html');
 });
 
 
