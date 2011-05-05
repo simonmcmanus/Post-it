@@ -4,22 +4,23 @@
 		<title>PostItLists.com</title>\n/n
 		<script src="/socket.io/socket.io.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>	
+
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>	
+		
+		
+		
+		https://github.com/louisremi/jquery.transition.js/raw/master/jquery.transition.min.js"></script>	
 		<script type="text/javascript" src="https://github.com/douglascrockford/JSON-js/raw/master/json2.js"></script>	
 		<script type="text/javascript" src="/public/core.js"></script>	
 		<link rel=StyleSheet href="/public/style.css" type="text/css" media="screen">
+		<link rel=StyleSheet href="/public/jquery.scrollto.js" type="text/css" media="screen">
 		<link rel=StyleSheet href="http://simonmcmanus.com/node_static/fonts/Jr-Hand-fontfacekit/stylesheet.css" type="text/css" media="screen">
 		<link rel=StyleSheet href="http://simonmcmanus.com/node_static/fonts/Rabiohead-fontfacekit/stylesheet.css" type="text/css" meda="screen">
 	</head>
 	<body>		
 		<h1>{{html title}}</h1>
-		
-		<form method="POST" action="new">
-			<label>title:</label><input name="title" id="title" />
-			<label>text:</label><textarea name="text"></textarea>
-			<input type="submit" value="Add Item"/>
-		</form>
-		
+		<div id="overlay" class="off">
+		</div>
 		<div id="frame">
 			{{html body}}
 		</div>

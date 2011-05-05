@@ -1,8 +1,8 @@
-html {	background:#666; }
+html {	background:#666; margin:0; padding:0; }
 		#frame { 
 				margin:1em;
 				padding:1em;
-				border: #2e1a12 solid 20px;
+				border: #2e1a12 solid 2px;
 				    -webkit-border-image: url(/public/wood.png) 200 stretch;
 				    -moz-border-image: url(/public/wood.png) 200 stretch;
 				    border-image: url(/public/wood.png) 200 stretch;
@@ -20,14 +20,14 @@ html {	background:#666; }
 		}
 		table { width:100%; }
 		th {	font-size:3em;
-			color:#fff;
+			color:#222;
 				vertical-align:top;
-				font-family:Arial;
+				font-family:RabioheadRegular;
 
 			
 		}
 		td { 	height:100%;
-				width:35%;
+				width:400px;
 				vertical-align:top;
 				font-family:'RabioheadRegular';
 		}
@@ -39,24 +39,25 @@ html {	background:#666; }
 		.tasks li:hover {
 				cursor:move;
 		}
-		.tasks li{
+		.tasks li, div.note{
 				font-family:'RabioheadRegular';
 				font-size:1.4em;
 				width:80%;
 				float:right;
 				 right:45%;
 				list-style:none;
-				padding:0.3em 0.6em 0.3em 0.6em;
+				padding:1em;
 				margin:0.4em;
+				z-index:10;
 				color:#555;
 				/* For Internet Explorer 5.5 - 7 */
 				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0000FF, endColorstr=#FFFFFFFF);
 				/* For Internet Explorer 8 */
 				-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0000FF, endColorstr=#FFFFFFFF)";
 				background: -moz-linear-gradient(top, #F1EA9B 0%, #F1E999 40%, #F6F2C6 100%); /* firefox */
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#F1EA9B), color-stop(30%,#F1E999), color-stop(100%,#F6F2C6)); /* webkit */
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#F1EA9B), color-stop(30%,#F1E999), color-stop(100%,#e9e9C9)); /* webkit */
 				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F1EA9B', endColorstr='#F6F2C6',GradientType=0 ); /* ie */
-				border: 1px solid #bbb;
+				border: 1px solid #888;
 		}
 		
 
@@ -74,9 +75,9 @@ html {	background:#666; }
 				transform: skew(10deg) rotate(3deg);
 				-webkit-transform: skew(0deg) rotate(0deg);
 				-moz-transform: skew(0deg) rotate(0deg);
-				box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
-				-webkit-box-shadow: 0px 8px 4px rgba(0, 0, 0, 0.3); 
-				-moz-box-shadow: 0 8px 4px rgba(0, 0, 0, 0.3); 
+				box-shadow: 0 8px 16px rgba(0, 0, 0, 2.7); 
+				-webkit-box-shadow: 0px 8px 4px rgba(0, 0, 0, 2.7); 
+				-moz-box-shadow: 0 8px 4px rgba(0, 0, 0, 2.7); 
 		} 
 
 		ul.tasks li  ul.subtasks li:after { 
@@ -145,3 +146,81 @@ html {	background:#666; }
 		div.simon {
 				backgroud:blue;
 		}
+		
+		div#overlay {
+			margin:0;
+			top:0;
+		background:#999;
+		width:120%;
+		height:120%;
+		opacity:0.9;
+		z-index:10;
+		position:fixed;
+		text-align:center;	
+		display:none;
+		}
+		
+		form.new input, form.new textarea {
+			font-size:1.4em;
+			border:0;
+			background:transparent;
+			background:red;
+			font-family:'RabioheadRegular';
+		}
+		form.new input{
+			font-size:1.6em;
+		}
+		
+		.animateOut{
+			position:fixed;
+			z-index:10;
+		}
+
+		/* Commments */
+		
+		.comment {
+			padding:0.5em;
+			margin:0.5em;
+			border-top:1px solid #eee;
+			display:none;
+		}
+		
+		.comment  .title {
+			font-weight:bold;
+			display:block;
+		}
+		
+		ul.status{
+			top:0px;
+			float:right;
+			z-index:20;
+			position:relative;
+			display:block;
+		}		
+		ul.status li {
+			width:50px;
+			font-size:15px;
+			display:inline;
+			display:none;
+			border:1px solid #ccc;
+		}
+		
+			ul.status li:first-child {
+				left:-10em;
+				
+						-webkit-transform: rotate(10deg);
+						-moz-transform: rotate(10deg);
+						-o-transform: rotate(10deg);
+			}
+		
+			ul.status li:nth-child(2n) {
+				left:7em;
+			}
+			
+			ul.status li:nth-child(3n) {
+				left:12em;
+			}
+			ul.status li:nth-child(4n) {
+				left:17em;
+			}
+				

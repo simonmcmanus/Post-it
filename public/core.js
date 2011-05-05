@@ -37,6 +37,38 @@ $(function() {
 	
 
 $(document).ready(function() {
+	
+	$('ul.tasks li').click(function(){
+//		$(this).addClass('animateOut');
+		$('#overlay').show().css({'opacity':0}).animate({'opacity': 0.8});
+		
+		
+		
+		var rightpos = $(window).width()-400;
+		var top = $(this).offset().top
+		console.log('top is: ', top);
+		
+		$(this).css({
+			
+			zIndex:100,
+			position:'absolute'			
+		});
+		
+		$(this).animate({
+			top:top,
+			left:100,
+		}, 1000, function() {
+			$(this).find('.comment').css('opacity', 0).show().animate({'opacity': 1}, 200);
+		});
+		
+	});
+	
+	$('ul.tasks li').hover(function() {
+		$(this).find('.status li').fadeIn('fast').css({'position':'absolute'});
+	}, function() {
+		$(this).find('.status li').fadeOut('fast');		
+	});
+	/*
 	$('ul.tasks li').dblclick(function(){
 		if($(this).find('textarea').length >= 0){
 			var btn = $("<button>save</button>");
@@ -46,6 +78,8 @@ $(document).ready(function() {
 			$(btn).appendTo($(this).append("<textarea></textarea>"));		
 		}
 	});	
+	
+	*/
 });
 function message(obj){
 	if(typeof obj.message === "undefined") return false;

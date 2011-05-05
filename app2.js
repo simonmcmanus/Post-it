@@ -77,4 +77,4 @@ io.on('connection', function(client){
 
 
 app.listen(8000);
-console.log('Server running at: http://simonmcmanus.com:9000/');
+console.log('Server running at: http://simonmcmanus.com:8000/');

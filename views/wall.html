@@ -14,7 +14,15 @@
   <tr>
       <td>
           <ul id="notStarted" class="tasks">
-	
+			<li id='new_task'>
+				<form method="POST" action="new" class="new">
+					<div class="note">
+						<input name="title" id="title" placeholder="title"/>
+						<textarea name="text" placeholder="text"></textarea>
+						<button	 type="submit">Add Item</button>
+					</div>
+				</form>
+			</li>
 	
 	
 	
@@ -25,7 +33,56 @@
             <div class="desc">
 				${list.text}
 			</div>
-        </li>
+			<div class="comments">
+				<div class="comment">
+					<span class="title">
+						Simon McManus
+					</span>
+					Should blah blah blah blah blah 
+				</div>
+				<div class="comment">
+					<span class="title">
+						Simon McManus
+					</span>
+					Should blah blah blah blah blah 
+				</div>
+				<div class="comment">
+					<span class="title">
+						Simon McManus
+					</span>
+					Should blah blah blah blah blah 
+				</div>
+				<div class="comment">
+					<span class="title">
+						Simon McManus
+					</span>
+					Should blah blah blah blah blah 
+				</div>
+				<div class="comment">
+					<span class="title">
+						Simon McManus
+					</span>
+					Should blah blah blah blah blah 
+				</div>
+			
+			</div>
+			
+			
+			<ul class="status">
+				<li class="col1">
+					12 Comments
+				</li>
+				
+				<li class="col1">
+					0 Not Started
+				</li>
+				<li class="col1">
+				13	In Progress 
+				</li>
+				<li class="col1">
+				5	Done
+				</li>
+        </ul>
 	
 	
 	{{/each}}
