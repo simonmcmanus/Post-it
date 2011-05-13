@@ -10,6 +10,21 @@ exports.newList = function(title, text, callback) {
 }
 
 
+exports.getTask = function(params, callback) {
+	var query = 'SELECT * FROM items where id="'+params.id+'"';
+	console.log(query);
+	sql.query(query, params, callback);	
+};
+
+
+
+exports.updateTask = function(params, callback) {
+	console.log('wpoppa', params);
+	var query = 'UPDATE ITEMS SET text="'+params.task.text+'", title="'+params.task.title+'", tags="'+params.task.tags+'" where id="'+params.id+'"';
+	console.log(query);
+	sql.query(query, params, callback);	
+};
+
 exports.getAllList = function() {
 	sql.query('SELECT * FROM lists', callback);
 }

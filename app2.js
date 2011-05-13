@@ -15,6 +15,7 @@ var app = module.exports = express.createServer();
 app.set( "view engine", "html" );
 app.register( ".html", jqtpl); // use jQuery templating to render html files. 
 
+app.use(express.bodyParser()); // recieve post requests
 
 app.configure( function(){
     app.use(express.static(__dirname));
@@ -39,6 +40,37 @@ app.get('/lists/:file(*wall.html)', function(req, res){
 		});		
 	}, params);
 });
+
+
+
+// Edit form
+app.get('/lists/:wall/tasks/:taskId/edit', function(req, res){
+	ds.getTask({
+		id:req.params.taskId
+	}, function(data) {
+		res.render('edit_task', {
+			
+			layout:false,
+			locals: {
+				wall: req.params.wall,
+				id: req.params.taskId,
+				task: data[0]
+			}
+		});		
+	});
+});
+
+
+// Edit form
+app.post('/lists/:wall/tasks/:taskId/edit', function(req, res){
+	ds.updateTask({
+		id:req.params.taskId,
+		task:req.body
+	}, function() {
+		res.redirect('/lists/'+req.params.wall+'/wall.html#'+req.params.taskid);
+	});
+});
+
 
 
 

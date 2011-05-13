@@ -40,25 +40,58 @@ $(document).ready(function() {
 	
 	$('ul.tasks li').click(function(){
 //		$(this).addClass('animateOut');
+		
+		$(this).addClass('open');
+		var textareaId = $(this).attr('id')+'Text';
+		$.get('http://127.0.0.1:8000/lists/smm/tasks/1/edit/', function(data) {
+			console.log(data);
+			$('ul.tasks li.open .edit').html(data);
+			$('ul.tasks li.open .read').hide();
+			
+				$('#'+textareaId).animate({
+							width:$(window).width()-800			
+						}, 1000);
+			
+		
+			});
+		
+		
+		
 		$('#overlay').show().css({'opacity':0}).animate({'opacity': 0.8});
 		
 		
-		
-		var rightpos = $(window).width()-400;
-		var top = $(this).offset().top
+		//var rightpos = $(window).width()-400;
+		var top = $(this).offset().top;
+		var left = $(this).offset().left;
+		var width = $(this).width();
 		console.log('top is: ', top);
 		
 		$(this).css({
-			
+			width:width,
+			top:top,
+			left:left,
+			rotate:"0deg",
 			zIndex:100,
 			position:'absolute'			
 		});
+		$(this).removeClass('tilt');
+  		$('html,body').animate({scrollTop:top-100},1000);
+		console.log(textareaId);
+		
 		
 		$(this).animate({
 			top:top,
+			width:$(window).width()-400,
 			left:100,
 		}, 1000, function() {
-			$(this).find('.comment').css('opacity', 0).show().animate({'opacity': 1}, 200);
+				area1 = new nicEditor({fullPanel : false, buttonList:['bold','italic','underline','left','center', 'right', 'ul']}).panelInstance(textareaId,{hasPanel : true});
+			var that = this;
+			setTimeout(function() {
+				
+				$(that).find('.comment').slideDown();
+				
+//				$(that).find('.comment').css('opacity', 0).show().animate({'opacity': 1}, 200);
+			}, 800);
 		});
 		
 	});

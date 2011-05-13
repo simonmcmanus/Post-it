@@ -28,10 +28,13 @@
 	
 	
 	{{each(i, list) list}}
-        <li id="${list.id}">
+        <li class="tilt" id="${list.id}">
+			<div class="edit"></div>
+			<div class="read">
         		<h3>${list.title}</h3>
-            <div class="desc">
-				${list.text}
+            	<div class="desc">
+					${list.text}
+				</div>
 			</div>
 			<div class="comments">
 				<div class="comment">

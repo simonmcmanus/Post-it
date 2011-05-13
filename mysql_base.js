@@ -4,8 +4,9 @@ var Client = require('mysql').Client,
     client.user = 'root'; 
     client.password = ''; 
     client.connect();
-    // use the correct database
-    client.query('USE lists'); // change this
+
+	// select the database
+    client.query('USE lists'); 
 
 	var query = function(query, params, callback) {
 		client.query(query, 
