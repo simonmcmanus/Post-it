@@ -1,5 +1,22 @@
+/***
+
+TODOs
+
+tidy up mess below. 
+
+get save working
+clean up css
+get new task working			
+get sort working
+get socket IO working again. 
+
+
+*
+**/
+/*
 var changeTasks = function(event, ui) {
 	var s =$(this).sortable('toArray').join(', ');
+	console.log('s is : ', s);
 	var $items = $(this).find('li');
 	var c = $items.length;
 	var list = [];
@@ -27,92 +44,192 @@ var changeTasks = function(event, ui) {
 	obj[id] = list;
 	send(JSON.stringify(obj), this.id);
 };
+*/
+
+
+
+
+var postTasks = function(status, ids) {
+	console.log(status, ids);
+		$.ajax({
+			type:"POST",
+			url:"/lists/smm/status/"+status+"/edit/",
+			data:'ids='+ids,
+			success: function(data) {
+				alert('bop');
+			}
+		})
+};
+
+var changeTasks = function(event, ui) {
+	var s = $(this).sortable('toArray').join(', ');
+	postTasks($(this).attr('id'), s);
+};
+
+
 $(function() {
-	$( "ul.tasks" ).sortable({
+$( "ul.tasks" ).sortable({
 		connectWith: ".tasks",
 		placeholder: "placeholder",
 		forcePlaceholderSize: true,
 		update: changeTasks 
-	}).disableSelection();	});
+	}).disableSelection();
+});
+
+
+
+var getComments = function(id, callback) {
+		$.get('/lists/smm/tasks/'+id+'/comments/', function(data) {
+			$('ul.tasks li.open .comments').html(data);
+			if(callback){			
+				callback();
+			}
+			$('.new-comment input').click(function() {
+				var form = $(this).parent();
+				$.ajax({
+					type:"POST",
+					url:"/lists/smm/tasks/"+id+"/comments/new",
+					data:form.serialize(),
+					success: function(data) {
+						getComments(id);
+					}
+				})
+				
+			})
+		});
+		
 	
+};
+
+
+
+
+
+var open = function(e) {
+	e.preventDefault();
+	
+	
+	
+	var task = $(this).parents('li');
+	var id = $(task).attr('id');
+	if($(task).hasClass('open')){
+		return false;
+	}
+	
+	console.log(task);
+//		 $( "ul.tasks" ).sortable("disable" )
+	
+	$(task).addClass('open');
+	var textareaId = $(task).attr('id')+'Text';
+	// get edit form
+	$.get('/lists/smm/tasks/'+id+'/edit/', function(data) {
+	$('ul.tasks li.open .edit').html(data);
+	$('ul.tasks li.open .read').hide();
+		$('#'+textareaId).aloha();		
+	});
+	getComments(id, function() {
+		$('ul.tasks li.open .comments .comment').hide();			
+	});
+	$('#overlay').show().css({'opacity':0}).animate({'opacity': 0.8});
+	
+	
+	//var rightpos = $(window).width()-400;
+	var top = $(task).offset().top;
+	var left = $(task).offset().left;
+	var width = $(task).width();
+	
+	$(task).css({
+		width:width,
+		top:top,
+		left:left,
+		zIndex:100,
+		position:'absolute'			
+	});
+	$(task).removeClass('tilt');
+	$('html,body').animate({scrollTop:top-100},1000);
+	var status = task.parents('ul.tasks').attr('id');
+	
+	if(status == 'notStarted'){
+		var l = left;
+		var w = $(window).width()-400;
+	}else if(status == 'inProgress'){
+		var l = 150;
+		var w = $(window).width()-400;
+		
+	}else if(status == 'done'){
+		var l = left- $(window).width()/1.4  +200 ;
+		var w = $(window).width()/1.3;
+		
+	}
+	
+	
+	$(task).animate({
+		top:top,
+		width:w,
+		left:l,
+	}, 1000, function() {
+		
+		
+//				area1 = new nicEditor({fullPanel : false, buttonList:['bold','italic','underline','left','center', 'right', 'ul']}).panelInstance(textareaId,{hasPanel : true});
+		setTimeout(function() {
+			
+			$(task).find('.comment').slideDown();
+			
+//				$(that).find('.comment').css('opacity', 0).show().animate({'opacity': 1}, 200);
+		}, 800);
+	});
+};
+
+var close = function() {
+	$('.comments').hide();
+	$('li.open').addClass('tilt').animate({
+		'position':'relative',
+		width:250,
+		display:'list-item',
+		left:'auto',
+		top:'auto'
+		}, 400);
+		$('ul.tasks li.open .edit').fadeOut(100);
+		$('ul.tasks li.open .read').show();
+		$('#overlay').fadeOut(500);;
+};
+
+var showNewTask = function(e) {
+	e.preventDefault();
+	var nt = $('li.new_task').clone();
+	nt.find('form.new').submit(submitNewTask);
+	$('#notStarted').prepend(nt);
+	nt.focus();
+};
+
+var submitNewTask = function(e) {
+//	e.preventDefault();
+	console.log(this);
+//	return false;
+	
+}
+
+
 
 $(document).ready(function() {
 	
-	$('ul.tasks li').click(function(){
-//		$(this).addClass('animateOut');
-		
-		$(this).addClass('open');
-		var textareaId = $(this).attr('id')+'Text';
-		$.get('http://127.0.0.1:8000/lists/smm/tasks/1/edit/', function(data) {
-			console.log(data);
-			$('ul.tasks li.open .edit').html(data);
-			$('ul.tasks li.open .read').hide();
-			
-				$('#'+textareaId).animate({
-							width:$(window).width()-800			
-						}, 1000);
-			
-		
-			});
-		
-		
-		
-		$('#overlay').show().css({'opacity':0}).animate({'opacity': 0.8});
-		
-		
-		//var rightpos = $(window).width()-400;
-		var top = $(this).offset().top;
-		var left = $(this).offset().left;
-		var width = $(this).width();
-		console.log('top is: ', top);
-		
-		$(this).css({
-			width:width,
-			top:top,
-			left:left,
-			rotate:"0deg",
-			zIndex:100,
-			position:'absolute'			
-		});
-		$(this).removeClass('tilt');
-  		$('html,body').animate({scrollTop:top-100},1000);
-		console.log(textareaId);
-		
-		
-		$(this).animate({
-			top:top,
-			width:$(window).width()-400,
-			left:100,
-		}, 1000, function() {
-				area1 = new nicEditor({fullPanel : false, buttonList:['bold','italic','underline','left','center', 'right', 'ul']}).panelInstance(textareaId,{hasPanel : true});
-			var that = this;
-			setTimeout(function() {
-				
-				$(that).find('.comment').slideDown();
-				
-//				$(that).find('.comment').css('opacity', 0).show().animate({'opacity': 1}, 200);
-			}, 800);
-		});
-		
-	});
 	
+	$(document).keyup(function(e) {
+	  if (e.keyCode == 27) { 
+			close();
+		 }   // esc
+	});
+
+	$('ul.tasks li .edit').click(open);
+
+
+	$('#header a.newTask').click(showNewTask);
 	$('ul.tasks li').hover(function() {
 		$(this).find('.status li').fadeIn('fast').css({'position':'absolute'});
 	}, function() {
 		$(this).find('.status li').fadeOut('fast');		
 	});
-	/*
-	$('ul.tasks li').dblclick(function(){
-		if($(this).find('textarea').length >= 0){
-			var btn = $("<button>save</button>");
-			btn.click(function() {
-				$(this).parents('li').html($(this).prev().val());
-			});
-			$(btn).appendTo($(this).append("<textarea></textarea>"));		
-		}
-	});	
-	
-	*/
+
 });
 function message(obj){
 	if(typeof obj.message === "undefined") return false;
@@ -126,7 +243,6 @@ function message(obj){
 			var item = d[c];
 			var clazz = (item.updated) ? "updated" : "";
 			if(item.id){
-				console.log(item);
 				list.append("<li id='"+item.id+"' class='"+clazz+"'><h3>"+item.title+"</h3><div class='desc'>"+item.description+" </div><img width='30px' src='http://www.clker.com/cliparts/c/2/I/7/X/w/male-teacher-2-th.png' /></li>");							
 			}
 		}		
