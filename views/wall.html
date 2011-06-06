@@ -12,45 +12,40 @@
   </tr>
   <tr>
       <td>
-          <ul id="notStarted"  class="tasks">
+
+		<ul class="new_task">
+		<li class="new_task" >
+			<form method="POST" action="tasks/new" class="new">
+					<input name="title" id="title" placeholder="title"/>
+					<textarea name="text" placeholder="text"></textarea>
+					<button	 type="submit">Add Item</button>
+			</form>
+		</li>
+		</ul>   
+       	<ul id="notStarted"  class="tasks">
 	
 	{{each(i, list) status.notStarted}}
         <li class="tilt" id="${list.id}">
 			<div class="edit"></div>
 			<div class="read">
+				<a class="close" href="./close">close</a>	
 				<a class="edit" href="./edit">edit</a>
         		<h3>${list.title}</h3>
+				<div class="comments">
+
+				</div>
+
             	<div class="desc">
 					${list.text}
 				</div>
 			</div>
-			<div class="comments">
-			
-			</div>
-			
-			<!--
-			<ul class="status">
-				<li class="col1">
-					12 Comments
-				</li>
-				
-				<li class="col1">
-					0 Not Started
-				</li>
-				<li class="col1">
-				13	In Progress 
-				</li>
-				<li class="col1">
-				5	Done
-				</li>
-        </ul>
--->
-	
-	
+		</li>
 	{{/each}}
           </ul>
       </td>
       <td>
+	
+
       <ul class="tasks" id="inProgress">
 				{{each(i, list) status.inProgress}}
 			        <li class="tilt" id="${list.id}">
@@ -65,33 +60,10 @@
 						<div class="comments">
 
 						</div>
-
-						<!--
-						<ul class="status">
-							<li class="col1">
-								12 Comments
-							</li>
-
-							<li class="col1">
-								0 Not Started
-							</li>
-							<li class="col1">
-							13	In Progress 
-							</li>
-							<li class="col1">
-							5	Done
-							</li>
-			        </ul>
-			-->
-
-
-				{{/each}}      	
-
+				{{/each}}      
       </ul>
       <td>
           <ul class="tasks" id="done">
-          	
-
 				{{each(i, list) status.done}}
 			        <li class="tilt" id="${list.id}">
 						<div class="edit"></div>
@@ -106,24 +78,6 @@
 
 						</div>
 
-						<!--
-						<ul class="status">
-							<li class="col1">
-								12 Comments
-							</li>
-
-							<li class="col1">
-								0 Not Started
-							</li>
-							<li class="col1">
-							13	In Progress 
-							</li>
-							<li class="col1">
-							5	Done
-							</li>
-			        </ul>
-			-->
-
 
 				{{/each}}
 
@@ -131,13 +85,3 @@
       </td>
   </tr>
 </table>
-
-<ul class="new_task">
-<li class="new_task" >
-	<form method="POST" action="tasks/new" class="new">
-			<input name="title" id="title" placeholder="title"/>
-			<textarea name="text" placeholder="text"></textarea>
-			<button	 type="submit">Add Item</button>
-	</form>
-</li>
-</ul>

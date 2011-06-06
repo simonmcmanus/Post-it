@@ -41,7 +41,8 @@ app.get('/lists/:file(*wall.html)', routes.wall);
 app.post('/lists/:wall/tasks/new', routes.taskNew);
 
 // Edit form
-app.get('/lists/:wall/tasks/:taskId/edit', routes.taskEdit);
+app.get('/lists/:wall/tasks/:taskId/edit', routes.GET_taskEdit);
+app.post('/lists/:wall/tasks/:taskId/edit', routes.POST_taskEdit);
 
 // show comments
 app.get('/lists/:wall/tasks/:taskId/comments', routes.comments);

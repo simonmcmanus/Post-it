@@ -4,10 +4,10 @@ TODOs
 
 tidy up mess below. 
 
-get save working
+get save working	
 clean up css
-get new task working			
-get sort working
+perge task
+get new task working ajax			
 get socket IO working again. 
 
 
@@ -79,26 +79,27 @@ $( "ul.tasks" ).sortable({
 
 
 var getComments = function(id, callback) {
-		$.get('/lists/smm/tasks/'+id+'/comments/', function(data) {
-			$('ul.tasks li.open .comments').html(data);
-			if(callback){			
-				callback();
-			}
-			$('.new-comment input').click(function() {
-				var form = $(this).parent();
-				$.ajax({
-					type:"POST",
-					url:"/lists/smm/tasks/"+id+"/comments/new",
-					data:form.serialize(),
-					success: function(data) {
-						getComments(id);
-					}
-				})
-				
+	$.get('/lists/smm/tasks/'+id+'/comments/', function(data) {
+		$('ul.tasks li.open .comments').html(data);
+		if(callback){			
+			callback();
+		}
+		$('.new-comment input').click(function(e) {
+			e.preventDefault();
+			var $form = $(this).parent();
+			
+
+			$.ajax({
+				type:"POST",
+				url:"/lists/smm/tasks/"+id+"/comments/new",
+				data:$form.serialize(),
+				success: function(data) {
+					getComments(id);
+				}
 			})
-		});
-		
-	
+			return false;
+		})
+	});
 };
 
 
@@ -116,9 +117,10 @@ var open = function(e) {
 		return false;
 	}
 	
-	console.log(task);
-//		 $( "ul.tasks" ).sortable("disable" )
 	
+	
+	$('#header').slideUp();
+	$( "ul.tasks" ).sortable("disable" )
 	$(task).addClass('open');
 	var textareaId = $(task).attr('id')+'Text';
 	// get edit form
@@ -132,20 +134,27 @@ var open = function(e) {
 	});
 	$('#overlay').show().css({'opacity':0}).animate({'opacity': 0.8});
 	
-	
-	//var rightpos = $(window).width()-400;
 	var top = $(task).offset().top;
 	var left = $(task).offset().left;
 	var width = $(task).width();
+	var height = $(task).height();
+	
+	task.attr('data-original-top', top);
+	task.attr('data-original-left', width);
+	task.attr('data-original-width', left);
 	
 	$(task).css({
 		width:width,
 		top:top,
 		left:left,
+		height:height,
 		zIndex:100,
 		position:'absolute'			
 	});
 	$(task).removeClass('tilt');
+	
+	$('ul.tasks li a.edit').fadeOut(100);
+	
 	$('html,body').animate({scrollTop:top-100},1000);
 	var status = task.parents('ul.tasks').attr('id');
 	
@@ -168,31 +177,48 @@ var open = function(e) {
 		width:w,
 		left:l,
 	}, 1000, function() {
+		$(this).css({height:'auto'});
 		
 		
 //				area1 = new nicEditor({fullPanel : false, buttonList:['bold','italic','underline','left','center', 'right', 'ul']}).panelInstance(textareaId,{hasPanel : true});
 		setTimeout(function() {
-			
-			$(task).find('.comment').slideDown();
-			
+			$(task).find('.comment').slideDown();			
 //				$(that).find('.comment').css('opacity', 0).show().animate({'opacity': 1}, 200);
-		}, 800);
+		}, 500);
 	});
 };
 
 var close = function() {
 	$('.comments').hide();
-	$('li.open').addClass('tilt').animate({
-		'position':'relative',
-		width:250,
-		display:'list-item',
-		left:'auto',
-		top:'auto'
-		}, 400);
-		$('ul.tasks li.open .edit').fadeOut(100);
-		$('ul.tasks li.open .read').show();
-		$('#overlay').fadeOut(500);;
+	
+	var $task = $('li.open');
+	
+	
+	$task.addClass('tilt').css({
+		top:0,
+		left:0,
+		width:'250px',
+		position:'relative'
+	});
+	
+	$task.removeClass('open');
+	$('ul.tasks li.open .edit').fadeOut(100);
+	$('ul.tasks li.open .read').show();
+	$('#overlay').fadeOut(900, function() {
+		$task.css({zIndex:1});
+	});
+	
+	 $( "ul.tasks" ).sortable({"disabled": false})
+	
 };
+
+
+var closeClick = function(e) {
+	e.preventDefault();
+	close();
+	return false;
+};
+
 
 var showNewTask = function(e) {
 	e.preventDefault();
@@ -221,7 +247,12 @@ $(document).ready(function() {
 	});
 
 	$('ul.tasks li .edit').click(open);
-
+	$('ul.tasks li .close').click(closeClick);
+	$('ul.tasks li').hover(function() {
+		$(this).find('a.edit').animate({opacity:1}, 200);
+	}, function() {
+		$(this).find('a.edit').animate({opacity:0}, 200);		
+	});
 
 	$('#header a.newTask').click(showNewTask);
 	$('ul.tasks li').hover(function() {

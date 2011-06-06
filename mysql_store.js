@@ -28,6 +28,7 @@ exports.getTask = function(params, callback) {
 };
 
 exports.updateTask = function(params, callback) {
+	console.log(params, params.task);
 	var query = 'UPDATE ITEMS SET text="'+params.task.text+'", title="'+params.task.title+'", tags="'+params.task.tags+'" where id="'+params.id+'"';
 	sql.query(query, params, callback);	
 };

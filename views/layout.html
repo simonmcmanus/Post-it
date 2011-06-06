@@ -2,33 +2,22 @@
 <html>
 	<head>
 		<title>PostItLists.com</title>
-		<script src="/socket.io/socket.io.js"></script>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>	
-
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+		<!--<script src="/socket.io/socket.io.js"></script>-->
+		<script type="text/javascript" src="/public/lib/jquery.js"></script>	
+		<script type="text/javascript" src="/public/lib/jquery.ui.js"></script>
+		<script type="text/javascript" src="/public/lib/json2.js"></script>	
+		<script type="text/javascript" src="/public/core.js"></script>			
 		
-		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-	  
-		
-	<script	src="https://github.com/louisremi/jquery.transition.js/raw/master/jquery.transition.min.js"></script>	
-		<script type="text/javascript" src="https://github.com/douglascrockford/JSON-js/raw/master/json2.js"></script>	
-		<script type="text/javascript" src="/public/core.js"></script>	
+		<link rel="stylesheet" type="text/css" href="/public/style.css" />
 		
 		
-		<link rel=StyleSheet href="/public/style.css" type="text/css" media="screen">
-		<link rel=StyleSheet href="https://github.com/zachstronaut/jquery-animate-css-rotate-scale/raw/master/jquery-animate-css-rotate-scale.js" type="text/css" media="screen">
-		<link rel=StyleSheet href="http://simonmcmanus.com/node_static/fonts/Jr-Hand-fontfacekit/stylesheet.css" type="text/css" media="screen">
-		<link rel=StyleSheet href="http://simonmcmanus.com/node_static/fonts/Rabiohead-fontfacekit/stylesheet.css" type="text/css" meda="screen">
-		
-		
-	
+		<link rel=StyleSheet href="/public/fonts/rabiohead.css" type="text/css" meda="screen">
 	</head>
-	<body>		
-		
-		<ul id="header">
-			<li><b>{{html title}}</b></li>
+	<body>
+		<ul id="header" class="shadow">
+			<li>{{html title}}</li>
 			<li ><a href="tasks/new" class="newTask">New Task</a></li>
+			<li ><a href="tasks/new" class="newTask">New Wall</a></li>
 		</ul>
 			
 		<div id="overlay" class="off">
