@@ -1,5 +1,11 @@
-	<form action="" method="POST">
+	<form action="" method="POST" 		data-revision="{{html task.revision}}">
+
 	<input  name="title" id="title" placeholder="{{html task.title}}"  value="{{html task.title}}" /><br />
+	<!--
+	<section class="contentEditable" contenteditable="true">
+			{{html task.text}}
+	</section>
+	-->
 	<textarea name="text" id="{{html task.id}}Text">
 		{{html task.text}}
 	</textarea><br />

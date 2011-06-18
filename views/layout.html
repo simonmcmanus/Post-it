@@ -1,28 +1,78 @@
 <!doctype html>
 <html>
 	<head>
-		<title>PostItLists.com</title>
+		<title>ArtFsry.net</title>
 		<!--<script src="/socket.io/socket.io.js"></script>-->
 		<script type="text/javascript" src="/public/lib/jquery.js"></script>	
 		<script type="text/javascript" src="/public/lib/jquery.ui.js"></script>
 		<script type="text/javascript" src="/public/lib/json2.js"></script>	
 		<script type="text/javascript" src="/public/core.js"></script>			
+
+
+		<script type="text/javascript" src="/public/lib/prettydates.js"></script>			
+
+		<script>
+		 var postit = {
+			isLoggedIn: "{{html everyauth.loggedIn}}",
+			username: "{{html user}}"
+		};
+		</script>
+
+<!--		<script type="text/javascript" src="/public/js/views.js"></script>			-->
 		
 		<link rel="stylesheet" type="text/css" href="/public/style.css" />
-		
-		
 		<link rel=StyleSheet href="/public/fonts/rabiohead.css" type="text/css" meda="screen">
+		<link rel=StyleSheet href="/public/fonts/ChunkFive-fontfacekit/stylesheet.css" type="text/css" meda="screen">
+		
+		
+		
+		
+		
+
+		<script type="text/javascript" src="/public/nicEdit/nicEdit.js"></script>
+		
 	</head>
 	<body>
+		
+		
+		
+		
+		
+
 		<ul id="header" class="shadow">
 			<li>{{html title}}</li>
 			<li ><a href="tasks/new" class="newTask">New Task</a></li>
 			<li ><a href="tasks/new" class="newTask">New Wall</a></li>
+			<li>	{{html user}}</li>
+
 		</ul>
 			
 		<div id="overlay" class="off">
 		</div>
-		<div id="frame">
+		
+		
+		<div class="login">
+			<h2>Lst.ee</h2>
+
+				<div class="note">
+					<h3>Login</h3>
+					<div class="desc">
+							To edit these tasks you need to login. You can login with any of these services
+							<img src="/public/img/arrow.png"/>
+					</div>
+				</div>
+
+		
+			<ul>
+				<li>Login with....</li>
+				<li><a href="/auth/google" class="google" title="Login with Google">Google</a></li>
+				<li><a href="/auth/facebook" class="facebook" title="Login with Facebook">Facebook</a></li>
+				<li><a href="/auth/twitter" class="twitter" title="Login with Twitter">Twitter</a></li>
+				<li>	{{html user}}</li>
+			
+			</ul>
+		</div>
+		<div id="container">
 			{{html body}}
 		</div>
 	</body>

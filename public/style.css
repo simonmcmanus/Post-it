@@ -1,9 +1,11 @@
 html {
 	overflow-x:hidden;	
+	overflow:none;
 }
 
 html, body {
-	background: url(/public/img/gray-gradient.jpg) 50% #666;	
+	
+	background: url(/public/img/gray-gradient.jpg) 50% no-repeat #111;	
 	margin: 0;
 	padding: 0;
 }
@@ -11,8 +13,37 @@ html, body {
 input, 
 textarea {
 	font-family: 'RabioheadRegular';
+	width:100%;
+	padding:0.4em 0.8em ;
+	-moz-border-radius: 0.2em;
+	border-radius: 0.2em;
+	background:#f3e76d;
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0000FF,endColorstr=#FFFFFFFF);/* For Internet Explorer 8 */
+	-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0000FF,endColorstr=#FFFFFFFF)";
+	background: -moz-linear-gradient(top,#e6e5dd 0%,#efeee5 40%,#e6e5dd 100%);/* firefox */
+	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#e6e5dd),color-stop(60%,#efeee5),color-stop(100%,#e6e5dd));/* webkit */
+	filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6e5dd',endColorstr='#e6e5dd',GradientType=0 );/* ie */
+	
+	border:1px solid #efe474;
+	
+	border-color: #88a;
 }
 
+
+input, 
+textarea,
+button {
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
+  -moz-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
+  -o-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
+  -ms-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
+  box-shadow: 0 0 5px rgba(0, 0, 255, .5);
+  
+}
+
+textarea {
+	font-size:1em;
+}
 #frame {
 	border:20px;
 	-webkit-border-image: url(/public/frame/frame.png) 10% repeat;
@@ -54,18 +85,36 @@ ul.tasks {
 }
 
 #frame {
-	margin-top:6em;
+	margin-top:7em;
 }
 .edit {
 	float:left;
 	opacity:0;
 	width:50%;
 }
+
+.edit form textarea {
+	min-height:20em;
+}
+
+.edit form input {
+	border:0;
+	padding:2.3em 0.5em;
+	background: transparent;	
+	
+	
+	-webkit-box-shadow: 0 0 0;
+	-moz-box-shadow: 0 0 0 ;
+  	-o-box-shadow: 0 0 0;
+  	-ms-box-shadow: 0 0 0;
+  	box-shadow: 0 0 0;
+}
 .tasks li:hover {
 	cursor: move;
 }
 
 ul#header {
+	display:none;
 	background:#eee;
 	background: url(/public/img/gray-gradient.jpg) 10% #666;
 	border-bottom:1px solid #222;
@@ -104,20 +153,24 @@ html body ul#header li a:link {
 }
 
 button, 
-ul#header li a {
+ul#header li a, 
+.login li a {
 	position:relative;
-	top:0.5em;
 	background:#fff;
-	border:1px solid #121212;
-	margin:3px;
-	padding:6px 12px;
+	margin:3px 3px 3px 0;
+	padding:8px 15px;
 	text-decoration:none;
 	font-family: 'Arial';
-	font-size:0.9em;
+	font-size:14px;
 	-moz-border-radius: 8px;
 	border-radius: 5px;
+	border:1px solid #f3e76d;
+	border:1px solid #444;	
+}
+
+button, 
+ul#header li a {
 	text-shadow: #666 2px 1px 1px;
-	
 	background: -webkit-gradient(linear, left top, left bottom, from(#8b8784), to(#4f4e4a));
 	/* For Mozilla/Gecko (Firefox etc) */
 	background: -moz-linear-gradient(top, #8b8784, #4f4e4a);
@@ -126,13 +179,15 @@ ul#header li a {
 	/* For Internet Explorer 8 */
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#8b8784, endColorstr=#4f4e4a)";
 	
-	-moz-box-shadow:inset 0 1px 0 rgba(#4f4e4a,0.5);
-	-webkit-box-shadow:inset 0 1px 0 rgba(#4f4e4a,0.5);
-	box-shadow:inset 0 1px 0 rgba(#4f4e4a,0.5);
 	color:#fff;
 	
 }
 
+ul#header li a {
+	border:1px solid #121212;
+	top:0.5em;
+	
+}
 html body ul#header li a:hover {
 }
 
@@ -152,11 +207,11 @@ a.edit {
 a.close {
 	background:url('/public/img/close_icon.png');
 	float:right;
-	height:48px;
+	height:30px;
 	position:relative;
 	text-indent:9000px;
 	top:0;
-	width:48px;
+	width:30px;
 }
 
 
@@ -173,7 +228,10 @@ li.open div.desc {
 	cursor:auto;
 }
 
-.tasks li {
+.tasks li,
+.login .note {
+	
+	font-family: 'RabioheadRegular';
 	font-size: 1.4em;
 	width: 100%;
 	list-style: none;
@@ -190,12 +248,23 @@ li.open div.desc {
 	
 }
 
+.tasks li div.saving {
+	background:#000;
+	width: 100%;
+	left:0;
+	font-size:3em;
+	height: 100%;
+	position: absolute;
+	opacity:0.7;
+}
+
 .tasks li.tilt {
 	max-height:250px;
 	overflow:hidden;
 	
 }
-ul.tasks li:after {
+ul.tasks li:after,
+.login .note:after {
 	z-index: -1;
 	position: absolute;
 	background: transparent;
@@ -290,12 +359,10 @@ div#overlay {
 	text-align: center;
 	display: none;
 	
-	background: -webkit-gradient(radial, 40% 40%, 0, 40% 40%, 600, from(#eee), to(#333333));
+	background: -webkit-gradient(radial, 40% 40%, 0, 40% 40%, 600, from(#aaa), to(#333333));
 	background: -moz-radial-gradient(40% 40%, farthest-side, #eee, #333);	
 }
 form.new input,form.new textarea {
-	border: 0;
-	background: transparent;
 	font-family: 'RabioheadRegular';
 }
 form.new input {
@@ -308,19 +375,23 @@ form.new input {
 /* Commments */
 
 .comments {
-	width:40%;
-	float:right;
-	top:10px;
-	right:-20px;
-	position:relative;
+	width: 41%;
+	float: right;
+	top: 39px;
+	right: -20px;
+	
+	position: relative;
+	padding: 1em;
 }
 .comment {
 	padding: 0.5em;
 	border-top: 1px solid #eee;
 	font-size:0.8em;
 }
-.comment .author{
+.comment .author, .time{
 	display: inline;
+	padding:0.3em 0;
+	font-family:arial;
 }
 
 .comment .author, .comment .time {
@@ -329,7 +400,6 @@ form.new input {
 }
 .new-comment textarea {
 	width:96%;
-	font-size:1em;
 }
 
 ul.status {
@@ -368,8 +438,6 @@ ul.status li:nth-child(4n) {
 	
 }
 .tasks li input {
-	border:0;
-	background:transparent;
 	color:#000;
 }
 
@@ -384,4 +452,95 @@ ul.new_task li.new_task{
 	display:block;
 }
 
+.button {
+	padding:10px;
+	float: right;
+	right: 0;
+	position: absolute;
 	
+}
+
+
+div.login {
+	
+	color:#D8D2D0;
+	letter-spacing:0.1em;	
+	background:#000;
+	border-bottom:1px solid #777;
+	
+	background: -webkit-gradient(radial, 40% 40%, 0, 40% 40%, 600, from(#aaa), to(#333333));
+	background: -moz-radial-gradient(20% 40%, farthest-side, #262839, #111);
+	
+	background: url(/public/img/gray-gradient.jpg) 20% 60% no-repeat #111;
+	border:4px solid #222;
+	padding:1em 1em 1em 3em;
+	
+	box-shadow: inset -5px -5px 20px 0.1px #333;
+	
+}
+div.login .box{
+	
+}
+
+div.login h2{
+	font-family:'ChunkFiveRegular';
+	font-size:6em;
+	letter-spacing:0.04em;
+	text-shadow: -0.02em -0.03em 1px #fff,  10px 10px 30px #000;
+	margin: 0.8em 0 0 0;
+}
+
+div.login ul {
+	padding:2em 0 2em;
+}
+
+div.login li {
+	display:inline;
+	margin:0 20px;
+}
+
+html body div.login ul li a {
+	color:#222;
+	border:3px solid #fff;
+	padding: 10px 10px 10px 45px;
+	height:3em;	
+	
+  	box-shadow:5px 0px 65px #000;
+}
+
+
+div.login .facebook {
+	background-image:url(/public/img/login/facebook.png);
+	background-position:3px 3px;
+	background-repeat:no-repeat;
+}
+
+div.login .twitter {
+	
+	background-image:url(/public/img/login/twitter-2.png);
+	background-position:3px 3px;
+	background-repeat:no-repeat;
+}
+
+div.login .google {
+	background-image:url(/public/img/login/google.png);
+	background-position:3px 3px;
+	background-repeat:no-repeat;
+}
+
+
+.login .note {	
+	width:25%;
+	float:right;
+	top:-4.5em;
+	right:4.5em;
+	position:relative;
+	-webkit-transform: rotate(6deg);
+	-moz-transform: rotate(6deg);
+	-o-transform: rotate(6deg);
+}
+
+.login .note img {
+	padding:1em 1em 0 .5em ;
+	display:block;
+}

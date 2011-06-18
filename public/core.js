@@ -84,7 +84,7 @@ var getComments = function(id, callback) {
 		if(callback){			
 			callback();
 		}
-		$('.new-comment input').click(function(e) {
+		$('.new-comment button').click(function(e) {
 			e.preventDefault();
 			var $form = $(this).parent();
 			
@@ -104,7 +104,23 @@ var getComments = function(id, callback) {
 
 
 
-
+var saveTask = function(e) {
+	e.preventDefault();
+	$task = $('li.open');
+	$task.append('<div class="saving">Saving...</div>');
+	$form = $task.find('form').eq(0);
+		$.ajax({
+			type:"POST",
+			url:"/lists/smm/tasks/"+$task.attr('id')+"/edit/",
+			data:$form.serialize(),
+			success: function(data) {
+				$task.find('.saving').html('Saved...').fadeOut(1000, function() {
+					$(this).remove();
+				});
+				//getComments(id);
+			}
+		})
+};
 
 var open = function(e) {
 	e.preventDefault();
@@ -125,9 +141,9 @@ var open = function(e) {
 	var textareaId = $(task).attr('id')+'Text';
 	// get edit form
 	$.get('/lists/smm/tasks/'+id+'/edit/', function(data) {
-	$('ul.tasks li.open .edit').html(data);
-	$('ul.tasks li.open .read').hide();
-		$('#'+textareaId).aloha();		
+		$('ul.tasks li.open div.edit').html(data).fadeIn(200);
+		$('ul.tasks li.open .edit button').click(saveTask);
+		$('ul.tasks li.open .read').hide();
 	});
 	getComments(id, function() {
 		$('ul.tasks li.open .comments .comment').hide();			
@@ -178,14 +194,28 @@ var open = function(e) {
 		left:l,
 	}, 1000, function() {
 		$(this).css({height:'auto'});
-		
+		/*
+	 	nicEditors.allTextAreas({
+			iconsPath : '/public/nicEdit/nicEditorIcons.gif'
+		});
+		*/
+		$(this).find('.edit').animate({opacity:1}, 100);
 		
 //				area1 = new nicEditor({fullPanel : false, buttonList:['bold','italic','underline','left','center', 'right', 'ul']}).panelInstance(textareaId,{hasPanel : true});
 		setTimeout(function() {
-			$(task).find('.comment').slideDown();			
+						$(task).find('.comments').show();
+			$(task).find('.comment').hide().slideDown();			
 //				$(that).find('.comment').css('opacity', 0).show().animate({'opacity': 1}, 200);
 		}, 500);
 	});
+};
+
+
+
+var closeClick = function(e)  {
+	e.preventDefaults();
+	close();
+	return false;
 };
 
 var close = function() {
@@ -200,6 +230,14 @@ var close = function() {
 		width:'250px',
 		position:'relative'
 	});
+	
+	$('div.edit').hide();
+	console.log($task.find('div.edit'));
+	$('ul.tasks li a.edit').fadeIn(100);
+	
+	$('#header').slideDown(900);
+	
+	$task.find('.read').show();
 	
 	$task.removeClass('open');
 	$('ul.tasks li.open .edit').fadeOut(100);
@@ -226,6 +264,12 @@ var showNewTask = function(e) {
 	nt.find('form.new').submit(submitNewTask);
 	$('#notStarted').prepend(nt);
 	nt.focus();
+	
+ nicEditors.allTextAreas({
+	iconsPath : '/public/nicEdit/nicEditorIcons.gif'
+});
+
+	
 };
 
 var submitNewTask = function(e) {
@@ -247,11 +291,16 @@ $(document).ready(function() {
 	});
 
 	$('ul.tasks li .edit').click(open);
+	$('#overlay').click(close);
 	$('ul.tasks li .close').click(closeClick);
 	$('ul.tasks li').hover(function() {
-		$(this).find('a.edit').animate({opacity:1}, 200);
+		if(postit.isLoggedIn == "true"){
+			$(this).find('a.edit').animate({opacity:1}, 200);
+			
+		}
 	}, function() {
-		$(this).find('a.edit').animate({opacity:0}, 200);		
+		$(this).find('a.edit').animate({opacity:0}, 200);
+		
 	});
 
 	$('#header a.newTask').click(showNewTask);

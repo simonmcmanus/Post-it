@@ -1,10 +1,3 @@
-/**
-
-
-
-| - client - | - server - |
-url > routes - data ->  views - uis - 
-**/
 var express = require('express');
 var fs = require('fs');
 var	http = require('http');
@@ -12,68 +5,117 @@ var url = require('url');
 var jqtpl = require('jqtpl');
 var io = require('socket.io');
 var sys = require(process.binding('natives').util ? 'util' : 'sys');
+var everyauth = require('everyauth');
+var ds = require('./mysql_store.js'); // set datastore
 var server;
 
+var config = require('./config.js');
+var routes = require('./routes.js');
 
-var app = module.exports = express.createServer();
 
-app.set( "view engine", "html" );
+
+everyauth.debug = true;
+
+var usersById = {};
+
+
+var sendResponse = function(res, data) {
+	var session = data.session;
+    var redirectTo = session.redirectTo;
+    delete session.redirectTo;
+    res.redirect(redirectTo);
+};
+
+
+everyauth
+  .twitter
+    .myHostname('http://local.host:3000')
+    .consumerKey(config.auth.twitter.cKey)
+    .consumerSecret(config.auth.twitter.consumerSecret)
+	.findOrCreateUser( function (sess, accessTok, accessTokExtra, twitUser) {
+		id = twitUser.name+'@twitter';
+		var user = {
+			id: id,
+			twitterUser: twitUser,
+			username: twitUser.name
+		};
+		usersById[id] = user;
+		return user;
+	})
+  .sendResponse(sendResponse);
+
+
+everyauth
+  .facebook
+    .myHostname('http://localhost:3000')
+    .appId(config.auth.facebook.appId)
+    .appSecret(config.auth.facebook.appSecret)
+   	.findOrCreateUser( function (sess, accessTok, accessTokExtra, fbUser) {
+		var id = fbUser.username+"@facebook";
+		var user = {
+			id: id,
+			facebookUser: fbUser,
+			username: fbUser.username
+		};
+		usersById[id] = user;
+		return user;
+	})
+  .sendResponse(sendResponse);
+
+  
+
+everyauth.google
+  .myHostname('http://localhost:3000')
+  .appId('3335216477.apps.googleusercontent.com')
+  .appSecret('HQ3dXWfmxMoJSZC987N6SeUn')
+  .scope('https://www.google.com/m8/feeds/')
+  .findOrCreateUser( function (sess, accessToken, extra, googleUser) {
+	var id = googleUser.id
+	var user = {
+		id: id,
+		googleUser: googleUser,
+		username: id
+	}
+	return user;
+  })
+  .sendResponse(sendResponse);
+
+
+var app =  express.createServer(
+	express.bodyParser(),
+	express.static(__dirname + "/public"),
+	express.cookieParser(),
+	express.static(__dirname),
+	express.session({ secret: 'htuayreve'}),
+	everyauth.middleware(),
+	everyauth.everymodule.findUserById( function (userId, callback) {
+		callback(null, userId);
+	})
+);
+
+
+everyauth.helpExpress(app);
+
+app.configure( function () {
+  app.set('view engine', 'html');
+
+});
+
 app.register( ".html", jqtpl); // use jQuery templating to render html files. 
 
 
-var routes = require('./routes.js');
 
-app.configure( function(){
-    app.use(express.static(__dirname));
-    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-	// allow forms to be posted
-	app.use( express.bodyParser() );
-});
 
-app.get('/', function(req, res){
-	res.send('<a href="/lists/smm/wall.html">see demo list</a>');
-});
+app.get('/', routes.home);
+app.get('/login', routes.login);
 
 app.get('/lists/:file(*wall.html)', routes.wall);
-
-
-// Edit form
-app.post('/lists/:wall/tasks/new', routes.taskNew);
-
-// Edit form
-app.get('/lists/:wall/tasks/:taskId/edit', routes.GET_taskEdit);
+app.post('/lists/:wall/tasks/new', routes.taskNew);	// Edit form
+app.get('/lists/:wall/tasks/:taskId/edit', routes.GET_taskEdit);	// Edit form
 app.post('/lists/:wall/tasks/:taskId/edit', routes.POST_taskEdit);
+app.get('/lists/:wall/tasks/:taskId/comments', routes.comments);	// show comments
+app.post('/lists/:wall/status/:status/edit/', routes.saveStatus);	// Accept comment posts
+app.post('/lists/:wall/tasks/:taskId/comments/new', routes.newComment);  // Accept comment posts
 
-// show comments
-app.get('/lists/:wall/tasks/:taskId/comments', routes.comments);
-
-
-// Accept comment posts
-app.post('/lists/:wall/status/:status/edit/', routes.saveStatus);
-
-
-// Accept comment posts
-app.post('/lists/:wall/tasks/:taskId/comments/new', routes.newComment);
-
-
-
-var io = io.listen(app), buffer = [];
-  
-io.on('connection', function(client){
-	client.send({ buffer: buffer });
-	client.broadcast({ announcement: client.sessionId + ' connected' });
-	client.on('message', function(message){
-		var msg = { message: [client.sessionId, message] };
-		//console.log('recieved', sys.inspect(client));
-		buffer.push(msg);
-
-		if (buffer.length > 15) buffer.shift();
-			client.broadcast(msg);
-		});
-	client.on('disconnect', function(){
-		client.broadcast({ announcement: client.sessionId + ' disconnected' });
-	});
-});
-
-app.listen(8000);
-console.log('Server running at: http://simonmcmanus.com:8000/');
+app.listen(config.port);
+console.log('Server running at: http://simonmcmanus.com:'+config.port);

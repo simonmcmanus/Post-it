@@ -1,3 +1,5 @@
+{{tmpl partial.html}}
+
 <table class="tasks">
   <tr>
       <th>
@@ -25,19 +27,23 @@
        	<ul id="notStarted"  class="tasks">
 	
 	{{each(i, list) status.notStarted}}
-        <li class="tilt" id="${list.id}">
-			<div class="edit"></div>
-			<div class="read">
-				<a class="close" href="./close">close</a>	
+	    <li class="tilt" id="${list.id}">
+			<div class="button">
 				<a class="edit" href="./edit">edit</a>
-        		<h3>${list.title}</h3>
+				<a class="close" href="./close">close</a>	
+			</div>
+			<div class="edit">
+			</div>
+			<div class="read">
+					<h3>${list.title}</h3>
 				<div class="comments">
-
 				</div>
 
-            	<div class="desc">
+	        	<div class="desc">
 					${list.text}
 				</div>
+			</div>
+			<div class="comments">
 			</div>
 		</li>
 	{{/each}}
@@ -49,36 +55,48 @@
       <ul class="tasks" id="inProgress">
 				{{each(i, list) status.inProgress}}
 			        <li class="tilt" id="${list.id}">
-						<div class="edit"></div>
-						<div class="read">
+						<div class="button">
 							<a class="edit" href="./edit">edit</a>
-			        		<h3>${list.title}</h3>
+							<a class="close" href="./close">close</a>	
+						</div>
+						<div class="edit">
+						</div>
+						<div class="read">
+			  					<h3>${list.title}</h3>
+							<div class="comments">
+							</div>
+
 			            	<div class="desc">
 								${list.text}
 							</div>
 						</div>
 						<div class="comments">
-
 						</div>
+					</li>
 				{{/each}}      
+		
       </ul>
       <td>
           <ul class="tasks" id="done">
 				{{each(i, list) status.done}}
 			        <li class="tilt" id="${list.id}">
-						<div class="edit"></div>
-						<div class="read">
+						<div class="button">
 							<a class="edit" href="./edit">edit</a>
-			        		<h3>${list.title}</h3>
+							<a class="close" href="./close">close</a>	
+						</div>
+						<div class="edit">
+						</div>
+						<div class="read">
+			  					<h3>${list.title}</h3>
+							<div class="comments">
+							</div>
 			            	<div class="desc">
 								${list.text}
 							</div>
 						</div>
 						<div class="comments">
-
 						</div>
-
-
+					</li>
 				{{/each}}
 
           </ul>

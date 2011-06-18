@@ -1,13 +1,21 @@
 var ds = require('./mysql_store.js'); // set datastore
 	
 
+
+exports.home = function(req, res){
+		res.send('<a href="/lists/smm/wall.html">see demo list</a>');
+};
+
+exports.login = function(req, res){
+		res.render('login.html');
+};
+
+
 exports.wall = function(req, res){
 	var params = {};
 	params.list = req.params.file.replace('/wall.html', '');
+    req.session.redirectTo =  '/lists/'+params.list+'/wall.html'; // redirect back to this url after login.
 	ds.getList(params, function(result, params) {
-		
-		
-		console.log('result', result);
 		var c = result.length;
 		var status = {
 			notStarted:[],
@@ -17,12 +25,11 @@ exports.wall = function(req, res){
 		while(c--) {
 			status[result[c].status].push(result[c]);
 		}
-		
 		res.render("wall.html", {
 			locals:{
 				title:params.list,
 				list:result,
-				status:status
+				status:status,
 			}
 		});		
 	}, params);
@@ -89,9 +96,14 @@ exports.comments = function(req, res){
 
 
 exports.newComment = function(req, res){
+	if(!req.loggedIn){
+		res.end('permission denied');
+		return false;
+	}
 	ds.newComment({
-		id:req.params.taskId,
-		comment:req.body
+		id: req.params.taskId,
+		username: req.user, 
+		comment: req.body
 	}, function(data) {
 		res.render('comments', {			
 			layout:false,

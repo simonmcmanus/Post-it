@@ -12,9 +12,14 @@ exports.getComments = function(params, callback) {
 
 exports.newComment = function(params, callback) {
 //	console.log('parasm', params);
-	var q = 'INSERT INTO comments  VALUES ("null", "'+params.comment.text+'", "Simon McManus", "123", "'+params.id+'")';
-	//console.log(q);
-	sql.query(q, params, callback);
+	if(params.comment.text !== ""){
+		var date = new Date;
+		var q = 'INSERT INTO comments  VALUES ("null", "'+params.comment.text+'", "'+params.username+'", "'+date+'", "'+params.id+'")';
+		//console.log(q);
+		sql.query(q, params, callback);
+	}else {
+		callback(null, 'no text');
+	}
 };
 
 exports.newTask = function(title, text, callback) {
