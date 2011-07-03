@@ -2,12 +2,17 @@ var express = require('express');
 var fs = require('fs');
 var	http = require('http');
 var url = require('url');
-var jqtpl = require('jqtpl');
+var sizlate = require('sizlate');
+
 var io = require('socket.io');
 var sys = require(process.binding('natives').util ? 'util' : 'sys');
 var everyauth = require('everyauth');
 var ds = require('./mysql_store.js'); // set datastore
+
+
 var server;
+
+
 
 var config = require('./config.js');
 var routes = require('./routes.js');
@@ -97,14 +102,11 @@ var app =  express.createServer(
 everyauth.helpExpress(app);
 
 app.configure( function () {
-  app.set('view engine', 'html');
+  app.set('view engine', 'html');5
 
 });
 
-app.register( ".html", jqtpl); // use jQuery templating to render html files. 
-
-
-
+app.register('.html', sizlate);
 
 app.get('/', routes.home);
 app.get('/login', routes.login);
@@ -117,5 +119,9 @@ app.get('/lists/:wall/tasks/:taskId/comments', routes.comments);	// show comment
 app.post('/lists/:wall/status/:status/edit/', routes.saveStatus);	// Accept comment posts
 app.post('/lists/:wall/tasks/:taskId/comments/new', routes.newComment);  // Accept comment posts
 
-app.listen(config.port);
-console.log('Server running at: http://simonmcmanus.com:'+config.port);
+//app.listen(config.port);
+
+sizlate.startup(app, function(app) {
+	app.listen(config.port);	
+	console.log('Server running at: http://simonmcmanus.com:'+config.port);
+});

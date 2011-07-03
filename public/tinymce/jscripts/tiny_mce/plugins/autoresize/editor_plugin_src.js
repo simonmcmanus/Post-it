@@ -35,7 +35,9 @@
 			 * This method gets executed each time the editor needs to resize.
 			 */
 			function resize() {
+				console.log('df');
 				var d = ed.getDoc(), b = d.body, de = d.documentElement, DOM = tinymce.DOM, resizeHeight = t.autoresize_min_height, myHeight;
+
 
 				// Get height differently depending on the browser used
 				myHeight = tinymce.isIE ? b.scrollHeight : de.offsetHeight;
@@ -87,6 +89,7 @@
 				});
 
 				ed.onLoadContent.add(function(ed, l) {
+						console.log(ed, l);
 					resize();
 
 					// Because the content area resizes when its content CSS loads,

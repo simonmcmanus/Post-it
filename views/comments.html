@@ -1,20 +1,11 @@
-{{each(i, comment) comments}}
-
-	<div class="comment">
-		<div class="text">
-			{{html comment.text}}
-		</div>
-		<span class="author">
-			{{html comment.user_id}}
-		</span>
-		<span class="time">
-			{{html comment.epoch}}
-		</span>
-	</div>
-{{/each}}
-	<div class="comment new-comment">
+<html>
+<body><div class="commentsArea">
+</div>
+		<div class="comment new-comment">
 		<form method="POST" action="new/">
 		<textarea name="text" id="text"></textarea>
 		<button type="submit">Add Comment </button>
 		</form>
 	</div>
+</body>
+</html>

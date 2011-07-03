@@ -11,8 +11,9 @@ html, body {
 }
 
 input, 
-textarea {
-	font-family: 'RabioheadRegular';
+textarea,
+html body .edit table.mceLayout {
+	font-family: 'GothamBook';
 	width:100%;
 	padding:0.4em 0.8em ;
 	-moz-border-radius: 0.2em;
@@ -22,13 +23,27 @@ textarea {
 	-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0000FF,endColorstr=#FFFFFFFF)";
 	background: -moz-linear-gradient(top,#e6e5dd 0%,#efeee5 40%,#e6e5dd 100%);/* firefox */
 	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#e6e5dd),color-stop(60%,#efeee5),color-stop(100%,#e6e5dd));/* webkit */
-	filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6e5dd',endColorstr='#e6e5dd',GradientType=0 );/* ie */
-	
+	filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6e5dd',endColorstr='#e6e5dd',GradientType=0 );/* ie */	
 	border:1px solid #efe474;
-	
 	border-color: #88a;
 }
 
+html body .defaultSkin .mceIframeContainer{
+	vertical-align:top;
+}
+
+html body .mceLayout{
+	width:100% !important;
+}
+
+html body .edit .mceButton {
+	padding:.3em;
+	margin: .3em;
+	background:#fff;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	
+}
 
 input, 
 textarea,
@@ -44,30 +59,33 @@ button {
 textarea {
 	font-size:1em;
 }
-#frame {
+.frame {
 	border:20px;
 	-webkit-border-image: url(/public/frame/frame.png) 10% repeat;
 	-moz-border-image: url(/public/frame/frame.png) 10% repeat;
-	height:100%;
-	margin:1em;	
+	margin:3em 1em;	
 }
 
 table.tasks {
+	background:#FEF7F4;
 	background-image: url(/public/img/corkboard.jpg) !important;
-	box-shadow: inset 5px 5px 10px 0.3px #444;
+	box-shadow: inset 5px 5px 10px 0.6px #777;
 	width: 100%;
 }
 
-h1 {
-	color: #fff;
-	padding-left: 1em;
+
+#inProgress {
+border-left:2px solid #ddd;
+border-right:2px solid #ddd;
 }
 
-th {
-	color: #222;
-	font-size: 3em;
-	font-family: RabioheadRegular;
-	vertical-align: top;
+.taskContainer h4 {
+	color: #444;
+	margin:0;
+	font-size: 2em;
+	padding:0.7em 0;
+	font-family: 'GothamBook';
+		vertical-align: top;
 }
 
 td {
@@ -80,22 +98,16 @@ td {
 }
 ul.tasks {
 	height:70%;
+	width:30%;
 	min-height: 30em;
-	width:270px;
 }
 
-#frame {
-	margin-top:7em;
-}
 .edit {
 	float:left;
 	opacity:0;
 	width:50%;
 }
 
-.edit form textarea {
-	min-height:20em;
-}
 
 .edit form input {
 	border:0;
@@ -113,8 +125,7 @@ ul.tasks {
 	cursor: move;
 }
 
-ul#header {
-	display:none;
+div#header ul.loggedIn{
 	background:#eee;
 	background: url(/public/img/gray-gradient.jpg) 10% #666;
 	border-bottom:1px solid #222;
@@ -130,7 +141,12 @@ ul#header {
 	list-style:none;
 }
 
-ul#header li {
+div#header ul li {
+	font-family:GothamBook,  NeverSayNeverRegular;
+}
+
+
+div#header ul.loggedIn li {
 	display:inline;
 	line-height:2em;
 	margin:0.3em 0;
@@ -140,7 +156,7 @@ ul#header li {
 }
 
 
-ul#header li:first-child {
+div#header ul.loggedIn li:first-child {
 	font-family:arial;
 	font-size:2em;
 	line-height:3em;
@@ -148,19 +164,18 @@ ul#header li:first-child {
 	padding:0;
 	top:-0.8em;	
 }
-html body ul#header li a:link {
+html body div#header ul.loggedIn li a:link {
 	color:#333;
 }
 
 button, 
-ul#header li a, 
+div#header ul.loggedIn li a, 
 .login li a {
 	position:relative;
 	background:#fff;
 	margin:3px 3px 3px 0;
 	padding:8px 15px;
 	text-decoration:none;
-	font-family: 'Arial';
 	font-size:14px;
 	-moz-border-radius: 8px;
 	border-radius: 5px;
@@ -168,8 +183,12 @@ ul#header li a,
 	border:1px solid #444;	
 }
 
+.login li a:hover {
+	background-color:#ccc;
+}
+
 button, 
-ul#header li a {
+div#header ul.loggedIn li a {
 	text-shadow: #666 2px 1px 1px;
 	background: -webkit-gradient(linear, left top, left bottom, from(#8b8784), to(#4f4e4a));
 	/* For Mozilla/Gecko (Firefox etc) */
@@ -183,15 +202,15 @@ ul#header li a {
 	
 }
 
-ul#header li a {
+div#header ul.loggedIn li a {
 	border:1px solid #121212;
 	top:0.5em;
 	
 }
-html body ul#header li a:hover {
+html body div#header ul.loggedIn li a:hover {
 }
 
-html body ul#header li a:visited {
+html body div#header ul.loggedIn li a:visited {
 	color:#fff;
 }
 
@@ -231,11 +250,11 @@ li.open div.desc {
 .tasks li,
 .login .note {
 	
-	font-family: 'RabioheadRegular';
-	font-size: 1.4em;
-	width: 100%;
+	font-family: 'GothamBook';
+	font-size: 1.1em;
+	width: 290px;
 	list-style: none;
-	padding: 0 1em 1em 0.5em;;
+	padding: 0.7em;
 	margin: 0.2em;
 	z-index: 10;
 	color: #555;/* For Internet Explorer 5.5 - 7 */
@@ -245,6 +264,7 @@ li.open div.desc {
 	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#f9ea8d),color-stop(60%,#f5f0a2	),color-stop(100%,#f6e9a3));/* webkit */
 	filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#F1EA9B',endColorstr='#F6F2C6',GradientType=0 );/* ie */
 	border:1px solid #777;
+	display:inline-block;
 	
 }
 
@@ -259,7 +279,7 @@ li.open div.desc {
 }
 
 .tasks li.tilt {
-	max-height:250px;
+	max-height:220px;
 	overflow:hidden;
 	
 }
@@ -298,13 +318,15 @@ ul.tasks li ul.subtasks li {
 	border: 0;
 	font-size: 0.7em;
 }
+
+div.note h3, 
 .tasks li h3, 
 .tasks li input {
 	font-size: 1.2em;
 	color: #777;
 	padding: 0;
 	width:100%;
-	margin: 0.5em 0;
+	margin: 1px 0 8px 0;
 }
 
 
@@ -350,17 +372,17 @@ div.simon {
 div#overlay {
 	margin: 0;
 	top: 0;
-	background: #333;
+	background: #222;
 	width: 120%;
 	height: 120%;
-	opacity: 0.9;
+	opacity: 1;
 	z-index: 100;
 	position: fixed;
 	text-align: center;
 	display: none;
 	
-	background: -webkit-gradient(radial, 40% 40%, 0, 40% 40%, 600, from(#aaa), to(#333333));
-	background: -moz-radial-gradient(40% 40%, farthest-side, #eee, #333);	
+	background: -webkit-gradient(radial, 40% 40%, 0, 40% 40%, 600, from(#000), to(#555));
+	background: -moz-radial-gradient(40% 40%, farthest-side, #eee, #555);	
 }
 form.new input,form.new textarea {
 	font-family: 'RabioheadRegular';
@@ -375,6 +397,7 @@ form.new input {
 /* Commments */
 
 .comments {
+	text-align:left;
 	width: 41%;
 	float: right;
 	top: 39px;
@@ -441,9 +464,6 @@ ul.status li:nth-child(4n) {
 	color:#000;
 }
 
-.x-tab-panel table {
-	background:white;
-}
 
 ul.new_task li.new_task{
 	display:none;
@@ -459,81 +479,101 @@ ul.new_task li.new_task{
 	position: absolute;
 	
 }
-
+html body ul.login {
+	padding-bottom:1.4em;
+	margin:0 !important;
+}
 
 div.login {
-	
 	color:#D8D2D0;
-	letter-spacing:0.1em;	
 	background:#000;
-	border-bottom:1px solid #777;
-	
 	background: -webkit-gradient(radial, 40% 40%, 0, 40% 40%, 600, from(#aaa), to(#333333));
 	background: -moz-radial-gradient(20% 40%, farthest-side, #262839, #111);
-	
 	background: url(/public/img/gray-gradient.jpg) 20% 60% no-repeat #111;
-	border:4px solid #222;
-	padding:1em 1em 1em 3em;
-	
-	box-shadow: inset -5px -5px 20px 0.1px #333;
-	
+	border: 2em solid transparent;
+	border-top: 1em solid transparent;
+	border-bottom:0;
+	background:#111;
+	transparency:1	;
+	padding:0em 1em 0em 0.2em;
 }
+
 div.login .box{
 	
 }
 
-div.login h2{
-	font-family:'ChunkFiveRegular';
-	font-size:6em;
-	letter-spacing:0.04em;
+div.login h1{
+	font-family:GothamBold;
+	font-size:4em;
 	text-shadow: -0.02em -0.03em 1px #fff,  10px 10px 30px #000;
-	margin: 0.8em 0 0 0;
+	margin: 0.2em 0 0 0;
+}
+
+div.login h2{
+	font-size:6em;	
 }
 
 div.login ul {
-	padding:2em 0 2em;
+	padding:.5em 0 .5em;
 }
 
 div.login li {
 	display:inline;
-	margin:0 20px;
+	margin:0 15px 0 10px;
 }
 
 html body div.login ul li a {
 	color:#222;
-	border:3px solid #fff;
-	padding: 10px 10px 10px 45px;
-	height:3em;	
-	
-  	box-shadow:5px 0px 65px #000;
+	border:1px solid #aaa;
+	padding: 7px 7px 5px 30px;
+	line-height:3em;
+  	box-shadow:5px 0px 65px #888;
 }
 
-
 div.login .facebook {
-	background-image:url(/public/img/login/facebook.png);
-	background-position:3px 3px;
+	background-image:url(/public/img/login/22/facebook.png);
+	background-position:2px 2px;
 	background-repeat:no-repeat;
 }
 
 div.login .twitter {
-	
-	background-image:url(/public/img/login/twitter-2.png);
-	background-position:3px 3px;
+
+	background-image:url(/public/img/login/22/twitter-2.png);
+	background-position:2px 2px;
 	background-repeat:no-repeat;
 }
 
 div.login .google {
-	background-image:url(/public/img/login/google.png);
-	background-position:3px 3px;
+	background-image:url(/public/img/login/22/google.png);
+	background-position:2px 2px;
 	background-repeat:no-repeat;
 }
 
 
+@-webkit-keyframes slidein {
+    100% {
+		-webkit-transform: perspective(0)
+		 rotate3d(0, 1, 0, 0deg);
+		width:900px;
+	}
+}
+
+.login .note.makeBig {
+	-webkit-animation: slidein 2s;
+}
+.login .note.makeBig.done {
+	-webkit-transform: perspective(0)
+	 rotate3d(0, 1, 0, 0deg);
+	width:900px;
+
+}
+
 .login .note {	
-	width:25%;
+	width:13.5em;
 	float:right;
-	top:-4.5em;
-	right:4.5em;
+	margin-left:2em;
+	top:-3.5em;
+	right:2.5em;
 	position:relative;
 	-webkit-transform: rotate(6deg);
 	-moz-transform: rotate(6deg);
@@ -543,4 +583,107 @@ div.login .google {
 .login .note img {
 	padding:1em 1em 0 .5em ;
 	display:block;
+}
+
+div.wall {
+	opacity:0.6;
+	width:100%;
+	background:#222;
+	color:#fff;
+	height:2em;
+	line-height:2em;
+	padding:0 2em 0 2.4em;
+	border-bottom:4px solid #333;
+	font-family: 'GothamBook';
+	background: -moz-linear-gradient(top,#111 0%,#000 40%,#111 100%);/* firefox */
+	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#111),color-stop(60%,#000	),color-stop(100%,#111));/* webkit */
+}
+
+#lights {
+	width:100%;
+	position:absolute;
+	height:100%;
+}
+#lights.onetwothree {
+	background-image: -webkit-gradient(
+		linear, right top, left top, 
+		color-stop(1%, rgba(0, 0, 0,  0.5)),
+		color-stop(20%, rgba(40, 40, 40, 0)),
+		color-stop(34%, rgba(0, 0, 0, 0.5)),
+		color-stop(50%, rgba(40, 40, 40, 0)),
+		color-stop(65%, rgba(0, 0, 0, 0.5)),
+		color-stop(85%, rgba(40, 40, 40, 0)),
+		color-stop(97%, rgba(0, 0, 0, 0.5))
+	);
+
+	/* mozilla example - FF3.6+ */
+	background-image: -moz-linear-gradient(
+		right center,
+		rgba(0, 0, 0,  0.5) 1%, 
+		rgba(40, 40, 40, 0) 20%,
+		rgba(0, 0, 0, 0.5) 34%,
+		rgba(40, 40, 40, 0) 50%,
+		rgba(0, 0, 0, 0.5) 65%,
+		rgba(40, 40, 40, 0) 85%,
+		rgba(0, 0, 0, 0.5) 97%
+	);
+
+        /* IE 5.5 - 7 */
+        filter: progid:DXImageTransform.Microsoft.gradient(
+          gradientType=1, startColor=0, endColorStr=#FFFFFF
+        );
+
+        /* IE8 uses -ms-filter for whatever reason... */
+        -ms-filter: progid:DXImageTransform.Microsoft.gradient(
+          gradientType=1, startColor=0, endColoStr=#FFFFFF
+        );
+}
+
+#lights.twothree {
+	/* webkit */
+	background-image: -webkit-gradient(
+		linear, right top, left top, 
+		color-stop(1%, rgba(0, 0, 0,  0.5)),
+		color-stop(20%, rgba(40, 40, 40, 0)),
+		color-stop(35%, rgba(0, 0, 0,  0.5)),
+		color-stop(50%, rgba(40, 40, 40, 0)),
+		color-stop(65%, rgba(0, 0, 0,  0.5)),
+		color-stop(85%, rgba(0, 0, 0,  0.5)),
+		color-stop(97%, rgba(0, 0, 0,  0.5))
+	);
+
+	/* mozilla - FF3.6+ */
+	background-image: -moz-linear-gradient(
+		right center,
+		rgba(0, 0, 0,  0.5) 1%, 
+		rgba(40, 40, 40, 0) 20%,
+		rgba(0, 0, 0, 0.5) 34%,
+		rgba(40, 40, 40, 0) 50%,
+		rgba(0, 0, 0, 0.5) 65%,
+		rgba(0, 0, 0, 0.5) 85%,
+		rgba(0, 0, 0, 0.5) 97%
+	);
+
+	/* IE 5.5 - 7 */
+	filter: progid:DXImageTransform.Microsoft.gradient(
+		gradientType=1, startColor=0, endColorStr=#FFFFFF
+	);
+
+	/* IE8 uses -ms-filter for whatever reason... */
+	-ms-filter: progid:DXImageTransform.Microsoft.gradient(
+		gradientType=1, startColor=0, endColoStr=#FFFFFF
+	);
+}
+
+
+
+div.tasks {
+	background:#fff;
+}
+html body .taskContainer {
+	min-width:20em;
+	text-align:center;
+	vertical-align: top;
+	display:inline-block;
+	width:33%;
 }

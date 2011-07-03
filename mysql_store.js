@@ -23,9 +23,10 @@ exports.newComment = function(params, callback) {
 };
 
 exports.newTask = function(title, text, callback) {
-	var q = 'INSERT INTO items VALUES ("null", "'+title+'", "'+text+'", "", "notStarted")';
-	console.log(q);
+	var q = 'INSERT INTO items VALUES ("null", "'+title+'", "'+text+'", "", "notStarted",  "1")';
+	console.log(q, callback);
 	sql.query(q,  callback);
+	console.log('passed callback');
 }
 
 exports.getTask = function(params, callback) {
@@ -33,16 +34,23 @@ exports.getTask = function(params, callback) {
 };
 
 exports.updateTask = function(params, callback) {
-	console.log(params, params.task);
-	var query = 'UPDATE ITEMS SET text="'+params.task.text+'", title="'+params.task.title+'", tags="'+params.task.tags+'" where id="'+params.id+'"';
+	var title = params.task.title.slice(1, -1); //strip quotes;
+	var text = params.task.text.slice(1, -1);
+	console.log(title, text);
+	var query = 'UPDATE ITEMS SET text="'+text+'", title="'+title+'", tags="'+params.task.tags+'" where id="'+params.id+'"';
+	console.log(query);
 	sql.query(query, params, callback);	
 };
 
+/*
 
+Accepts a list of ids seperated by a comma.
+@param - id
+@param - status
+*/
 exports.updateList = function(params, callback) {
 	var ids = params.ids.split(',');
 	var c = ids.length;
-
 	var ids_sql = [];
 	while(c--) {
 		if(ids[c]!="" && ids[c]!=" ") {

@@ -106,13 +106,16 @@ var getComments = function(id, callback) {
 
 var saveTask = function(e) {
 	e.preventDefault();
-	$task = $('li.open');
+	var $task = $('li.open');
 	$task.append('<div class="saving">Saving...</div>');
-	$form = $task.find('form').eq(0);
+	var $form = $task.find('form').eq(0);
+	var title = $task.find('[name=title]')[0].value;
+//	console.log($form.serialize());
+	console.log(editor.getData());
 		$.ajax({
 			type:"POST",
 			url:"/lists/smm/tasks/"+$task.attr('id')+"/edit/",
-			data:$form.serialize(),
+			data:'title="'+title+'"&text="'+encodeURIComponent(editor.getData())+'"',
 			success: function(data) {
 				$task.find('.saving').html('Saved...').fadeOut(1000, function() {
 					$(this).remove();
@@ -124,30 +127,46 @@ var saveTask = function(e) {
 
 var open = function(e) {
 	e.preventDefault();
-	
-	
-	
 	var task = $(this).parents('li');
 	var id = $(task).attr('id');
 	if($(task).hasClass('open')){
 		return false;
 	}
-	
-	
-	
-	$('#header').slideUp();
+//	$('#header').slideUp();
 	$( "ul.tasks" ).sortable("disable" )
 	$(task).addClass('open');
 	var textareaId = $(task).attr('id')+'Text';
 	// get edit form
 	$.get('/lists/smm/tasks/'+id+'/edit/', function(data) {
-		$('ul.tasks li.open div.edit').html(data).fadeIn(200);
+		
+		var $edit = $('ul.tasks li.open div.edit');
+		$edit.html(data).fadeIn(200);
+		
+		var $textarea = $edit.find('textarea');
+		var html = $textarea.html();
+		$textarea.hide();
+		
+		
+		console.log($textarea.attr('id'));
+		editor = CKEDITOR.replace( $textarea.attr('id'), {
+			extraPlugins : 'autogrow',
+			autoGrow_maxHeight: 600,
+			removePlugins : 'resize',
+			width:500,
+			toolbar: 'Basic',
+			toolbar_Basic: [   [ 'Bold', 'Italic' ] ],
+			autoUpdateElement: true /* TODO: use textarea */
+		});
+	
 		$('ul.tasks li.open .edit button').click(saveTask);
+	
+		
 		$('ul.tasks li.open .read').hide();
 	});
 	getComments(id, function() {
 		$('ul.tasks li.open .comments .comment').hide();			
 	});
+	
 	$('#overlay').show().css({'opacity':0}).animate({'opacity': 0.8});
 	
 	var top = $(task).offset().top;
@@ -155,28 +174,29 @@ var open = function(e) {
 	var width = $(task).width();
 	var height = $(task).height();
 	
+	
 	task.attr('data-original-top', top);
 	task.attr('data-original-left', width);
 	task.attr('data-original-width', left);
 	
 	$(task).css({
 		width:width,
-		top:top,
 		left:left,
 		height:height,
 		zIndex:100,
 		position:'absolute'			
 	});
+	
+	
 	$(task).removeClass('tilt');
 	
 	$('ul.tasks li a.edit').fadeOut(100);
-	
-	$('html,body').animate({scrollTop:top-100},1000);
+	$('html,body').animate({scrollTop:top-100},1500);
 	var status = task.parents('ul.tasks').attr('id');
 	
 	if(status == 'notStarted'){
 		var l = left;
-		var w = $(window).width()-400;
+		var w = $(window).width()-300;
 	}else if(status == 'inProgress'){
 		var l = 150;
 		var w = $(window).width()-400;
@@ -189,7 +209,6 @@ var open = function(e) {
 	
 	
 	$(task).animate({
-		top:top,
 		width:w,
 		left:l,
 	}, 1000, function() {
@@ -273,42 +292,78 @@ var showNewTask = function(e) {
 };
 
 var submitNewTask = function(e) {
-//	e.preventDefault();
-	console.log(this);
-//	return false;
+	e.preventDefault();
+	var $form = $(this);
+
+	$.ajax({
+		type:"POST",
+		url:$form.attr('action'),
+		data:$form.serialize(),
+		success: function(data) {
+			alert('posted new task');
+		}
+	})
+	return false;
 	
 }
 
 
 
-$(document).ready(function() {
-	
-	
-	$(document).keyup(function(e) {
-	  if (e.keyCode == 27) { 
-			close();
-		 }   // esc
-	});
 
+
+var cssOpenTask = function() {
+	$(this).addClass('makeBig');
+	setTimeout(function() {
+		$('.login .note.makeBig').addClass('done');
+	}, 2000);	
+};
+
+
+var keyBindings = function(e) {
+	if (e.keyCode == 27) { 
+		close();
+	}   // esc
+	console.log('boppin');
+};
+
+
+var doArchieve = function(e) {
+	e.preventDefault();
+	$task = $(this).parents('li');
+	postTasks('archieved', $task.attr('id'));
+	return false;			
+};
+
+
+
+var taskHoverIn = function() {
+	$(this).find('a.edit').animate({opacity:1}, 200);	
+};
+
+var taskHoverOut = function() {
+	$(this).find('a.edit').animate({opacity:0}, 200);	
+};
+
+
+
+$(document).ready(function() {
+//	$(document).keyup(keyBindings);
+
+	$('.login .note').click(cssOpenTask);
 	$('ul.tasks li .edit').click(open);
 	$('#overlay').click(close);
+	$('ul.tasks li .archieve').click(doArchieve);
 	$('ul.tasks li .close').click(closeClick);
-	$('ul.tasks li').hover(function() {
-		if(postit.isLoggedIn == "true"){
-			$(this).find('a.edit').animate({opacity:1}, 200);
-			
-		}
-	}, function() {
-		$(this).find('a.edit').animate({opacity:0}, 200);
-		
-	});
-
+	$('ul.tasks li').hover(taskHoverIn, taskHoverOut);
 	$('#header a.newTask').click(showNewTask);
+	
+	/*
 	$('ul.tasks li').hover(function() {
 		$(this).find('.status li').fadeIn('fast').css({'position':'absolute'});
 	}, function() {
 		$(this).find('.status li').fadeOut('fast');		
 	});
+	*/
 
 });
 function message(obj){
