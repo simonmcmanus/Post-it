@@ -11,7 +11,6 @@ var Client = require('mysql').Client,
 	var query = function(query, params, callback) {
 		client.query(query, 
 			function selectCb(err, results, fields) {
-				
 		    	if (err) {
 		      		throw err;
 		    	}

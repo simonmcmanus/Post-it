@@ -2,6 +2,8 @@
 <html>
 	<head>
 		<title></title>
+		<script src="http://js.pusherapp.com/1.9/pusher.min.js"></script>
+		
 		<!--<script src="/socket.io/socket.io.js"></script>-->
 		<script type="text/javascript" src="/public/lib/jquery.js"></script>	
 		<script type="text/javascript" src="/public/lib/jquery.ui.js"></script>
@@ -25,19 +27,16 @@
 		<link rel=StyleSheet href="/public/fonts/janda/stylesheet.css" type="text/css" meda="screen">
 		<link rel=StyleSheet href="/public/fonts/neversaynever/stylesheet.css" type="text/css" meda="screen">
 		<link rel=StyleSheet href="/public/fonts/gotham-light/style.css" type="text/css" meda="screen">
-
 		
 		<link rel=StyleSheet href="/public/fonts/rabiohead.css" type="text/css" meda="screen">
 		<link rel=StyleSheet href="/public/fonts/ChunkFive-fontfacekit/stylesheet.css" type="text/css" meda="screen">
 		<script type="text/javascript" src="/public/tinymce/jscripts/tiny_mce/jquery.tinymce.js"></script>
-		
-		
 		<script type="text/javascript" src="/public/ckeditor/ckeditor.js"></script>
 		<script src="/public/ckeditor/sample.js" type="text/javascript"></script>
 		<link href="/public/ckeditor/sample.css" rel="stylesheet" type="text/css" />
-		
-		
-		
+		<script src="/public/vtip/vtip.js" type="text/javascript"></script>
+		<link href="/public/vtip/vtip.css" rel="stylesheet" type="text/css" />
+
 	</head>
 	<body>
 		<div id="header" class="shadow">
@@ -47,6 +46,11 @@
 		<div id="overlay">
 		</div>
 		<div id="lights" class="onetwothree">
+			
+			<div id="listText">
+				
+			</div>
+			
 			<div id="container" class="frame"></div>
 		</div>
 	</body>

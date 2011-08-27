@@ -1,12 +1,11 @@
 var sql = require('./mysql_base.js');
 
 exports.getList = function(params, callback) {
-	sql.query('SELECT * FROM items', params, callback);
+	sql.query("SELECT * FROM items where list='"+params.list+"'", params, callback);
 }
 
 exports.getComments = function(params, callback) {
 	var q = 'SELECT * FROM comments WHERE TASK_ID = "'+params.id+'"';
-//	console.log(q);
 	sql.query(q, params, callback);
 };
 
@@ -22,11 +21,10 @@ exports.newComment = function(params, callback) {
 	}
 };
 
-exports.newTask = function(title, text, callback) {
-	var q = 'INSERT INTO items VALUES ("null", "'+title+'", "'+text+'", "", "notStarted",  "1")';
-	console.log(q, callback);
-	sql.query(q,  callback);
-	console.log('passed callback');
+exports.newTask = function(list, title, text, callback) {
+	var q = 'INSERT INTO items VALUES ("null", "'+title+'", "'+text+'", "", "notStarted",  "1", "", "'+list+'")';
+	console.log(q);
+	sql.query(q, {}, callback);
 }
 
 exports.getTask = function(params, callback) {
@@ -36,9 +34,7 @@ exports.getTask = function(params, callback) {
 exports.updateTask = function(params, callback) {
 	var title = params.task.title.slice(1, -1); //strip quotes;
 	var text = params.task.text.slice(1, -1);
-	console.log(title, text);
 	var query = 'UPDATE ITEMS SET text="'+text+'", title="'+title+'", tags="'+params.task.tags+'" where id="'+params.id+'"';
-	console.log(query);
 	sql.query(query, params, callback);	
 };
 

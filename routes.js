@@ -1,20 +1,18 @@
 var ds = require('./mysql_store.js'); // set datastore
-	
-
 
 exports.home = function(req, res){
-		res.send('<a href="/lists/smm/wall.html">see demo list</a>');
+	res.send('<a href="/lists/smm/wall.html">see demo list</a>');
 };
 
 exports.login = function(req, res){
-		res.render('login.html');
+	res.render('login.html');
 };
-
 
 exports.wall = function(req, res){
 	var params = {};
-	params.list = req.params.file.replace('/wall.html', '');
-    req.session.redirectTo =  '/lists/'+params.list+'/wall.html'; // redirect back to this url after login.
+	params.list = req.params.list;
+	
+//    req.session.redirectTo =  '/'+params.list; // redirect back to this url after login.
 	ds.getList(params, function(result, params) {
 		var c = result.length;
 		var status = {
@@ -27,7 +25,11 @@ exports.wall = function(req, res){
 				status[result[c].status].push(result[c]);
 			}
 		}
-		var user = (req.user) ? req.user : '';
+		console.log(status.notStarted);
+		//var user = (req.user) ? req.user : '';
+		var user = '';
+		var image = (req.image) ? req.image : '';
+	//	console.log('noStarted', status.notStarted);
 		res.render("wall.html", {	
 			selectors: {
 				'title': 'lst.ee - your lists',
@@ -35,12 +37,15 @@ exports.wall = function(req, res){
 						partial: 'login.html',
 					} : {
 						partial: 'loggedIn.html',
+						classifyKeys: false,
 						data: [{
-							username: user
+							'.username': user,
+							'img src': image
 						}]
 					},
 				'#notStarted': {
-					partial: 'task.html', 
+					partial: 'task.html',
+					data: [{text: 'dfdf'}], 
 					data: status.notStarted
 				},
 				'#inProgress': {
@@ -51,12 +56,21 @@ exports.wall = function(req, res){
 					partial: 'task.html', 
 					data: status.done
 				},
-				'.wall': 'List: '+params.list
+				'.hidden': {
+					partial: 'newTask.html'
+				},
+				'form': {
+					action: '/'+params.list+'/tasks/new'
+				},
+				'.wall': params.list,
+				'input#list': {
+					value: params.list
+				}
+				
 			}
 		});		
 	}, params);
 };
-
 
 exports.saveStatus = function(req, res){
 	ds.updateList({
@@ -65,27 +79,25 @@ exports.saveStatus = function(req, res){
 	}, function() {
 		res.send('ok');
 	});
-}
-
+};
 
 exports.taskNew = function(req, res) {
-	ds.newTask(req.body.title, req.body.text, function() {
-		res.send('ok');
+	ds.newTask(req.body.list, req.body.title, req.body.text, function(data) {
+		var url = '/'+req.body.list+'/task/'+data.insertId;
+		res.send(url, { 
+			'Content-Type': 'text/plain'
+		 }, 201);
 	});
 };
 
 exports.POST_taskEdit = function(req, res){
-	//	(req);
 	ds.updateTask({
 		id:req.params.taskId,
 		task:req.body
 	}, function() {
-		console.log('CALLBACK', arguments);
 		res.redirect('/lists/'+req.params.wall+'/wall.html#'+req.params.taskid);
 	});
 };
-
-
 
 exports.GET_taskEdit = 	function(req, res){
 	ds.getTask({
@@ -95,14 +107,30 @@ exports.GET_taskEdit = 	function(req, res){
 			layout:false,
 			selectors: {
 				'form textarea': {
-						id: data[0].id+"Textarea",
-						value: data[0].text
+					id: data[0].id+"Textarea",
+					value: data[0].text
 				},
 				'form input[name="title"]': {
 					value: data[0].title,
 					placeholder: data[0].title
+				},
+				'form input[name="list"]': {
+					value: data[0].list
 				}
-				
+			}
+		});
+	});
+};
+
+exports.GET_task = 	function(req, res){
+	ds.getTask({
+		id:req.params.taskId
+	}, function(data) {
+		res.render('partials/task.html', {
+			layout:false,
+			selectors: {
+				'.text': data[0].text,
+				'.title': data[0].title
 			}
 		});
 	});
@@ -112,7 +140,6 @@ exports.comments = function(req, res){
 	ds.getComments({
 		id:req.params.taskId
 	}, function(data) {
-		
 		res.render('comments', {
 			layout:false,
 			selectors: {
@@ -121,10 +148,9 @@ exports.comments = function(req, res){
 					data: data
 				}
 			}
-		});		
+		});
 	});
 };
-
 
 exports.newComment = function(req, res){
 /*	if(!req.loggedIn){

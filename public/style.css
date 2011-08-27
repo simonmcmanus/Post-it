@@ -10,8 +10,10 @@ html, body {
 	padding: 0;
 }
 
+header { display:block;}
+
 input, 
-textarea,
+textarea	,
 html body .edit table.mceLayout {
 	font-family: 'GothamBook';
 	width:100%;
@@ -24,7 +26,7 @@ html body .edit table.mceLayout {
 	background: -moz-linear-gradient(top,#e6e5dd 0%,#efeee5 40%,#e6e5dd 100%);/* firefox */
 	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#e6e5dd),color-stop(60%,#efeee5),color-stop(100%,#e6e5dd));/* webkit */
 	filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6e5dd',endColorstr='#e6e5dd',GradientType=0 );/* ie */	
-	border:1px solid #efe474;
+	border:1px solid #fff;
 	border-color: #88a;
 }
 
@@ -48,11 +50,6 @@ html body .edit .mceButton {
 input, 
 textarea,
 button {
-	-webkit-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
-  -moz-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
-  -o-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
-  -ms-box-shadow: 0 0 5px rgba(0, 0, 255, .5);
-  box-shadow: 0 0 5px rgba(0, 0, 255, .5);
   
 }
 
@@ -66,17 +63,18 @@ textarea {
 	margin:3em 1em;	
 }
 
-table.tasks {
+
+div.tasks {
 	background:#FEF7F4;
 	background-image: url(/public/img/corkboard.jpg) !important;
-	box-shadow: inset 5px 5px 10px 0.6px #777;
+	box-shadow: inset 0px 5px 10px 0.6px #555;
 	width: 100%;
 }
 
 
 #inProgress {
-border-left:2px solid #ddd;
-border-right:2px solid #ddd;
+/* background:rgba(70, 70, 70,  0.2); */
+width:100%;
 }
 
 .taskContainer h4 {
@@ -98,29 +96,30 @@ td {
 }
 ul.tasks {
 	height:70%;
-	width:30%;
 	min-height: 30em;
 }
 
 .edit {
 	float:left;
-	opacity:0;
 	width:50%;
 }
-
+div.button {
+	opacity:0;
+}
 
 .edit form input {
-	border:0;
+	border:1px solid #fff;
 	padding:2.3em 0.5em;
-	background: transparent;	
 	
 	
-	-webkit-box-shadow: 0 0 0;
-	-moz-box-shadow: 0 0 0 ;
-  	-o-box-shadow: 0 0 0;
-  	-ms-box-shadow: 0 0 0;
-  	box-shadow: 0 0 0;
 }
+
+
+input#title {
+	border:1px solid #ccc !important;
+}
+
+
 .tasks li:hover {
 	cursor: move;
 }
@@ -173,7 +172,7 @@ div#header ul.loggedIn li a,
 .login li a {
 	position:relative;
 	background:#fff;
-	margin:3px 3px 3px 0;
+	margin:0px 0px 0px 0;
 	padding:8px 15px;
 	text-decoration:none;
 	font-size:14px;
@@ -187,7 +186,7 @@ div#header ul.loggedIn li a,
 	background-color:#ccc;
 }
 
-button, 
+
 div#header ul.loggedIn li a {
 	text-shadow: #666 2px 1px 1px;
 	background: -webkit-gradient(linear, left top, left bottom, from(#8b8784), to(#4f4e4a));
@@ -202,16 +201,43 @@ div#header ul.loggedIn li a {
 	
 }
 
+.new button{
+	display:inline;
+	margin-top:.5em;
+	text-shadow: #888 0.5px 0.5px 0.5px;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
+	/* For Mozilla/Gecko (Firefox etc) */
+	background: -moz-linear-gradient(top, #8b8784, #4f4e4a);
+	/* For Internet Explorer 5.5 - 7 */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#8b8784, endColorstr=#4f4e4a);
+	/* For Internet Explorer 8 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#8b8784, endColorstr=#4f4e4a)";
+	border:1px solid #bbb;
+	color:#444;
+	
+}
+
+.new button:hover{
+	display:inline;
+	margin-top:.5em;
+	cursor:pointer;
+	text-shadow: #888 0.5px 0.5px 0.5px;
+	background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#eee));
+	/* For Mozilla/Gecko (Firefox etc) */
+	background: -moz-linear-gradient(top, #8b8784, #4f4e4a);
+	/* For Internet Explorer 5.5 - 7 */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#8b8784, endColorstr=#4f4e4a);
+	/* For Internet Explorer 8 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#8b8784, endColorstr=#4f4e4a)";
+	border:1px solid #aaa !important;
+	color:#111;
+	
+}
+
 div#header ul.loggedIn li a {
 	border:1px solid #121212;
 	top:0.5em;
 	
-}
-html body div#header ul.loggedIn li a:hover {
-}
-
-html body div#header ul.loggedIn li a:visited {
-	color:#fff;
 }
 
 a.edit {
@@ -233,6 +259,16 @@ a.close {
 	width:30px;
 }
 
+a.archieve {
+	background:url('/public/img/delete_icon.png');
+	float:right;
+	height:30px;
+	position:relative;
+	text-indent:9000px;
+	top:0;
+	width:30px;	
+}
+
 
 .tilt a.close {
 	display:none;
@@ -249,6 +285,7 @@ li.open div.desc {
 
 .tasks li,
 .login .note {
+	text-align:left;	
 	
 	font-family: 'GothamBook';
 	font-size: 1.1em;
@@ -272,6 +309,7 @@ li.open div.desc {
 	background:#000;
 	width: 100%;
 	left:0;
+	top:0;
 	font-size:3em;
 	height: 100%;
 	position: absolute;
@@ -385,10 +423,10 @@ div#overlay {
 	background: -moz-radial-gradient(40% 40%, farthest-side, #eee, #555);	
 }
 form.new input,form.new textarea {
-	font-family: 'RabioheadRegular';
+	padding:0.3em;
 }
 form.new input {
-	font-size: 1.6em;
+	font-size: 1.2em;
 }
 .animateOut {
 	position: fixed;
@@ -466,10 +504,19 @@ ul.status li:nth-child(4n) {
 
 
 ul.new_task li.new_task{
-	display:none;
+	/* display:none; */
+}
+
+.new_task form {
+	margin-bottom:0;
+}
+
+
+html body .new_task {
+	width:320px;
 }
 .new_task button {
-	display:block;
+	display:inline;
 }
 
 .button {
@@ -484,7 +531,7 @@ html body ul.login {
 	margin:0 !important;
 }
 
-div.login {
+header.login {
 	color:#D8D2D0;
 	background:#000;
 	background: -webkit-gradient(radial, 40% 40%, 0, 40% 40%, 600, from(#aaa), to(#333333));
@@ -498,31 +545,31 @@ div.login {
 	padding:0em 1em 0em 0.2em;
 }
 
-div.login .box{
+header.login .box{
 	
 }
 
-div.login h1{
+headerheader.login.login h1{
 	font-family:GothamBold;
 	font-size:4em;
 	text-shadow: -0.02em -0.03em 1px #fff,  10px 10px 30px #000;
 	margin: 0.2em 0 0 0;
 }
 
-div.login h2{
+header.login h2{
 	font-size:6em;	
 }
 
-div.login ul {
+header.login ul {
 	padding:.5em 0 .5em;
 }
 
-div.login li {
+header.login li {
 	display:inline;
 	margin:0 15px 0 10px;
 }
 
-html body div.login ul li a {
+html body header.login ul li a {
 	color:#222;
 	border:1px solid #aaa;
 	padding: 7px 7px 5px 30px;
@@ -530,20 +577,20 @@ html body div.login ul li a {
   	box-shadow:5px 0px 65px #888;
 }
 
-div.login .facebook {
+header.login .facebook {
 	background-image:url(/public/img/login/22/facebook.png);
 	background-position:2px 2px;
 	background-repeat:no-repeat;
 }
 
-div.login .twitter {
+header.login .twitter {
 
 	background-image:url(/public/img/login/22/twitter-2.png);
 	background-position:2px 2px;
 	background-repeat:no-repeat;
 }
 
-div.login .google {
+header.login .google {
 	background-image:url(/public/img/login/22/google.png);
 	background-position:2px 2px;
 	background-repeat:no-repeat;
@@ -568,7 +615,7 @@ div.login .google {
 
 }
 
-.login .note {	
+.login .note {
 	width:13.5em;
 	float:right;
 	margin-left:2em;
@@ -677,13 +724,64 @@ div.wall {
 
 
 
-div.tasks {
-	background:#fff;
-}
 html body .taskContainer {
 	min-width:20em;
 	text-align:center;
 	vertical-align: top;
 	display:inline-block;
 	width:33%;
+}
+
+.smokePuff {
+	z-index:100;
+}
+
+
+
+/* CSS ANIMATION */
+
+
+@-webkit-keyframes hoverTask {
+	0% {
+			-webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0) ;
+	}
+    100% {
+		-webkit-box-shadow: 0px 0px 55px rgba(120, 120, 120, .9);
+	}
+}
+html body ul.tasks li:hover {
+	-webkit-box-shadow: 0px 0px 55px rgba(120, 120, 120, .9);
+	-webkit-animation: hoverTask 1s;
+}
+
+	
+	
+
+
+/* CKEditor */
+html span.cke_skin_kama {
+	padding:0 !important;
+}
+
+#cke_bottom_text, #cke_10 {
+	display:none;
+}
+html body .cke_skin_kama .cke_wrapper {
+	background-image:none;
+	background-color:#fff;
+	background:#f3e76d;
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#F0F4f8,endColorstr=#FFFFFFFF);/* For Internet Explorer 8 */
+	-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0000FF,endColorstr=#FFFFFFFF)";
+	background: -moz-linear-gradient(top,#e6e5dd 0%,#efeee5 40%,#e6e5dd 100%);/* firefox */
+	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#edeeef),color-stop(60%,#f3f5f6),color-stop(100%,#e2e5e8));/* webkit */
+	filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6e5dd',endColorstr='#e6e5dd',GradientType=0 );/* ie */	
+}
+
+button.add {
+	float:right;
+}
+
+
+.hidden {
+	display:none;
 }

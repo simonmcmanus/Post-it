@@ -1,3 +1,8 @@
+
+
+
+
+
 /***
 
 TODOs
@@ -110,19 +115,20 @@ var saveTask = function(e) {
 	$task.append('<div class="saving">Saving...</div>');
 	var $form = $task.find('form').eq(0);
 	var title = $task.find('[name=title]')[0].value;
-//	console.log($form.serialize());
-	console.log(editor.getData());
-		$.ajax({
-			type:"POST",
-			url:"/lists/smm/tasks/"+$task.attr('id')+"/edit/",
-			data:'title="'+title+'"&text="'+encodeURIComponent(editor.getData())+'"',
-			success: function(data) {
-				$task.find('.saving').html('Saved...').fadeOut(1000, function() {
-					$(this).remove();
-				});
-				//getComments(id);
-			}
-		})
+	var list = $('.wall').html();
+	var data = 'list="'+list+'"&title="'+title+'"&text="'+encodeURIComponent(editor.getData())+'"';
+	console.log(data);
+	$.ajax({
+		type:"POST",
+		url:"/lists/smm/tasks/"+$task.attr('id')+"/edit/",
+		data:data,
+		success: function(data) {
+			$task.find('.saving').html('Saved...').fadeOut(1000, function() {
+				$(this).remove();
+			});
+			//getComments(id);
+		}
+	})
 };
 
 var open = function(e) {
@@ -146,17 +152,14 @@ var open = function(e) {
 		var html = $textarea.html();
 		$textarea.hide();
 		
+
 		
 		console.log($textarea.attr('id'));
-		editor = CKEDITOR.replace( $textarea.attr('id'), {
-			extraPlugins : 'autogrow',
+		editor = CKEDITOR.replace( $textarea.attr('id'), $.extend(ckEditorConfig, {
 			autoGrow_maxHeight: 600,
 			removePlugins : 'resize',
-			width:500,
-			toolbar: 'Basic',
-			toolbar_Basic: [   [ 'Bold', 'Italic' ] ],
-			autoUpdateElement: true /* TODO: use textarea */
-		});
+			width:500
+		}));
 	
 		$('ul.tasks li.open .edit button').click(saveTask);
 	
@@ -213,14 +216,8 @@ var open = function(e) {
 		left:l,
 	}, 1000, function() {
 		$(this).css({height:'auto'});
-		/*
-	 	nicEditors.allTextAreas({
-			iconsPath : '/public/nicEdit/nicEditorIcons.gif'
-		});
-		*/
 		$(this).find('.edit').animate({opacity:1}, 100);
 		
-//				area1 = new nicEditor({fullPanel : false, buttonList:['bold','italic','underline','left','center', 'right', 'ul']}).panelInstance(textareaId,{hasPanel : true});
 		setTimeout(function() {
 						$(task).find('.comments').show();
 			$(task).find('.comment').hide().slideDown();			
@@ -279,36 +276,45 @@ var closeClick = function(e) {
 
 var showNewTask = function(e) {
 	e.preventDefault();
-	var nt = $('li.new_task').clone();
+	var nt = $('li.new_task:first').clone();
+	nt.removeClass('mew_task');
 	nt.find('form.new').submit(submitNewTask);
-	$('#notStarted').prepend(nt);
-	nt.focus();
+	var node = $(nt).prependTo('#notStarted');
 	
- nicEditors.allTextAreas({
-	iconsPath : '/public/nicEdit/nicEditorIcons.gif'
-});
-
+	var $textarea = node.find('textarea');
+	$textarea.attr('id', Math.random());
+	editor = CKEDITOR.replace( $textarea.get(0).id, ckEditorConfig);	
+	node.find('input').focus();
+	$('html,body').animate({scrollTop:$('input#title').position().top+50},1500);
 	
 };
 
 var submitNewTask = function(e) {
 	e.preventDefault();
 	var $form = $(this);
-
+	var list = $('.wall').html();
 	$.ajax({
 		type:"POST",
 		url:$form.attr('action'),
-		data:$form.serialize(),
-		success: function(data) {
-			alert('posted new task');
+		data:'list='+list+'&title='+$form.find('#title').val()+'&text='+encodeURIComponent(editor.getData())+'',
+		success: function(data, textStatus, jqXHR) {
+			getNewTask(data);
 		}
 	})
-	return false;
-	
+	return false;	
 }
 
 
-
+var getNewTask = function(url) {
+	$.ajax({
+		type:'GET',
+		url:url,
+		success: function(data){
+			$('#notStarted').prepend($(data));
+			$('#notStarted .new_task').hide();
+		}
+	})
+}
 
 
 var cssOpenTask = function() {
@@ -330,6 +336,42 @@ var keyBindings = function(e) {
 var doArchieve = function(e) {
 	e.preventDefault();
 	$task = $(this).parents('li');
+	var width = $task.width();
+	var pos = width / 2;
+	
+	var $img = $('<img src="/public/img/smoke.png" class="smokePuff" />');
+	$img.css({
+		left:pos,
+		position:'absolute',
+		'margin-left': '53px',
+	    'margin-top': '-10px'
+	});
+	$task.children().fadeOut();
+	
+	$task.animate({
+		width:20,
+		'margin-left':pos,
+		height: 20
+	}, 130, function() {
+		$task.parent().append($img);
+		
+		$img.css({
+			position:'absolute',
+			'margin-left':pos,
+			top:$task.position().top,
+			left: $task.position().left
+		});
+		$img.animate({
+			width:'+=60',
+			height:'+=60',
+			top:'-=40',
+			left:'-=60',
+		}, 800)
+		.animate({
+			top:'2000'
+		}, 3000);
+		$task.hide();
+	});
 	postTasks('archieved', $task.attr('id'));
 	return false;			
 };
@@ -337,17 +379,27 @@ var doArchieve = function(e) {
 
 
 var taskHoverIn = function() {
-	$(this).find('a.edit').animate({opacity:1}, 200);	
+	$(this).find('div.button').animate({opacity:1}, 300);
+	$(this).addClass('taskHover');
 };
 
 var taskHoverOut = function() {
-	$(this).find('a.edit').animate({opacity:0}, 200);	
+	$(this).find('div.button').animate({opacity:0}, 300);	
 };
 
 
+var ckEditorConfig = {
+	extraPlugins : 'autogrow',
+	removePlugins : 'resize elementspath',
+	toolbar: 'Basic',
+	toolbar_Basic: [   [ 'Bold', 'Italic' ] ],
+	autoUpdateElement: true /* TODO: use textarea */
+
+};
 
 $(document).ready(function() {
 //	$(document).keyup(keyBindings);
+
 
 	$('.login .note').click(cssOpenTask);
 	$('ul.tasks li .edit').click(open);

@@ -25,12 +25,11 @@ var usersById = {};
 
 
 var sendResponse = function(res, data) {
-	var session = data.session;
-    var redirectTo = session.redirectTo;
-    delete session.redirectTo;
-    res.redirect(redirectTo);
+//	var session = data.session;
+//	var redirectTo = session.redirectTo;
+//	delete session.redirectTo;
+	res.redirect('/'+data.user.id+'');
 };
-
 
 everyauth
   .twitter
@@ -38,11 +37,12 @@ everyauth
     .consumerKey(config.auth.twitter.cKey)
     .consumerSecret(config.auth.twitter.consumerSecret)
 	.findOrCreateUser( function (sess, accessTok, accessTokExtra, twitUser) {
-		id = twitUser.name+'@twitter';
+		id = twitUser.name;
 		var user = {
 			id: id,
 			twitterUser: twitUser,
-			username: twitUser.name
+			username: twitUser.name,
+			image: twitUser.profile_image_url
 		};
 		usersById[id] = user;
 		return user;
@@ -57,6 +57,7 @@ everyauth
     .appSecret(config.auth.facebook.appSecret)
    	.findOrCreateUser( function (sess, accessTok, accessTokExtra, fbUser) {
 		var id = fbUser.username+"@facebook";
+		console.log(fbUser);
 		var user = {
 			id: id,
 			facebookUser: fbUser,
@@ -98,7 +99,6 @@ var app =  express.createServer(
 	})
 );
 
-
 everyauth.helpExpress(app);
 
 app.configure( function () {
@@ -106,13 +106,27 @@ app.configure( function () {
 
 });
 
+
+/*
+
+/users/
+
+users/1
+
+users/1/create
+users/1/update
+users/1/delete
+*/
 app.register('.html', sizlate);
 
 app.get('/', routes.home);
 app.get('/login', routes.login);
 
-app.get('/lists/:file(*wall.html)', routes.wall);
-app.post('/lists/:wall/tasks/new', routes.taskNew);	// Edit form
+app.get('/:list', routes.wall);
+app.post('/:wall/tasks/new', routes.taskNew);	// Edit form
+
+app.get('/:wall/task/:taskId', routes.GET_task);
+
 app.get('/lists/:wall/tasks/:taskId/edit', routes.GET_taskEdit);	// Edit form
 app.post('/lists/:wall/tasks/:taskId/edit', routes.POST_taskEdit);
 app.get('/lists/:wall/tasks/:taskId/comments', routes.comments);	// show comments
