@@ -18,6 +18,21 @@ get socket IO working again.
 
 *
 **/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 var changeTasks = function(event, ui) {
 	var s =$(this).sortable('toArray').join(', ');
@@ -51,11 +66,83 @@ var changeTasks = function(event, ui) {
 };
 */
 
+// EVENTS
+
+var events = $({});
+
+events.bind('closeOverlay', function() {
+    alert('simons eent ');
+})
+
+
+// END EVENTS
+
+
+
+
+var pi = {
+	urls: {
+		workspace: '/$workspace/',
+		task: '/lists/smm/tasks/$id/edit/',
+		comment: '/task/$id/comment/$id/',
+		comments: '/task/$idcomments/'
+	},
+	base: {
+		init : function(selector) {
+			this.domNode = $(selector);
+		},
+		open: function() {
+			log('ui open');
+			this.domNode.show();
+		},
+		close: function() {
+			that.domNode.hide();
+		},
+		update: function() {
+
+		},
+		listen: function(event, callback) {
+			// register callback
+			callback(data);
+		}
+	}
+};
+
+pi.ui = {};
+
+pi.ui.task = function() {
+	var that = this;
+	that.id = "159";
+	var init = function(selector) {
+		that.domNode = $(selector);
+		that.id = that.domNode.attr('id');
+	};
+	
+	var url = function() {
+		return pi.urls.task.replace('$id', that.id);
+	};
+	that.get = function() {
+		$.ajax({
+			url: url(),
+			success: that.got
+		});	
+	};
+	that.got = function(data) {
+		console.log(data);
+	};
+	
+	
+	that.get();
+}
+
+pi.ui.task.prototype = pi.base;
+pi.ui.task.contstructor = pi.constructor;
+pi.ui.task = new pi.ui.task();
 
 
 
 var postTasks = function(status, ids) {
-	console.log(status, ids);
+	//console.log(status, ids);
 		$.ajax({
 			type:"POST",
 			url:"/lists/smm/status/"+status+"/edit/",
@@ -71,9 +158,8 @@ var changeTasks = function(event, ui) {
 	postTasks($(this).attr('id'), s);
 };
 
-
 $(function() {
-$( "ul.tasks" ).sortable({
+	$( "ul.tasks" ).sortable({
 		connectWith: ".tasks",
 		placeholder: "placeholder",
 		forcePlaceholderSize: true,
@@ -81,13 +167,11 @@ $( "ul.tasks" ).sortable({
 	}).disableSelection();
 });
 
-
-
 var getComments = function(id, callback) {
 	$.get('/lists/smm/tasks/'+id+'/comments/', function(data) {
 		$('ul.tasks li.open .comments').html(data);
 		if(callback){			
-			callback();
+			callback(data);
 		}
 		$('.new-comment button').click(function(e) {
 			e.preventDefault();
@@ -117,10 +201,13 @@ var saveTask = function(e) {
 	var title = $task.find('[name=title]')[0].value;
 	var list = $('.wall').html();
 	var data = 'list="'+list+'"&title="'+title+'"&text="'+encodeURIComponent(editor.getData())+'"';
+	//console.lvog(data);
+	var url = "/lists/smm/tasks/"+$task.attr('id')+"/edit/";
+	console.log(url);
 	console.log(data);
 	$.ajax({
 		type:"POST",
-		url:"/lists/smm/tasks/"+$task.attr('id')+"/edit/",
+		url:url,
 		data:data,
 		success: function(data) {
 			$task.find('.saving').html('Saved...').fadeOut(1000, function() {
@@ -146,7 +233,7 @@ var open = function(e) {
 	$.get('/lists/smm/tasks/'+id+'/edit/', function(data) {
 		
 		var $edit = $('ul.tasks li.open div.edit');
-		$edit.html(data).fadeIn(200);
+		$edit.append(data).fadeIn(200);
 		
 		var $textarea = $edit.find('textarea');
 		var html = $textarea.html();
@@ -154,11 +241,10 @@ var open = function(e) {
 		
 
 		
-		console.log($textarea.attr('id'));
+		//console.log($textarea.attr('id'));
 		editor = CKEDITOR.replace( $textarea.attr('id'), $.extend(ckEditorConfig, {
 			autoGrow_maxHeight: 600,
 			removePlugins : 'resize',
-			width:500
 		}));
 	
 		$('ul.tasks li.open .edit button').click(saveTask);
@@ -167,10 +253,9 @@ var open = function(e) {
 		$('ul.tasks li.open .read').hide();
 	});
 	getComments(id, function() {
-		$('ul.tasks li.open .comments .comment').hide();			
+		$('ul.tasks li.open .comments').hide();			
 	});
-	
-	$('#overlay').show().css({'opacity':0}).animate({'opacity': 0.8});
+	overlay.open();
 	
 	var top = $(task).offset().top;
 	var left = $(task).offset().left;
@@ -191,7 +276,7 @@ var open = function(e) {
 	});
 	
 	
-	$(task).removeClass('tilt');
+	$(task).removeClass('task');
 	
 	$('ul.tasks li a.edit').fadeOut(100);
 	$('html,body').animate({scrollTop:top-100},1500);
@@ -209,20 +294,20 @@ var open = function(e) {
 		var w = $(window).width()/1.3;
 		
 	}
+	$(task).css({height:'auto'});
 	
 	
 	$(task).animate({
 		width:w,
 		left:l,
-	}, 1000, function() {
-		$(this).css({height:'auto'});
+	}, 400, function() {
 		$(this).find('.edit').animate({opacity:1}, 100);
 		
 		setTimeout(function() {
 						$(task).find('.comments').show();
-			$(task).find('.comment').hide().slideDown();			
+			$(task).find('.comment').hide().fadeIn();			
 //				$(that).find('.comment').css('opacity', 0).show().animate({'opacity': 1}, 200);
-		}, 500);
+		}, 240);
 	});
 };
 
@@ -248,7 +333,7 @@ var close = function() {
 	});
 	
 	$('div.edit').hide();
-	console.log($task.find('div.edit'));
+	//console.log($task.find('div.edit'));
 	$('ul.tasks li a.edit').fadeIn(100);
 	
 	$('#header').slideDown(900);
@@ -258,10 +343,7 @@ var close = function() {
 	$task.removeClass('open');
 	$('ul.tasks li.open .edit').fadeOut(100);
 	$('ul.tasks li.open .read').show();
-	$('#overlay').fadeOut(900, function() {
-		$task.css({zIndex:1});
-	});
-	
+	overlay.close();
 	 $( "ul.tasks" ).sortable({"disabled": false})
 	
 };
@@ -277,10 +359,9 @@ var closeClick = function(e) {
 var showNewTask = function(e) {
 	e.preventDefault();
 	var nt = $('li.new_task:first').clone();
-	nt.removeClass('mew_task');
+	nt.removeClass('new_task');
 	nt.find('form.new').submit(submitNewTask);
 	var node = $(nt).prependTo('#notStarted');
-	
 	var $textarea = node.find('textarea');
 	$textarea.attr('id', Math.random());
 	editor = CKEDITOR.replace( $textarea.get(0).id, ckEditorConfig);	
@@ -298,6 +379,7 @@ var submitNewTask = function(e) {
 		url:$form.attr('action'),
 		data:'list='+list+'&title='+$form.find('#title').val()+'&text='+encodeURIComponent(editor.getData())+'',
 		success: function(data, textStatus, jqXHR) {
+			$form.parent('li').remove();
 			getNewTask(data);
 		}
 	})
@@ -310,7 +392,9 @@ var getNewTask = function(url) {
 		type:'GET',
 		url:url,
 		success: function(data){
-			$('#notStarted').prepend($(data));
+			var $task = $(data);
+			$task.hover(taskHoverIn, taskHoverOut);
+			$('#notStarted').prepend($task);
 			$('#notStarted .new_task').hide();
 		}
 	})
@@ -329,14 +413,53 @@ var keyBindings = function(e) {
 	if (e.keyCode == 27) { 
 		close();
 	}   // esc
-	console.log('boppin');
+	//console.log('boppin');
 };
 
 
+var overlay = {
+	open: function() {
+		$('#overlay').show().css({'opacity':0}).animate({'opacity': 0.8}, 100);		
+	},
+	close: function(callback) {
+		focus.close();
+		$('#overlay').fadeOut(200, function() {
+			if(callback)
+			callback();
+		});
+	}
+}
+
+// when the users attention is focused on one area
+var focus = {
+	close: function() {}
+}
+
+var confirmArchieve = function() {
+	$('#vtip').append('<hr/><p>are you sure? </p> <button class="no">no</button> <button href="#" class="yes">yes</button>');
+
+var $task = $(this).parents('li');
+ 	$task.find('.vtip').unbind();
+	focus.close = cancelArchieve;
+	$('#vtip .yes').click(doArchieve); 
+	overlay.open();
+	$task.addClass('confirmDelete');
+	return false;	
+};
+
+
+var cancelArchieve = function() {
+	vtip2.close();
+};
 var doArchieve = function(e) {
 	e.preventDefault();
-	$task = $(this).parents('li');
+	vtip2.close();
+	var 	$task = $('.confirmDelete');
 	var width = $task.width();
+	overlay.close(function() {
+		$task.css({zIndex:1});
+	});
+	
 	var pos = width / 2;
 	
 	var $img = $('<img src="/public/img/smoke.png" class="smokePuff" />');
@@ -361,30 +484,37 @@ var doArchieve = function(e) {
 			top:$task.position().top,
 			left: $task.position().left
 		});
+		$task.hide();
 		$img.animate({
 			width:'+=60',
 			height:'+=60',
 			top:'-=40',
 			left:'-=60',
-		}, 800)
+		}, 400)
 		.animate({
-			top:'2000'
-		}, 3000);
-		$task.hide();
+			top:$('#bin').offset().top	
+		}, 400, function() {
+			$(this).fadeOut('fast');
+			$task.appendTo('#bin').fadeIn().css({width:'auto'}).find('section').show();;
+		})
+		
+	//	$task.hide();
 	});
-	postTasks('archieved', $task.attr('id'));
+	postTasks('deleted', $task.attr('id'));
 	return false;			
 };
 
 
 
 var taskHoverIn = function() {
-	$(this).find('div.button').animate({opacity:1}, 300);
+//	$(this).find('div.button').animate({opacity:1}, 300);
 	$(this).addClass('taskHover');
 };
 
 var taskHoverOut = function() {
-	$(this).find('div.button').animate({opacity:0}, 300);	
+	//$(this).find('div.button').animate({opacity:0}, 300);	
+	$(this).removeClass('taskHover');
+	
 };
 
 
@@ -404,7 +534,7 @@ $(document).ready(function() {
 	$('.login .note').click(cssOpenTask);
 	$('ul.tasks li .edit').click(open);
 	$('#overlay').click(close);
-	$('ul.tasks li .archieve').click(doArchieve);
+	$('ul.tasks li .delete').click(confirmArchieve);
 	$('ul.tasks li .close').click(closeClick);
 	$('ul.tasks li').hover(taskHoverIn, taskHoverOut);
 	$('#header a.newTask').click(showNewTask);
@@ -441,7 +571,7 @@ function message(obj){
 		function() {
 			$(this).removeClass('updated');
 			setTimeout(function() {
-				console.log(this);
+				//console.log(this);
 			},5000)
 		}
 	);		

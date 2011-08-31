@@ -25,11 +25,9 @@ exports.wall = function(req, res){
 				status[result[c].status].push(result[c]);
 			}
 		}
-		console.log(status.notStarted);
-		//var user = (req.user) ? req.user : '';
-		var user = '';
+		var user = (req.user) ? req.user : '';
 		var image = (req.image) ? req.image : '';
-	//	console.log('noStarted', status.notStarted);
+
 		res.render("wall.html", {	
 			selectors: {
 				'title': 'lst.ee - your lists',
@@ -46,7 +44,7 @@ exports.wall = function(req, res){
 				'#notStarted': {
 					partial: 'task.html',
 					data: [{text: 'dfdf'}], 
-					data: status.notStarted
+					data: status.notStarted,
 				},
 				'#inProgress': {
 					partial: 'task.html', 
@@ -95,7 +93,7 @@ exports.POST_taskEdit = function(req, res){
 		id:req.params.taskId,
 		task:req.body
 	}, function() {
-		res.redirect('/lists/'+req.params.wall+'/wall.html#'+req.params.taskid);
+		res.redirect('/'+req.params.wall);
 	});
 };
 
@@ -129,6 +127,7 @@ exports.GET_task = 	function(req, res){
 		res.render('partials/task.html', {
 			layout:false,
 			selectors: {
+				'.id': data[0].id,
 				'.text': data[0].text,
 				'.title': data[0].title
 			}

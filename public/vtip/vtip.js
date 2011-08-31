@@ -12,7 +12,6 @@ this.vtip = function() {
             this.t = this.title;
             this.title = ''; 
             this.top = (e.pageY + yOffset); this.left = (e.pageX + xOffset);
-            
             $('body').append( '<p id="vtip"><img id="vtipArrow" />' + this.t + '</p>' );
                         
             $('p#vtip #vtipArrow').attr("src", '/public/vtip/vtip_arrow.png');
@@ -33,5 +32,13 @@ this.vtip = function() {
     );            
     
 };
+
+
+var vtip2 = {};
+vtip2.close = function() {
+		$('p#vtip').attr('title', $('p#vtip').attr('t'));
+	
+    $("p#vtip").fadeOut("slow").remove();
+}
 
 jQuery(document).ready(function($){vtip();})

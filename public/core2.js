@@ -16,8 +16,15 @@ var base = {
 	get: function() {
 		$.get();
 	},
+	update: function() {
+		
+	},
 	post: function() {
 		$.post();		
+	},
+	listen: function(event, callback) {
+		// register callback
+		callback(data);
 	}	
 };
 
