@@ -74,7 +74,6 @@ input#title {
 }
 
 .button {
-	opacity: 0;
 	float: right;
 	right: 10px;
 	top: 10px;
@@ -179,9 +178,6 @@ ul.tasks {
 .edit {
 	float: left;
 	width: 50%;
-}
-.taskHover div.button{
-	opacity: 1;
 }
 .tasks li:hover {
 	cursor: move;
@@ -739,6 +735,7 @@ div.wall {
 
 /* CSS ANIMATION */
 
+/*
 
 
 .animateOut {
@@ -764,7 +761,7 @@ div.wall {
 	width:900px;
 
 }
-
+*/
 @-webkit-keyframes hoverTask {
 	0% {
 			-webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0) ;
@@ -773,13 +770,35 @@ div.wall {
 		-webkit-box-shadow: 0px 0px 55px rgba(120, 120, 120, .9);
 	}
 }
+
 html body ul.tasks li:hover {
 	-webkit-box-shadow: 0px 0px 55px rgba(120, 120, 120, .9);
 	-webkit-animation: hoverTask 1s;
 }
 
-	
-	
+
+
+
+html body ul.tasks li .button a {
+	opacity: 0;
+	/* Firefox */
+	-moz-transition-property: opacity;
+	-moz-transition-duration: 1s;
+	/* WebKit */
+	-webkit-transition-property: opacity;
+	-webkit-transition-duration: 1s;
+	/* Opera */
+	-o-transition-property: opacity;
+	-o-transition-duration: 1s;
+	/* Standard */
+	transition-property: opacity;
+	transition-duration: 1s;
+}
+html body ul.tasks li:hover .button a{
+	opacity: 1;
+}
+
+
 
 
 
