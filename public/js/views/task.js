@@ -14,7 +14,18 @@ pi.views.task = function() {
 		} 
 	};
 	
+	var pushState = function() {
+	//	var url = that.domNode.find('a.edit').attr('href');
+	//	window.history.pushState({ path: url }, "Title", url);
+	};
 	
+	var pushStateClose = function() {
+	//	var url = that.domNode.find('a.close').attr('href');
+	//	window.history.pushState({path: url}, "Title", url);		
+	};
+	
+	// handle the back and forward buttons
+
 
 	that.open = function(id) {
 			that.domNode = $('#'+id);
@@ -49,8 +60,7 @@ pi.views.task = function() {
 				position:'absolute'			
 			});
 			that.domNode.removeClass('task');
-			$('ul.tasks li a.edit').fadeOut(100);
-			$('html,body').animate({scrollTop:top-100},1500);
+//			$('html,body').animate({scrollTop:top-100},200);
 			var status = that.domNode.parents('ul.tasks').attr('id');
 			if(status == 'notStarted'){
 				var l = left;
@@ -66,12 +76,11 @@ pi.views.task = function() {
 			}
 			that.domNode.css({height:'auto'});
 
-
+			pushState();
 			that.domNode.animate({
 				width:w,
 				left:l,
 			}, 400, function() {
-				$(this).find('.edit').animate({opacity:1}, 100);
 
 				setTimeout(function() {
 					that.domNode.find('.comments').show();
@@ -88,6 +97,7 @@ pi.views.task = function() {
 	};
 	
 	var closeTask = function() {
+		pushStateClose();
 		$('.comments').hide();
 		that.domNode.addClass('tilt').css({
 			top:0,
@@ -97,12 +107,11 @@ pi.views.task = function() {
 			position:'relative'
 		});
 		$('div.edit').hide();
-		$('ul.tasks li a.edit').fadeIn(100);
+//		$('ul.tasks li a.edit').removeClass('hidden');
 		$('#header').slideDown(900);
+
 		that.domNode.find('.read').show();
 		that.domNode.removeClass('open');
-		$('ul.tasks li.open .edit').fadeOut(100);
-		$('ul.tasks li.open .read').show();
 		$( "ul.tasks" ).sortable({"disabled": false});
 		
 	};
@@ -112,7 +121,11 @@ pi.views.task = function() {
 	});
 	
 	pi.events.bind('overlayClose', function() {
-		closeTask();
+		if(that.domNode){
+			closeTask();
+		}else {
+			vtip2.close();			
+		}
 	});
 	
 	init();

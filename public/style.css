@@ -91,7 +91,7 @@ div.button a {
 	width: 32px;
 	margin-left: 0.5em;
 	position: relative;
-	text-indent: 9000px;
+	text-indent: 9000px; 
 	float: right;
 }
 
@@ -158,6 +158,29 @@ li.open div.desc {
 
 /* Tasks */
 
+
+div.tasks li.open {
+}
+
+
+#bin  li .button {
+display:none;
+}
+
+div.tasks li .close {
+	display:none;
+}
+
+
+div.tasks li.open .close {
+	display:block;
+}
+
+
+div.tasks li.open .edit {
+	display:none;
+}
+
 div.tasks {
 	background: #FEF7F4;
 	background-image: url(/public/img/corkboard.jpg);
@@ -196,6 +219,8 @@ ul.tasks {
 	max-height: 220px;
 	overflow: hidden;
 }
+
+/*
 ul.tasks li:after,
 .login .note:after {
 	z-index: -1;
@@ -215,6 +240,7 @@ ul.tasks li:after,
 	-webkit-box-shadow: 0px 8px 4px rgba(0,0,0,2.7);
 	-moz-box-shadow: 0 8px 4px rgba(0,0,0,2.7);
 }
+*/
 ul.tasks li ul.subtasks li:after {
 	display: none;
 }
@@ -316,21 +342,7 @@ html body .cke_skin_kama .cke_wrapper {
 
 /* login */
 
-div#header ul.loggedIn{
-	background: #eee;
-	background: url(/public/img/gray-gradient.jpg) 10% #666;
-	border-bottom: 1px solid #222;
-	color: #fff;
-	height: 3em;
-	margin: 0;
-	padding: 0;
-	padding-left: 2em;
-	position: fixed;
-	top: 0;
-	width: 100%;
-	z-index: 99;
-	list-style: none;
-}
+
 
 div#header ul li {
 	font-family:GothamBook,  NeverSayNeverRegular;
@@ -340,20 +352,11 @@ div#header ul li {
 div#header ul.loggedIn li {
 	display:inline;
 	line-height:2em;
-	margin:0.3em 0;
-	padding:0.3em 0;	
 	position:relative;
+	height:2em;
 }
 
 
-div#header ul.loggedIn li:first-child {
-	font-family:arial;
-	font-size:2em;
-	line-height:3em;
-	margin:0 0.5em 0 0;
-	padding:0;
-	top:-0.8em;	
-}
 html body div#header ul.loggedIn li a:link {
 	color:#333;
 }
@@ -361,9 +364,7 @@ html body div#header ul.loggedIn li a:link {
 
 div#header ul.loggedIn li a, 
 .login li a {
-	position:relative;
 	background:#fff;
-	margin:0px 0px 0px 0;
 	padding:8px 15px;
 	text-decoration:none;
 	font-size:14px;
@@ -395,7 +396,14 @@ div#header ul.loggedIn li a {
 
 html body ul.login {
 	padding-bottom:1.4em;
+	padding-top:1.2em;
+	left:-80px;
 	margin:0 !important;
+}
+
+div#header ul li  a{
+	font-size:0.9em;
+	
 }
 
 header.login {
@@ -413,13 +421,13 @@ header.login {
 }
 
 header.login .box{
-	
 }
 
-headerheader.login.login h1{
-	font-family:GothamBold;
-	font-size:4em;
-	text-shadow: -0.02em -0.03em 1px #fff,  10px 10px 30px #000;
+header.login.login h1{
+	font-family: 'GothamBold';
+	font-size:3.3em;
+	letter-spacing:-4px;
+	text-shadow: -0.02em -0.02em 2px #ffdf49,  1px 1px 30px #777;
 	margin: 0.2em 0 0 0;
 }
 
@@ -480,7 +488,6 @@ header.login .google {
 div#header ul.loggedIn li a {
 	border:1px solid #121212;
 	top:0.5em;
-	
 }
 
 .login .note img {
@@ -488,6 +495,88 @@ div#header ul.loggedIn li a {
 	display:block;
 }
 
+div#header ul.loggedIn{
+	background: #eee;
+	background: url(/public/img/gray-gradient.jpg) 10% #666;
+	border-bottom: 1px solid #222;
+	color: #fff;
+	height:2.5em;
+	margin: 0;
+	padding: 0;
+	padding-left: 2em;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 99;
+	list-style: none;
+}
+
+
+div#header ul.loggedIn li.wall {
+	height:3em;
+	line-height:3em;
+}
+
+div#header ul.sublinks {
+	top:1em;
+	position:inherit;
+	margin:0;
+	z-index:-10;
+	padding:0;
+}
+div#header ul.sublinks li {
+	display:block;
+	top:-7px;
+	margin:0;
+}
+div#header ul.sublinks li a{
+	width:12.5em;
+	padding:5px;
+	background:#333	;
+
+	border:1px solid #222;
+	border-radius:0;
+	float:left;
+}
+
+
+div#header li.user  a.username{
+	border:0;
+}
+html body div#header .cta {
+	float:right;
+	right:-1em;
+	right:3em;
+	padding:5px;
+	z-index:10;
+	
+}
+
+html body div#header li.cta a {
+	background: #222;
+	color:#fff;
+}
+div#header li.user a.username  {
+	border-radius:5px 0px 0px 5px;
+	border:1px solid #222;
+	
+	font-size:1em;
+}
+
+li.user img{
+	right:7px;
+	border-radius:0 5px 5px 0;
+	border:1px solid #222;
+	border-left:0;
+	top:4px;
+	width:32px;
+	height:32px;
+	position:absolute;
+}
+
+div#header .cta {
+	float:right;
+}
 /* Login */
 
 
@@ -690,7 +779,7 @@ html body .new_task {
 .login .note {
 	text-align:left;	
 	
-	font-family: 'GothamBook';
+	font-family: arial;
 	font-size: 1.1em;
 	width: 290px;
 	list-style: none;
@@ -778,24 +867,43 @@ html body ul.tasks li:hover {
 
 
 
+ 
+@-webkit-keyframes hoverTask {
+	0% {
+			-webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0) ;
+	}
+    100% {
+		-webkit-box-shadow: 0px 0px 55px rgba(120, 120, 120, .9);
+	}
+}
+
+html body ul.tasks li.open:hover {
+	-webkit-box-shadow: 0px 0px 55px rgba(120, 120, 120, .9);
+	-webkit-animation: hoverTask 1s;
+}
+
+
+
 
 html body ul.tasks li .button a {
-	opacity: 0;
-	/* Firefox */
-	-moz-transition-property: opacity;
+		/* Firefox */
+	opacity:0;
+	-moz-transition-property: all;
 	-moz-transition-duration: 1s;
-	/* WebKit */
-	-webkit-transition-property: opacity;
-	-webkit-transition-duration: 1s;
 	/* Opera */
 	-o-transition-property: opacity;
 	-o-transition-duration: 1s;
 	/* Standard */
 	transition-property: opacity;
 	transition-duration: 1s;
+		/* WebKit */
+	-webkit-transition-property: all;
+	-webkit-transition-duration: 1s;
+	
+
 }
 html body ul.tasks li:hover .button a{
-	opacity: 1;
+	opacity:1;
 }
 
 

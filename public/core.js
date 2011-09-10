@@ -77,103 +77,8 @@ var changeTasks = function(event, ui) {
 
 
 
-pi.views.task = function() {
-//	that.add('comments', 'task', 'taskEdit');
-};
 
 
-
-
-$(function() {
-	
-});
-
-
-
-
-
-
-
-
-var closeClick = function(e) {
-	e.preventDefault();
-	close();
-	return false;
-};
-
-
-var showNewTask = function(e) {
-	e.preventDefault();
-	var nt = $('li.new_task:first').clone();
-	nt.removeClass('new_task');
-	nt.find('form.new').submit(submitNewTask);
-	var node = $(nt).prependTo('#notStarted');
-	var $textarea = node.find('textarea');
-	$textarea.attr('id', Math.random());
-	editor = CKEDITOR.replace( $textarea.get(0).id, ckEditorConfig);	
-	node.find('input').focus();
-	$('html,body').animate({scrollTop:$('input#title').position().top+50},1500);
-	
-};
-
-var submitNewTask = function(e) {
-	e.preventDefault();
-	var $form = $(this);
-	var list = $('.wall').html();
-	$.ajax({
-		type:"POST",
-		url:$form.attr('action'),
-		data:'list='+list+'&title='+$form.find('#title').val()+'&text='+encodeURIComponent(editor.getData())+'',
-		success: function(data, textStatus, jqXHR) {
-			$form.parent('li').remove();
-			getNewTask(data);
-		}
-	})
-	return false;	
-}
-
-
-var getNewTask = function(url) {
-	$.ajax({
-		type:'GET',
-		url:url,
-		success: function(data){
-			var $task = $(data);
-			$task.hover(taskHoverIn, taskHoverOut);
-			$('#notStarted').prepend($task);
-			$('#notStarted .new_task').hide();
-		}
-	})
-}
-
-
-var cssOpenTask = function() {
-	$(this).addClass('makeBig');
-	setTimeout(function() {
-		$('.login .note.makeBig').addClass('done');
-	}, 2000);	
-};
-
-
-
-
-// when the users attention is focused on one area
-var focus = {
-	close: function() {}
-}
-
-
-
-var taskHoverIn = function() {
-//	$(this).find('div.button').animate({opacity:1}, 300);
-	$(this).addClass('taskHover');
-};
-
-var taskHoverOut = function() {
-	//$(this).find('div.button').animate({opacity:0}, 300);	
-	$(this).removeClass('taskHover');
-	
-};
 
 
 var ckEditorConfig = {
@@ -194,7 +99,6 @@ $(document).ready(function() {
 	$('#overlay').click(close);
 	$('ul.tasks li .close').click(closeClick);
 	$('ul.tasks li').hover(taskHoverIn, taskHoverOut);
-	$('#header a.newTask').click(showNewTask);
 */	
 	/*
 	$('ul.tasks li').hover(function() {

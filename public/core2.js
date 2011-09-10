@@ -94,7 +94,6 @@ var task = function(selector) {
 		});
 		$(task).removeClass('tilt');
 		
-		$('ul.tasks li a.edit').fadeOut(100);
 
 		$('html,body').animate({scrollTop:top-100},1000);
 		var status = task.parents('ul.tasks').attr('id');

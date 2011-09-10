@@ -20,7 +20,7 @@ this.vtip = function() {
         },
         function() {
             this.title = this.t;
-            $("p#vtip").fadeOut("slow").remove();
+            $("p#vtip").not('.enabled').fadeOut("slow").remove();
         }
     ).mousemove(
         function(e) {

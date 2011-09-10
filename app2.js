@@ -102,10 +102,8 @@ var app =  express.createServer(
 everyauth.helpExpress(app);
 
 app.configure( function () {
-  app.set('view engine', 'html');5
-
+  app.set('view engine', 'html');
 });
-
 
 /*
 

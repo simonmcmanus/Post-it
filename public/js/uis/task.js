@@ -78,7 +78,7 @@ pi.ui.task = function(selector) {
 
 		//	that.domNode.hide();
 		});
-//		pi.views.boardpostTasks('deleted', that.domNode.attr('id'));
+		pi.views.board.postTasks('deleted', that.domNode.attr('id'));
 		return false;			
 
 	};
@@ -91,18 +91,16 @@ pi.ui.task = function(selector) {
 
 	var cancelDelete = function() {
 		pi.ui.overlay.close();
-		vtip2.close();		
+		vtip2.close();
 	};
 	
 	var confirmDelete = function(e) {
 		e.preventDefault();
 		$('#vtip').append('<hr/><p>are you sure? </p> <button href="#" class="no">no</button> <button href="#" class="yes">yes</button>');
-		that.domNode.find('.vtip').unbind();
+		$('#vtip').addClass('enabled');
 		$('#vtip .yes').click(doDeleteClick); 
 		$('#vtip .no').click(cancelDeleteClick); 
 		pi.ui.overlay.open();
-		pi.ui.overlay.closeOther = cancelDelete;
-//		that.domNode.addClass('confirmDelete');
 	};
 	
 	
@@ -125,7 +123,7 @@ pi.ui.task = function(selector) {
 			url: url(),
 			data: 'list="'+$('.wall').html()+'"&title="'+title+'"&text="'+encodeURIComponent(editor.getData())+'"',
 			success: function(data) {
-				that.domNode.find('.saving').html('Saved...').fadeOut(1000, function() {
+				that.domNode.find('.saving').html('Saved').fadeOut(1000, function() {
 					$(this).remove();
 				});
 			}

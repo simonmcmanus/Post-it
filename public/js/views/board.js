@@ -10,12 +10,53 @@ pi.views.board = function() {
 			update: changeTasks 
 		}).disableSelection();
 		
+
+		var down = function($node) {
+			$node.animate({
+				top:'+=13em'
+			}, 300);
+			$node.addClass('down');
+		};
+		
+		var up = function($node) {
+			$node.animate({
+				top:'-=13em'
+			}, 300);
+			$node.removeClass('down');
+		};
+
+
+		up($('li.user .sublinks'));
+		
+		$('li.user').click(function(e) {
+			e.preventDefault();
+			if($(this).find('.sublinks.down').length == 0){
+				down($(this).find('.sublinks'));
+			}else {
+				up($(this).find('.sublinks'));
+			}
+		})
+		
+		/*
+		$('.sublinks').mouseleave(function() {
+			up($(this));
+		});
+		*/
+		
+		
+		
 	};
 	var changeTasks = function(event, ui) {
 		var s = $(this).sortable('toArray').join(', ');
-		postTasks($(this).attr('id'), s);
+		that.postTasks($(this).attr('id'), s);
 	};
-	var postTasks = function(status, ids) {
+	var findTasks = function() {
+		$('.tasks li').each(function() {
+			that.uis.push(new pi.ui.task(this));
+			
+		});
+	};
+	that.postTasks = function(status, ids) {
 		$.ajax({
 			type:"POST",
 			url:"/lists/smm/status/"+status+"/edit/",
@@ -23,12 +64,6 @@ pi.views.board = function() {
 			success: function(data) {
 			}
 		})
-	};
-	var findTasks = function() {
-		$('.tasks li').each(function() {
-			that.uis.push(new pi.ui.task(this));
-			
-		});
 	};
 	
 	pi.events.bind('openTask', function(e, id) {

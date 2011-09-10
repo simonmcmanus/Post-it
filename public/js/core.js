@@ -36,3 +36,20 @@ var ckEditorConfig = {
 	autoUpdateElement: true /* TODO: use textarea */
 
 };
+
+$(window).bind('popstate', function(event) {
+    // if the event has our history data on it, load the page fragment with AJAX
+    var state = event.originalEvent.state;
+	console.log(state);
+    if (state) {
+		var path = state.path.replace(window.location.host , "");
+		
+		if(path == 'http:///test/'){
+			alert('load: '+path);
+			close();
+		}
+    }
+});
+
+
+history.replaceState({ path: window.location.href }, '');
