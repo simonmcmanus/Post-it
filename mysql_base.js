@@ -3,7 +3,7 @@ var Client = require('mysql').Client,
     client.port = 3306;  
     client.user = 'root'; 
     client.password = ''; 
-    client.connect();
+//    client.connect();
 
 	// select the database
     client.query('USE lists'); 
