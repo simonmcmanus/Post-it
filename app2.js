@@ -4,7 +4,7 @@ var	http = require('http');
 var url = require('url');
 var sizlate = require('sizlate');
 
-var io = require('socket.io');
+//var io = require('socket.io');
 var sys = require(process.binding('natives').util ? 'util' : 'sys');
 var everyauth = require('everyauth');
 var ds = require('./mysql_store.js'); // set datastore
