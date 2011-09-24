@@ -47,7 +47,7 @@ exports.wall = function(req, res){
 
 		res.render(__dirname+"/views/wall.html", {	
 			selectors: {
-				'title': 'Dappado.com - your lists',
+				'title': 'dappado.com - your lists',
 				'#header': (user === "") ? {
 						partial: 'login.html',
 					} : {

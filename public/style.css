@@ -790,7 +790,7 @@ html body .new_task {
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0000FF,endColorstr=#FFFFFFFF);/* For Internet Explorer 8 */
 	-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0000FF,endColorstr=#FFFFFFFF)";
 	background: -moz-linear-gradient(top,#ffd649 0%,#F1E999 40%,#F6F2C6 100%);/* firefox */
-	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#ffd649),color-stop(60%,#f5f0a2	),color-stop(100%,#f6e9a3));/* webkit */
+	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#ffd649),color-stop(60%,#f4f886),color-stop(100%,#eff37e));/* webkit */
 	filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#F1EA9B',endColorstr='#F6F2C6',GradientType=0 );/* ie */
 	border:1px solid #777;
 	display:inline-block;
