@@ -23,7 +23,7 @@ exports.newComment = function(params, callback) {
 
 exports.newTask = function(list, title, text, callback) {
 	var q = 'INSERT INTO items VALUES ("null", "'+title+'", "'+text+'", "", "notStarted",  "1", "", "'+list+'")';
-	console.log(q);
+	//console.log(q);
 	sql.query(q, {}, callback);
 }
 
@@ -63,7 +63,7 @@ exports.updateList = function(params, callback) {
 		return false;
 	}
 	var query = 'UPDATE items SET status="'+params.status+'" WHERE  '+ids_sql.join('');
-	console.log(query);
+	//console.log(query);
 	sql.query(query, callback);
 };
 

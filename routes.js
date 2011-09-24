@@ -38,7 +38,6 @@ exports.wall = function(req, res){
 		while(c--) {
 			if(status[result[c].status]){
 				var task = addLinks(result[c]);
-				console.log(task);
 				status[result[c].status].push(task);
 			}
 //			console.log(status[result[c].status]);
@@ -46,7 +45,7 @@ exports.wall = function(req, res){
 		var user = (req.user) ? req.user : '';
 		var image = (req.image) ? req.image : '';
 
-		res.render("wall.html", {	
+		res.render(__dirname+"/views/wall.html", {	
 			selectors: {
 				'title': 'Dappado.com - your lists',
 				'#header': (user === "") ? {
@@ -136,7 +135,8 @@ exports.GET_taskEdit = 	function(req, res){
 	ds.getTask({
 		id:req.params.taskId
 	}, function(data) {
-		res.render('edit_task.html', {
+		
+		res.render(__dirname+'/views/edit_task.html', {
 			layout:false,
 			selectors: {
 				'form textarea': {
@@ -174,7 +174,7 @@ exports.comments = function(req, res){
 	ds.getComments({
 		id:req.params.taskId
 	}, function(data) {
-		res.render('comments', {
+		res.render(__dirname+'/views/comments', {
 			layout:false,
 			selectors: {
 				'.commentsArea': {

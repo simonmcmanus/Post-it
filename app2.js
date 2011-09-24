@@ -2,7 +2,7 @@ var express = require('express');
 var fs = require('fs');
 var	http = require('http');
 var url = require('url');
-var sizlate = require('sizlate');
+var sizlate = require('../sizlate');
 
 //var io = require('socket.io');
 var sys = require(process.binding('natives').util ? 'util' : 'sys');
@@ -57,7 +57,6 @@ everyauth
     .appSecret(config.auth.facebook.appSecret)
    	.findOrCreateUser( function (sess, accessTok, accessTokExtra, fbUser) {
 		var id = fbUser.username+"@facebook";
-		console.log(fbUser);
 		var user = {
 			id: id,
 			facebookUser: fbUser,
@@ -99,10 +98,11 @@ var app =  express.createServer(
 	})
 );
 
-everyauth.helpExpress(app);
+//everyauth.helpExpress(app);
 
 app.configure( function () {
   app.set('view engine', 'html');
+  app.set('dirname', __dirname);
 });
 
 /*
