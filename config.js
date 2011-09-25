@@ -1,5 +1,5 @@
 exports.port = 3000;
-exports.host = "local.host";
+exports.host = "dev.dappado.com";
 
 exports.auth = {
 	twitter: {

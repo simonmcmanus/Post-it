@@ -108,8 +108,13 @@ a.close {
 }
 
 a.delete {
+	display:none;
+}
+.authenticated a.delete {
+	display:block;
 	background:url('/public/icons/document_delete.png');
 }
+
 
 
 .task a.close {
@@ -183,7 +188,7 @@ div.tasks li.open .edit {
 
 div.tasks {
 	background: #FEF7F4;
-	background-image: url(/public/img/corkboard.jpg);
+	background-image: url(/public/img/corkBoard.jpg);
 	box-shadow: inset 0px 5px 10px 0.6px #555;
 	width: 100%;
 }
@@ -202,7 +207,7 @@ ul.tasks {
 	float: left;
 	width: 50%;
 }
-.tasks li:hover {
+.authenticated .tasks li:hover {
 	cursor: move;
 }
 .tasks li div.saving {
@@ -343,70 +348,115 @@ html body .cke_skin_kama .cke_wrapper {
 /* login */
 
 
-
-div#header ul li {
+#header, 
+div.wall
+{
 	font-family:GothamBook,  NeverSayNeverRegular;
-}
-
-
-div#header ul.loggedIn li {
-	display:inline;
-	line-height:2em;
 	position:relative;
-	height:2em;
+	z-index:300;
+}
+
+#header li {
+	display:inline;
+	position:relative;
+	border-radius:2px;
+}
+
+#header li a {
+	border:1px solid #555;
+	display:inline-block;
+	height:22px;
+	line-height:22px;
+	color:#eee;
+	letter-spacing:2px;
+	text-decoration: none;
+  	box-shadow:5px 0px 65px #888;
+	-webkit-animation: ctaHoverOff 3s;
+
+}
+
+#header li a:hover {
+	background-color: #444;
+	box-shadow:5px 0px 65px #eee;
+border:1px solid #777;
+	-webkit-animation: ctaHover 2s;
 }
 
 
-html body div#header ul.loggedIn li a:link {
-	color:#333;
+
+@-webkit-keyframes ctaHover {
+	0% {
+		border:1px solid #555;
+		box-shadow:5px 0px 65px #888;
+	}
+    100% {
+    	border:1px solid #777;
+			box-shadow:5px 0px 65px #eee;
+	}
+}
+@-webkit-keyframes ctaHoverOff {
+	0% {
+    	border:1px solid #777;
+		box-shadow:5px 0px 65px #eee;
+	}
+    100% {
+		border:1px solid #555;
+		box-shadow:5px 0px 65px #888;
+	}
 }
 
 
-div#header ul.loggedIn li a, 
-.login li a {
-	background:#fff;
-	padding:8px 15px;
-	text-decoration:none;
-	font-size:14px;
-	-moz-border-radius: 8px;
-	border-radius: 5px;
-	border:1px solid #f3e76d;
-	border:1px solid #444;	
-}
-
-.login li a:hover {
-	background-color:#ccc;
-}
 
 
-div#header ul.loggedIn li a {
-	text-shadow: #666 2px 1px 1px;
-	background: -webkit-gradient(linear, left top, left bottom, from(#8b8784), to(#4f4e4a));
-	/* For Mozilla/Gecko (Firefox etc) */
-	background: -moz-linear-gradient(top, #8b8784, #4f4e4a);
-	/* For Internet Explorer 5.5 - 7 */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#8b8784, endColorstr=#4f4e4a);
-	/* For Internet Explorer 8 */
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#8b8784, endColorstr=#4f4e4a)";
+
+
+#header .cta {
+	float:right;
+	right:-1em;
+	right:3em;
+	padding:5px;
+	z-index:10;
 	
-	color:#fff;
+}
+
+
+@font-face {
+	font-family: 'JustOldFashion';
+	src: local('JustOldFashion.ttf');
+}
+
+
+@font-face { /*GOOD*/
+	font-family: 'Dekar';
 	
+	src: local('Dekar');
 }
 
 
-html body ul.login {
-	padding-bottom:1.4em;
-	padding-top:1.2em;
-	left:-80px;
-	margin:0 !important;
-}
 
-div#header ul li  a{
-	font-size:0.9em;
+
+
+@font-face { /*GOOD*/
+	font-family: 'Mido';
 	
+	src: local('Mido');
 }
 
-header.login {
+#header .login h1{
+	font-family: 'Dekar';
+	text-rendering: optimizeLegibility;
+	font-size:3.3em;
+	letter-spacing:17px;
+	color: #fff;
+	text-shadow:  0px 2px 3px #555;
+	margin: 0.2em 0 0 0;
+}
+
+#header .login h2{
+	font-size:6em;	
+}
+
+#header .login {
 	color:#D8D2D0;
 	background:#000;
 	background: -webkit-gradient(radial, 40% 40%, 0, 40% 40%, 600, from(#aaa), to(#333333));
@@ -418,84 +468,53 @@ header.login {
 	background:#111;
 	transparency:1	;
 	padding:0em 1em 0em 0.2em;
+	padding-bottom:1.4em;
+	padding-top:1.2em;
+	left:-80px;
+	margin:0 !important;
 }
 
-header.login .box{
-}
-
-header.login.login h1{
-	font-family: 'GothamBold';
-	font-size:3.3em;
-	letter-spacing:-4px;
-	text-shadow: -0.02em -0.02em 2px #ffdf49,  1px 1px 30px #777;
-	margin: 0.2em 0 0 0;
-}
-
-header.login h2{
-	font-size:6em;	
-}
-
-header.login ul {
+#header .login ul {
 	padding:.5em 0 .5em;
 }
 
-header.login li {
-	display:inline;
+#header .login li {
 	margin:0 15px 0 10px;
 }
 
-html body header.login ul li a {
-	color:#222;
-	border:1px solid #aaa;
-	padding: 7px 7px 5px 30px;
-	line-height:3em;
-  	box-shadow:5px 0px 65px #888;
+#header .login a {
+	padding: 1px 5px 1px 30px;
+	background-position:1px 1px;
+	background-repeat:no-repeat;
 }
 
-header.login .facebook {
+#header .login a.facebook {
 	background-image:url(/public/img/login/22/facebook.png);
-	background-position:2px 2px;
-	background-repeat:no-repeat;
 }
 
-header.login .twitter {
-
+#header .login a.twitter {
 	background-image:url(/public/img/login/22/twitter-2.png);
-	background-position:2px 2px;
-	background-repeat:no-repeat;
 }
 
-header.login .google {
+#header .login a.google {
 	background-image:url(/public/img/login/22/google.png);
-	background-position:2px 2px;
-	background-repeat:no-repeat;
 }
 
-.login .note {
+#header .login .note {
 	width:13.5em;
 	float:right;
 	margin-left:2em;
+	position:relative;
 	top:-3.5em;
 	right:2.5em;
 	position:relative;
 	-webkit-transform: rotate(6deg);
 	-moz-transform: rotate(6deg);
 	-o-transform: rotate(6deg);
+	z-index:400;
 }
 
-
-
-div#header ul.loggedIn li a {
-	border:1px solid #121212;
-	top:0.5em;
-}
-
-.login .note img {
-	padding:1em 1em 0 .5em ;
-	display:block;
-}
-
-div#header ul.loggedIn{
+#header ul.loggedIn{
 	background: #eee;
 	background: url(/public/img/gray-gradient.jpg) 10% #666;
 	border-bottom: 1px solid #222;
@@ -507,63 +526,45 @@ div#header ul.loggedIn{
 	position: fixed;
 	top: 0;
 	width: 100%;
-	z-index: 99;
 	list-style: none;
 }
 
-
-div#header ul.loggedIn li.wall {
+#header ul.loggedIn li.wall {
 	height:3em;
 	line-height:3em;
 }
 
-div#header ul.sublinks {
+
+#header ul.loggedIn li a {
+	padding: 5px 10px;
+	line-height:2em;
+}
+
+
+#header ul.loggedIn ul.sublinks {
 	top:1em;
 	position:inherit;
 	margin:0;
 	z-index:-10;
 	padding:0;
 }
-div#header ul.sublinks li {
+
+#header ul.loggedIn ul.sublinks li {
 	display:block;
 	top:-7px;
 	margin:0;
 }
-div#header ul.sublinks li a{
+
+#header ul.loggedIn ul.sublinks li a{
 	width:12.5em;
 	padding:5px;
-	background:#333	;
-
+	background:#333;
 	border:1px solid #222;
 	border-radius:0;
 	float:left;
 }
 
-
-div#header li.user  a.username{
-	border:0;
-}
-html body div#header .cta {
-	float:right;
-	right:-1em;
-	right:3em;
-	padding:5px;
-	z-index:10;
-	
-}
-
-html body div#header li.cta a {
-	background: #222;
-	color:#fff;
-}
-div#header li.user a.username  {
-	border-radius:5px 0px 0px 5px;
-	border:1px solid #222;
-	
-	font-size:1em;
-}
-
-li.user img{
+#header ul.loggedIn li.user img{
 	right:7px;
 	border-radius:0 5px 5px 0;
 	border:1px solid #222;
@@ -574,9 +575,6 @@ li.user img{
 	position:absolute;
 }
 
-div#header .cta {
-	float:right;
-}
 /* Login */
 
 
@@ -785,7 +783,6 @@ html body .new_task {
 	list-style: none;
 	padding: 10px;
 	margin: 5px;
-	z-index: 10;
 	color: #555;/* For Internet Explorer 5.5 - 7 */
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0000FF,endColorstr=#FFFFFFFF);/* For Internet Explorer 8 */
 	-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0000FF,endColorstr=#FFFFFFFF)";
@@ -802,6 +799,7 @@ html body .new_task {
 }
 
 div.wall {
+	z-index:200;
 	opacity:0.6;
 	width:100%;
 	background:#222;
@@ -860,7 +858,7 @@ div.wall {
 	}
 }
 
-html body ul.tasks li:hover {
+html body.authenticated ul.tasks li:hover {
 	-webkit-box-shadow: 0px 0px 55px rgba(120, 120, 120, .9);
 	-webkit-animation: hoverTask 1s;
 }

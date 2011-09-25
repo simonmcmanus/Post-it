@@ -3,30 +3,26 @@ pi.views.board = function() {
 	var that = this;
 	var init = function() {
 		findTasks();
-		$( "ul.tasks" ).sortable({
-			connectWith: ".tasks",
-			placeholder: "placeholder",
-			forcePlaceholderSize: true,
-			update: changeTasks 
-		}).disableSelection();
-		
-
-		var down = function($node) {
-			$node.animate({
-				top:'+=13em'
-			}, 300);
-			$node.addClass('down');
-		};
-		
-		var up = function($node) {
-			$node.animate({
-				top:'-=13em'
-			}, 300);
-			$node.removeClass('down');
-		};
-
-
-		up($('li.user .sublinks'));
+		if(isLoggedIn()){
+			makeSortable();
+			setupLoggedInNav();
+		}		
+	};
+	
+	
+	var isLoggedIn = function() {
+		// TODO - make more resiliant.
+		if($('.username').length > 0) {
+			$('body').addClass('authenticated');
+			return true;
+		}else {
+			$('body').removeClass('authenticated');
+			return false;
+		}
+	};
+	
+	var setupLoggedInNav = function() {
+	up($('li.user .sublinks'));
 		
 		$('li.user').click(function(e) {
 			e.preventDefault();
@@ -35,17 +31,40 @@ pi.views.board = function() {
 			}else {
 				up($(this).find('.sublinks'));
 			}
-		})
-		
-		/*
-		$('.sublinks').mouseleave(function() {
-			up($(this));
 		});
-		*/
 		
 		
-		
+		$('li.user .sublinks a').click(function() {
+			window.location = $(this).attr('href');
+		});
 	};
+	
+	var down = function($node) {
+		$node.animate({
+			top:'+=13em'
+		}, 300);
+		$node.addClass('down');
+	};
+	
+	var up = function($node) {
+		$node.animate({
+			top:'-=13em'
+		}, 300);
+		$node.removeClass('down');
+	};
+
+
+	var makeSortable = function() {
+		$( "ul.tasks" ).sortable({
+			connectWith: ".tasks",
+			placeholder: "placeholder",
+			forcePlaceholderSize: true,
+			update: changeTasks 
+		}).disableSelection();
+
+	};
+	
+	
 	var changeTasks = function(event, ui) {
 		var s = $(this).sortable('toArray').join(', ');
 		that.postTasks($(this).attr('id'), s);

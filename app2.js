@@ -33,7 +33,7 @@ var sendResponse = function(res, data) {
 
 everyauth
   .twitter
-    .myHostname('http://local.host:3000')
+    .myHostname('http://'+config.host+':'+config.port)
     .consumerKey(config.auth.twitter.cKey)
     .consumerSecret(config.auth.twitter.consumerSecret)
 	.findOrCreateUser( function (sess, accessTok, accessTokExtra, twitUser) {
@@ -52,7 +52,7 @@ everyauth
 
 everyauth
   .facebook
-    .myHostname('http://localhost:3000')
+    .myHostname('http://'+config.host+':'+config.port)
     .appId(config.auth.facebook.appId)
     .appSecret(config.auth.facebook.appSecret)
    	.findOrCreateUser( function (sess, accessTok, accessTokExtra, fbUser) {
@@ -70,7 +70,7 @@ everyauth
   
 
 everyauth.google
-  .myHostname('http://localhost:3000')
+  .myHostname('http://'+config.host+':'+config.port)
   .appId('3335216477.apps.googleusercontent.com')
   .appSecret('HQ3dXWfmxMoJSZC987N6SeUn')
   .scope('https://www.google.com/m8/feeds/')
@@ -135,5 +135,5 @@ app.post('/lists/:wall/tasks/:taskId/comments/new', routes.newComment);  // Acce
 
 sizlate.startup(app, function(app) {
 	app.listen(config.port);	
-	console.log('Server running at: http://simonmcmanus.com:'+config.port);
+	console.log('Server running at: '+config.host+':'+config.port);
 });
