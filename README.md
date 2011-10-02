@@ -34,6 +34,22 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=310 DEFAULT CHARSET=latin1;
 
+insert into users values ('', 'simonmcmanus', '');
+
+CREATE TABLE `userLogin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `users_id` varchar(45) DEFAULT NULL,  
+  `login` mediumtext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=310 DEFAULT CHARSET=latin1;
+
+
+insert into userLogin values ('', ID, '')
+
+select * from userLogin, users where userLogin.login='simonmcmanus' and  userLogin.users_id=users.id;
+
+
+
 
 CREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
