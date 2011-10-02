@@ -27,10 +27,9 @@ CREATE TABLE `items` (
 
 // list and task are the same but the difference is about structure (parents)
 
-CREATE TABLE `user` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(45) DEFAULT NULL,  
-  `type` mediumtext,
   `description` mediumtext,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=310 DEFAULT CHARSET=latin1;
