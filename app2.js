@@ -8,7 +8,8 @@ var sizlate = require('../sizlate');
 var sys = require(process.binding('natives').util ? 'util' : 'sys');
 var everyauth = require('everyauth');
 var ds = require('./mysql_store.js'); // set datastore
-
+var urls = require('./urls.js');
+console.log(urls);
 
 var server;
 
@@ -28,7 +29,21 @@ var sendResponse = function(res, data) {
 //	var session = data.session;
 //	var redirectTo = session.redirectTo;
 //	delete session.redirectTo;
-	res.redirect('/'+data.user.id+'');
+//	res.redirect('/'+data.user.id+'');	
+	var login = data.session.auth.userId;
+	
+	
+	// get user ? check username? then do the below in a callback?
+	var knownLogin = function(data) {
+		res.redirect(urls.get('list', {list: login}));
+	};
+
+	var unknownLogin = function(data) {
+		res.redirect(urls.users_new);
+	};
+	ds.knownLogin(data.session.auth.userId, knownLogin, unknownLogin);
+	
+	
 };
 
 everyauth
@@ -37,7 +52,8 @@ everyauth
     .consumerKey(config.auth.twitter.cKey)
     .consumerSecret(config.auth.twitter.consumerSecret)
 	.findOrCreateUser( function (sess, accessTok, accessTokExtra, twitUser) {
-		id = twitUser.name;
+		console.log('fine or create user');
+		id = twitUser.name+"@twitter";
 		var user = {
 			id: id,
 			twitterUser: twitUser,
@@ -75,7 +91,7 @@ everyauth.google
   .appSecret('HQ3dXWfmxMoJSZC987N6SeUn')
   .scope('https://www.google.com/m8/feeds/')
   .findOrCreateUser( function (sess, accessToken, extra, googleUser) {
-	var id = googleUser.id
+	var id = googleUser.id+"@google";
 	var user = {
 		id: id,
 		googleUser: googleUser,
@@ -94,6 +110,7 @@ var app =  express.createServer(
 	express.session({ secret: 'htuayreve'}),
 	everyauth.middleware(),
 	everyauth.everymodule.findUserById( function (userId, callback) {
+		console.log('find user by id');
 		callback(null, userId);
 	})
 );
@@ -105,26 +122,20 @@ app.configure( function () {
   app.set('dirname', __dirname);
 });
 
-/*
 
-/users/
 
-users/1
 
-users/1/create
-users/1/update
-users/1/delete
-*/
 app.register('.html', sizlate);
 
-app.get('/', routes.home);
-app.get('/login', routes.login);
+app.get(urls.home, routes.home);
+app.get(urls.login, routes.login);
+app.get(urls.users_new, routes.users_new);
+app.post(urls.users, routes.users_new_POST);
 
-app.get('/:list', routes.wall);
+
+app.get(urls.list, routes.wall);
 app.post('/:wall/tasks/new', routes.taskNew);	// Edit form
-
 app.get('/:wall/task/:taskId', routes.GET_task);
-
 app.get('/lists/:wall/tasks/:taskId/edit', routes.GET_taskEdit);	// Edit form
 app.post('/lists/:wall/tasks/:taskId/edit', routes.POST_taskEdit);
 app.get('/lists/:wall/tasks/:taskId/comments', routes.comments);	// show comments

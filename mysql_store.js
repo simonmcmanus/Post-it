@@ -38,6 +38,43 @@ exports.updateTask = function(params, callback) {
 	sql.query(query, params, callback);	
 };
 
+
+exports.userGet = function(params, callback) {
+	sql.query('SELECT * FROM users where username="'+params.username+'"', params, callback);	
+	
+};
+
+exports.user_new = function(params, callback) {
+	sql.query('insert into users values ("", "'+params.username+'", "user description")', params, function(data, params) {
+		sql.query('insert into userLogin values ("", "'+data.insertId+'", "'+params.login +'")', params, callback);		
+	});
+
+	
+	// username avaiable, lets make it for them.
+	
+	
+};
+
+// Is this login known on the system?
+exports.knownLogin = function(login, knownCallback, unknownCallback) {
+	console.log('select * from userLogin, users where userLogin.login="'+login+'" and  userLogin.users_id=users.id');
+ 	sql.query('select * from userLogin, users where userLogin.login="'+login+'" and  userLogin.users_id=users.id', {}, function(data, params) {
+
+ 		console.log('in here', data.length);
+ 		
+ 		if(data.length === 0){
+ 			unknownCallback(data);
+ 		}else {
+ 			knownCallback(data);
+ 		}
+ 	});
+};
+
+
+exports.newUserLogin = function(params, callback) {
+	sql.query('insert into userLogin values ("", "'+params.username+'", "simonmcmanus@twitter")');
+};
+
 /*
 
 Accepts a list of ids seperated by a comma.
@@ -63,7 +100,7 @@ exports.updateList = function(params, callback) {
 		return false;
 	}
 	var query = 'UPDATE items SET status="'+params.status+'" WHERE  '+ids_sql.join('');
-	//console.log(query);
+	console.log(query);
 	sql.query(query, callback);
 };
 

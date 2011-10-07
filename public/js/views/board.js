@@ -22,7 +22,8 @@ pi.views.board = function() {
 	};
 	
 	var setupLoggedInNav = function() {
-	up($('li.user .sublinks'));
+		
+		up($('li.user .sublinks'));
 		
 		$('li.user').click(function(e) {
 			e.preventDefault();
@@ -41,14 +42,14 @@ pi.views.board = function() {
 	
 	var down = function($node) {
 		$node.animate({
-			top:'+=13em'
+			top:'+=10em'
 		}, 300);
 		$node.addClass('down');
 	};
 	
 	var up = function($node) {
 		$node.animate({
-			top:'-=13em'
+			top:'-=10em'
 		}, 300);
 		$node.removeClass('down');
 	};
@@ -76,11 +77,14 @@ pi.views.board = function() {
 		});
 	};
 	that.postTasks = function(status, ids) {
+		console.log(ids, status);
+
 		$.ajax({
 			type:"POST",
 			url:"/lists/smm/status/"+status+"/edit/",
 			data:'ids='+ids,
 			success: function(data) {
+				console.log('data', data);
 			}
 		})
 	};

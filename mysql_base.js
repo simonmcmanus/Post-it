@@ -12,7 +12,11 @@ var Client = require('mysql').Client,
 		client.query(query, 
 			function selectCb(err, results, fields) {
 		    	if (err) {
-		      		throw err;
+		    		console.log(query);
+		    		setTimeout(function()  {
+			      		throw err;
+		    			
+		    		}, 100);
 		    	}
 				if(callback){
 					callback(results, params);

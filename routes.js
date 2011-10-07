@@ -1,4 +1,5 @@
 var ds = require('./mysql_store.js'); // set datastore
+var urls = require('./urls.js');
 
 
 
@@ -115,6 +116,49 @@ exports.taskNew = function(req, res) {
 			'Content-Type': 'text/plain'
 		 }, 201);
 	});
+};
+
+
+
+exports.users_new = function(req, res) {
+	if(!req.loggedIn){
+		res.redirect('/test');
+		return false;
+	}
+	res.render(__dirname+'/views/user_create.html', {
+		selectors : {
+			h1: 'hi',
+			'form': {
+				'.action': urls.user_new
+				
+			},
+			'input:[name="username"]': {
+				value: 'BOB'
+			}
+		}
+	});
+};
+
+exports.users_new_POST = function(req, res) {
+	if(!req.loggedIn){
+		res.redirect('/test');
+		return false;
+	}
+	
+	// create loginUser
+	// see if username is avaiable.
+	// if avaiable - create it and take user to space 
+	// if not available - ask user to suggest name - settings page
+	// IF USER NAME IS AVAAILBLE DO THE FOLLOWING: 
+	ds.user_new({
+		login: req.username,
+		username: req.body.username
+	}, function() {
+		console.log('CREATED');
+		res.redirect('/'+req.body.username);
+	});
+
+
 };
 
 exports.POST_taskEdit = function(req, res){

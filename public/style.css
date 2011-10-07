@@ -186,7 +186,9 @@ div.tasks li.open .edit {
 	display:none;
 }
 
-div.tasks {
+.page,
+div.tasks 
+{
 	background: #FEF7F4;
 	background-image: url(/public/img/corkBoard.jpg);
 	box-shadow: inset 0px 5px 10px 0.6px #555;
@@ -364,6 +366,7 @@ div.wall
 
 #header li a {
 	border:1px solid #555;
+	border-radius:3px;
 	display:inline-block;
 	height:22px;
 	line-height:22px;
@@ -372,12 +375,11 @@ div.wall
 	text-decoration: none;
   	box-shadow:5px 0px 65px #888;
 	-webkit-animation: ctaHoverOff 3s;
-
+background:#000;
 }
 
 #header li a:hover {
-	background-color: #444;
-	box-shadow:5px 0px 65px #eee;
+		box-shadow:5px 0px 65px #eee;
 border:1px solid #777;
 	-webkit-animation: ctaHover 2s;
 }
@@ -391,14 +393,11 @@ border:1px solid #777;
 	}
     100% {
     	border:1px solid #777;
-			box-shadow:5px 0px 65px #eee;
+		box-shadow:5px 0px 65px #eee;
 	}
 }
 @-webkit-keyframes ctaHoverOff {
-	0% {
-    	border:1px solid #777;
-		box-shadow:5px 0px 65px #eee;
-	}
+
     100% {
 		border:1px solid #555;
 		box-shadow:5px 0px 65px #888;
@@ -412,9 +411,7 @@ border:1px solid #777;
 
 #header .cta {
 	float:right;
-	right:-1em;
-	right:3em;
-	padding:5px;
+	padding:0 0 0 40px;
 	z-index:10;
 	
 }
@@ -489,15 +486,15 @@ border:1px solid #777;
 }
 
 #header .login a.facebook {
-	background-image:url(/public/img/login/22/facebook.png);
+	background-image:url(/public/icons/login/facebook.png);
 }
 
 #header .login a.twitter {
-	background-image:url(/public/img/login/22/twitter-2.png);
+	background-image:url(/public/icons/login/twitter.png);
 }
 
 #header .login a.google {
-	background-image:url(/public/img/login/22/google.png);
+	background-image:url(/public/icons/login/google.png);
 }
 
 #header .login .note {
@@ -536,8 +533,10 @@ border:1px solid #777;
 
 
 #header ul.loggedIn li a {
-	padding: 5px 10px;
-	line-height:2em;
+	padding: 5px 15px;
+	margin:3px;
+	background:#222;
+	line-height:1.5em;
 }
 
 
@@ -551,7 +550,6 @@ border:1px solid #777;
 
 #header ul.loggedIn ul.sublinks li {
 	display:block;
-	top:-7px;
 	margin:0;
 }
 
@@ -559,20 +557,29 @@ border:1px solid #777;
 	width:12.5em;
 	padding:5px;
 	background:#333;
+	margin:0;
 	border:1px solid #222;
 	border-radius:0;
 	float:left;
 }
 
+#header ul.loggedIn li.user {
+	float:right;
+	right:2.5em;
+}
 #header ul.loggedIn li.user img{
-	right:7px;
 	border-radius:0 5px 5px 0;
+	margin:3px 0  0 0;
 	border:1px solid #222;
 	border-left:0;
-	top:4px;
-	width:32px;
-	height:32px;
+	width:31px;
+	height:31px;
 	position:absolute;
+}
+
+#header ul.loggedIn .username {
+	border-right:0;
+	margin-right:0;
 }
 
 /* Login */
@@ -746,14 +753,35 @@ html body .new_task {
 
 
 
+/* Page */
+
+.page {
+	padding: 0	em;
+}
+
+.page  form{
+	margin:2em;
+	margin-bottom:0;
+	
+	
+}
 
 
+.paper {
+	
+}
+.page  h1{
+	margin-top:0;
+}
+/* END Page */
 
 
+/*Papers*/
 
-
-
-
+.papers  {
+	padding:1em 3em;
+}
+/*END Papers */
 
 
 
@@ -876,6 +904,7 @@ html body.authenticated ul.tasks li:hover {
 }
 
 html body ul.tasks li.open:hover {
+	
 	-webkit-box-shadow: 0px 0px 55px rgba(120, 120, 120, .9);
 	-webkit-animation: hoverTask 1s;
 }
