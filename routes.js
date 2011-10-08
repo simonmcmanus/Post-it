@@ -49,6 +49,7 @@ exports.wall = function(req, res){
 		}
 		var user = (req.user) ? req.user : '';
 		var image = (req.image) ? req.image : '';
+		var user = "simon";
 		res.render(__dirname+"/views/wall.html", {	
 			selectors: {
 				'title': 'dappado.com - your lists',
@@ -74,12 +75,12 @@ exports.wall = function(req, res){
 					partial: 'task.html', 
 					data: status.done
 				},
-				'#bin': {
-					partial: 'task.html', 
-					data: status.deleted
-				},
 				'#footer': {
 					partial: 'bin.html'
+				},
+				'#deleted': {
+					partial: 'task.html', 
+					data: status.deleted
 				},
 				'.hidden': {
 					partial: 'newTask.html'

@@ -26,7 +26,7 @@ pi.ui.taskNew = function() {
 		$textarea.attr('id', Math.random());
 		editor = CKEDITOR.replace( $textarea.get(0).id, ckEditorConfig);	
 		node.find('input').focus();
-		$('html,body').animate({scrollTop:$('input#title').position().top+50},1500);
+		$('html,body').animate({scrollTop:$('input#title').position().top-50},1500);
 
 	};
 	
