@@ -1,0 +1,10 @@
+#user_new input[name="username"].available {
+	background: url('/public/img/go.jpg') no-repeat top right	#fff;
+}
+#user_new input[name="username"].unavailable {
+	background: url('/public/img/stop.jpg') no-repeat top right	 #fff;
+}
+
+#user_new .error {
+	display:none;
+}

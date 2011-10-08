@@ -11,6 +11,10 @@ exports.home = function(req, res){
 	res.send('<a href="/lists/smm/wall.html">see demo list</a>');
 };
 
+exports.urls = function(req, res) {
+	res.download('./urls.js');
+};
+
 exports.login = function(req, res){
 	res.render('login.html');
 };
@@ -35,7 +39,7 @@ exports.wall = function(req, res){
 			return task;
 		};
 		
-		var c = result.length;
+		var c =  result.length;
 		while(c--) {
 			if(status[result[c].status]){
 				var task = addLinks(result[c]);
@@ -45,7 +49,6 @@ exports.wall = function(req, res){
 		}
 		var user = (req.user) ? req.user : '';
 		var image = (req.image) ? req.image : '';
-
 		res.render(__dirname+"/views/wall.html", {	
 			selectors: {
 				'title': 'dappado.com - your lists',
@@ -75,6 +78,9 @@ exports.wall = function(req, res){
 					partial: 'task.html', 
 					data: status.deleted
 				},
+				'#footer': {
+					partial: 'bin.html'
+				},
 				'.hidden': {
 					partial: 'newTask.html'
 				},
@@ -93,10 +99,11 @@ exports.wall = function(req, res){
 };
 
 exports.saveStatus = function(req, res){
-	if(!req.loggedIn){
+/*	if(!req.loggedIn){
 		 res.send('text', { 'Content-Type': 'text/plain' }, 401);
 			return false;
 	}
+	*/
 	ds.updateList({
 		status:req.params.status,
 		ids:req.body.ids
@@ -121,22 +128,36 @@ exports.taskNew = function(req, res) {
 
 
 exports.users_new = function(req, res) {
+/*
 	if(!req.loggedIn){
 		res.redirect('/test');
 		return false;
 	}
+	*/
 	res.render(__dirname+'/views/user_create.html', {
 		selectors : {
-			h1: 'hi',
+			h1: 'Hi '+ ( req.username || ' Simon McManus' ),
 			'form': {
-				'.action': urls.user_new
-				
+				'.action': urls.USER_NEW
 			},
 			'input:[name="username"]': {
 				value: 'BOB'
 			}
 		}
 	});
+};
+
+exports.users_taken = function(req, res) {
+	ds.userGet({
+		username: req.params.user
+	}, function(data) {
+		if(data.length === 0){
+			res.send('{"taken": false}');
+		}else {
+			res.send('{"taken": true}');	
+		}
+	});
+	
 };
 
 exports.users_new_POST = function(req, res) {
@@ -168,16 +189,16 @@ exports.POST_taskEdit = function(req, res){
 	}
 	
 	ds.updateTask({
-		id:req.params.taskId,
+		id:req.params.task,
 		task:req.body
 	}, function(data) {
-		res.redirect('/'+req.params.wall);
+		res.redirect('/'+req.params.list);
 	});
 };
 
 exports.GET_taskEdit = 	function(req, res){
 	ds.getTask({
-		id:req.params.taskId
+		id:req.params.task
 	}, function(data) {
 		
 		res.render(__dirname+'/views/edit_task.html', {
@@ -201,7 +222,7 @@ exports.GET_taskEdit = 	function(req, res){
 
 exports.GET_task = 	function(req, res){
 	ds.getTask({
-		id:req.params.taskId
+		id:req.params.task
 	}, function(data) {
 		res.render('partials/task.html', {
 			layout:false,
@@ -216,7 +237,7 @@ exports.GET_task = 	function(req, res){
 
 exports.comments = function(req, res){
 	ds.getComments({
-		id:req.params.taskId
+		id:req.params.task
 	}, function(data) {
 		res.render(__dirname+'/views/comments', {
 			layout:false,
@@ -239,15 +260,15 @@ exports.newComment = function(req, res){
 	}
 
 	ds.newComment({
-		id: req.params.taskId,
+		id: req.params.task,
 		username: req.user, 
 		comment: req.body
 	}, function(data) {
 		res.render('comments', {			
 			layout:false,
 			locals: {
-				wall: req.params.wall,
-				id: req.params.taskId,
+				wall: req.params.list,
+				id: req.params.task,
 				task: data[0]
 			}
 		});		

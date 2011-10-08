@@ -1,7 +1,7 @@
 var sql = require('./mysql_base.js');
 
 exports.getList = function(params, callback) {
-	sql.query("SELECT * FROM items where list='"+params.list+"'", params, callback);
+	sql.query("SELECT * FROM items where list='"+params.list+"' ORDER BY 'order' ASC", params, callback);
 }
 
 exports.getComments = function(params, callback) {
@@ -35,7 +35,7 @@ exports.updateTask = function(params, callback) {
 	var title = params.task.title.slice(1, -1); //strip quotes;
 	var text = params.task.text.slice(1, -1);
 	var query = 'UPDATE ITEMS SET text="'+text+'", title="'+title+'", tags="'+params.task.tags+'" where id="'+params.id+'"';
-	sql.query(query, params, callback);	
+	sql.query(query, params, callback);
 };
 
 
@@ -93,6 +93,9 @@ exports.updateList = function(params, callback) {
 			ids_sql.push('items.id="');
 			ids_sql.push(ids[c]);
 			ids_sql.push('"');
+			var q = 'UPDATE items set items.order="'+c+'" where items.id="'+ids[c]+'"';
+			console.log(q);
+			sql.query(q);
 		}
 	}
 
@@ -100,6 +103,10 @@ exports.updateList = function(params, callback) {
 		return false;
 	}
 	var query = 'UPDATE items SET status="'+params.status+'" WHERE  '+ids_sql.join('');
+	
+	
+	
+	
 	console.log(query);
 	sql.query(query, callback);
 };

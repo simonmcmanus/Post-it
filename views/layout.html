@@ -2,16 +2,16 @@
 <html>
 	<head>
 		<title></title>
-		<script src="http://js.pusherapp.com/1.9/pusher.min.js"></script>
 		
-		<!--<script src="/socket.io/socket.io.js"></script>-->
 		<script type="text/javascript" src="/public/lib/jquery.js"></script>	
 		<script type="text/javascript" src="/public/lib/jquery.ui.js"></script>
 		<script type="text/javascript" src="/public/lib/jquery-ui-touch-punch.js"></script>	
 		<script type="text/javascript" src="/public/lib/json2.js"></script>	
 		<script type="text/javascript" src="/public/lib/prettydates.js"></script>			
-<!--		<script type="text/javascript" src="/public/core.js"></script>	-->
 		<script type="text/javascript" src="/public/js/core.js"></script>	
+		
+		<script type="text/javascript" src="/urls.js"></script>	
+		
 		<script type="text/javascript" src="/public/js/events.js"></script>	
 		<script type="text/javascript" src="/public/js/views/base.js"></script>	
 		<script type="text/javascript" src="/public/js/views/board.js"></script>	
@@ -23,34 +23,20 @@
 		<script type="text/javascript" src="/public/js/uis/overlay.js"></script>	
 		<script type="text/javascript" src="/public/js/uis/comments.js"></script>	
 		
-		<script>
-		 var postit = {
-			isLoggedIn: "{{html everyauth.loggedIn}}",
-			username: "{{html user}}"
-		};
-		</script>
 		
+		<script type="text/javascript" src="/public/js/views/user_new.js"></script>			
+		<script type="text/javascript" src="/public/js/uis/user_taken.js"></script>
+		
+		<script type="text/javascript" src="/nowjs/now.js"></script>
 		<meta name="viewport" content="width=1120" />
-		<!--		<script type="text/javascript" src="/public/js/views.js"></script>			-->
+		<link rel="stylesheet" type="text/css" href="/public/css/shared.css" />
+		<link rel="stylesheet" type="text/css" href="/public/css/user_new.css" />
 		<link rel="stylesheet" type="text/css" href="/public/style.css" />
-		<link rel=StyleSheet href="/public/fonts/learningtotrust/stylesheet.css" type="text/css" meda="screen">
-		<link rel=StyleSheet href="/public/fonts/Foglighten/stylesheet.css" type="text/css" meda="screen">
-		<link rel=StyleSheet href="/public/fonts/RawengulkLight/stylesheet.css" type="text/css" meda="screen">
-		<link rel=StyleSheet href="/public/fonts/janda/stylesheet.css" type="text/css" meda="screen">
-		<link rel=StyleSheet href="/public/fonts/neversaynever/stylesheet.css" type="text/css" meda="screen">
-		<link rel=StyleSheet href="/public/fonts/gotham-light/style.css" type="text/css" meda="screen">
-		
-		<link rel=StyleSheet href="/public/fonts/mensch-inline/stylesheet.css" type="text/css" meda="screen">
-		
-		<link rel=StyleSheet href="/public/fonts/rabiohead.css" type="text/css" meda="screen">
-		<link rel=StyleSheet href="/public/fonts/ChunkFive-fontfacekit/stylesheet.css" type="text/css" meda="screen">
-		<script type="text/javascript" src="/public/tinymce/jscripts/tiny_mce/jquery.tinymce.js"></script>
+
 		<script type="text/javascript" src="/public/ckeditor/ckeditor.js"></script>
-		<script src="/public/ckeditor/sample.js" type="text/javascript"></script>
-		<link href="/public/ckeditor/sample.css" rel="stylesheet" type="text/css" />
 		<script src="/public/vtip/vtip.js" type="text/javascript"></script>
 		<link href="/public/vtip/vtip.css" rel="stylesheet" type="text/css" />
-
+		<link rel=StyleSheet href="/public/fonts/gotham-light/style.css" type="text/css" meda="screen">
 	</head>
 	<body>
 		<div id="header" class="shadow">
@@ -67,10 +53,7 @@
 			
 			<div id="container" class="frame"></div>
 			
-			<ul class="tasks" id="bin">
-				<h2>Bin</h2>
-			</ul>
-			
+			<div id="footer"></div>
 		</div>
 	</body>
 </html>

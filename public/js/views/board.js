@@ -17,7 +17,7 @@ pi.views.board = function() {
 			return true;
 		}else {
 			$('body').removeClass('authenticated');
-			return false;
+			return true;
 		}
 	};
 	

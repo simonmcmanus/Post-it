@@ -1,12 +1,14 @@
-<div class="page">
+<div id="user_new" class="page">
 	<div class="papers">	
 		<h1>Hi simonmcmanus</h1>
-		You are currently signed in. We need to create you a local username 
-		
-		Unfortunately the obvious name has already been taken. 
+		Thanks for signing in, we just need to create you a username before you can get started.
 		<form method="POST" action="/users">
-			<input name="username">test name</input>
-			<input type="submit" value="Get me started"/>
+			<input name="username" />
+			<div class="error">
+				Username not available.
+			</div>
+			<input type="submit" value="Get me started" />
+			
 		</form>
 	</div>
 </div>

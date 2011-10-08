@@ -1,0 +1,55 @@
+html {
+	overflow-x: hidden;	
+	overflow-y: none;
+	font-family: arial;
+	font-family: 'GothamBook';
+}
+
+body {
+	background: url(/public/img/gray-gradient.jpg) 50% 0% no-repeat #111;	
+	background-repeat:none;
+	margin: 0;
+	padding: 0;
+}
+
+button,
+input[type="submit"] {
+	cursor:	hand;
+	border: 1px solid #fff;
+	box-shadow: 1px 0px 1px 0px #999;
+	padding: 5px 15px 5px 20px;
+	margin: 10px 0 0 0;
+	font-size: 1em;
+	color: #616060;
+	-moz-border-radius: 0.4em;
+	border-radius: 0.4em;
+	background-color:#fff;
+}
+
+input, 
+textarea{
+	font-family: 'GothamBook';
+	width: 100%;
+	padding: 0.4em 0.8em ;
+	-moz-border-radius: 0.2em;
+	border-radius: 0.2em;
+	background: #f3e76d;
+	filter:progid: DXImageTransform.Microsoft.gradient(startColorstr=#FF0000FF,endColorstr=#FFFFFFFF);/* For Internet Explorer 8 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0000FF,endColorstr=#FFFFFFFF)";
+	background: -moz-linear-gradient(top,#e6e5dd 0%,#efeee5 40%,#e6e5dd 100%);/* firefox */
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#e6e5dd),color-stop(60%,#efeee5),color-stop(100%,#e6e5dd));/* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6e5dd',endColorstr='#e6e5dd',GradientType=0 );/* ie */	
+	border: 1px solid #fff;
+	border-color: #88a;
+}
+
+
+input[type="submit"] {
+	width:auto;
+}
+
+.error {
+	color:red;
+	font-size:0.9em;
+	padding:0.3em 0 ;
+}
