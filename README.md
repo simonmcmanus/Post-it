@@ -22,6 +22,9 @@ CREATE TABLE `items` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=310 DEFAULT CHARSET=latin1;
 
+ALTER TABLE `lists`.`items` ADD COLUMN `order` INT NULL  AFTER `list` ;
+
+
 
 
 
