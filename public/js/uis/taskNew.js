@@ -10,6 +10,7 @@ pi.ui.taskNew = function() {
 			url:url,
 			success: function(data){
 				var $task = $(data);
+				console.log($task);
 				$('#notStarted').prepend($task);
 				$('#notStarted .new_task').hide();
 			}
@@ -40,6 +41,7 @@ pi.ui.taskNew = function() {
 			data:'list='+list+'&title='+$form.find('#title').val()+'&text='+encodeURIComponent(editor.getData())+'',
 			success: function(data, textStatus, jqXHR) {
 				$form.parent('li').remove();
+				console.log(data);
 				getNewTask(data);
 			}
 		})

@@ -22,7 +22,7 @@ exports.newComment = function(params, callback) {
 };
 
 exports.newTask = function(list, title, text, callback) {
-	var q = 'INSERT INTO items VALUES ("null", "'+title+'", "'+text+'", "", "notStarted",  "1", "", "'+list+'")';
+	var q = 'INSERT INTO items VALUES ("null", "'+title+'", "'+text+'", "", "notStarted",  "1", "", "'+list+'", "")';
 	//console.log(q);
 	sql.query(q, {}, callback);
 }

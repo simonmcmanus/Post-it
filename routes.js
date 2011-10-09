@@ -129,12 +129,17 @@ exports.saveStatus = function(req, res){
 };
 
 exports.taskNew = function(req, res) {
+/*
 	if(!req.loggedIn){
 		res.end('permission denied');
 		return false;
 	}
+	*/
 	ds.newTask(req.body.list, req.body.title, req.body.text, function(data) {
-		var url = '/'+req.body.list+'/task/'+data.insertId;
+		var url = urls.get('TASK', {
+			list: req.body.list,
+			task: data.insertId
+		})+'?layout=false';
 		res.send(url, { 
 			'Content-Type': 'text/plain'
 		 }, 201);
