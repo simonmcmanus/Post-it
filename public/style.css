@@ -122,6 +122,14 @@ div.tasks li.open {
 }
 
 
+html body #deleted  {
+	background: rgba(100, 100, 100, 0.8);
+	margin:0 2em;
+	border:1px solid #222;
+}
+#deleted .text, #deleted .order, #deleted .tags {
+display:none;
+}
 #deleted  li .button {
 display:none;
 }
@@ -140,14 +148,7 @@ div.tasks li.open .edit {
 	display:none;
 }
 
-.page,
-div.tasks 
-{
-	background: #FEF7F4;
-	background-image: url(/public/img/corkBoard.jpg);
-	box-shadow: inset 0px 5px 10px 0.6px #555;
-	width: 100%;
-}
+
 .taskContainer h4 {
 	color: #444;
 	margin: 0;
@@ -327,15 +328,15 @@ div.wall
 	color:#eee;
 	letter-spacing:2px;
 	text-decoration: none;
-  	box-shadow:5px 0px 65px #888;
-	-webkit-animation: ctaHoverOff 3s;
+  	box-shadow:5px 0px 65px #333;
+	-webkit-animation: ctaHoverOff 2s;
 background:#000;
 }
 
 #header li a:hover {
-		box-shadow:5px 0px 65px #eee;
+		box-shadow:5px 0px 65px #aaa;
 border:1px solid #777;
-	-webkit-animation: ctaHover 2s;
+	-webkit-animation: ctaHover 1s;
 }
 
 
@@ -343,11 +344,11 @@ border:1px solid #777;
 @-webkit-keyframes ctaHover {
 	0% {
 		border:1px solid #555;
-		box-shadow:5px 0px 65px #888;
+		box-shadow:5px 0px 65px #333;
 	}
     100% {
     	border:1px solid #777;
-		box-shadow:5px 0px 65px #eee;
+		box-shadow:5px 0px 65px #aaa;
 	}
 }
 @-webkit-keyframes ctaHoverOff {
@@ -547,8 +548,8 @@ border:1px solid #777;
 	margin: 0;
 	top: 0;
 	background: #222;
-	width: 120%;
-	height: 120%;
+	width: 100%;
+	height: 100%;
 	opacity: 1;
 	z-index: 100;
 	position: fixed;
@@ -603,10 +604,14 @@ html body .new_task {
 #lights {
 	width:100%;
 	position:absolute;
-	height:100%;
+	
 }
+
+
+
+
 #lights.onetwothree {
-	background-image: -webkit-gradient(
+	background-image:  -webkit-gradient(
 		linear, right top, left top, 
 		color-stop(1%, rgba(0, 0, 0,  0.5)),
 		color-stop(20%, rgba(40, 40, 40, 0)),
@@ -615,7 +620,7 @@ html body .new_task {
 		color-stop(65%, rgba(0, 0, 0, 0.5)),
 		color-stop(85%, rgba(40, 40, 40, 0)),
 		color-stop(97%, rgba(0, 0, 0, 0.5))
-	);
+	) 	;
 
 	/* mozilla example - FF3.6+ */
 	background-image: -moz-linear-gradient(
@@ -629,16 +634,16 @@ html body .new_task {
 		rgba(0, 0, 0, 0.5) 97%
 	);
 
-        /* IE 5.5 - 7 */
-        filter: progid:DXImageTransform.Microsoft.gradient(
-          gradientType=1, startColor=0, endColorStr=#FFFFFF
-        );
+	/* IE 5.5 - 7 */
+	filter: progid:DXImageTransform.Microsoft.gradient(
+		gradientType=1, startColor=0, endColorStr=#FFFFFF
+	);
 
-        /* IE8 uses -ms-filter for whatever reason... */
-        -ms-filter: progid:DXImageTransform.Microsoft.gradient(
-          gradientType=1, startColor=0, endColoStr=#FFFFFF
-        );
-}
+	/* IE8 uses -ms-filter for whatever reason... */
+	-ms-filter: progid:DXImageTransform.Microsoft.gradient(
+		gradientType=1, startColor=0, endColoStr=#FFFFFF
+	);
+	}
 
 #lights.twothree {
 	/* webkit */
@@ -676,6 +681,42 @@ html body .new_task {
 	);
 }
 
+#lights.off {
+background-image: -webkit-gradient(
+	linear, right top, left top, 
+	color-stop(1%, rgba(0, 0, 0,  1)),
+	color-stop(20%, rgba(40, 40, 40, 0.9)),
+	color-stop(34%, rgba(0, 0, 0, 1)),
+	color-stop(50%, rgba(40, 40, 40, 0.9)),
+	color-stop(65%, rgba(0, 0, 0, 1)),
+	color-stop(85%, rgba(40, 40, 40, 0.9)),
+	color-stop(97%, rgba(0, 0, 0, 1))
+) ;
+
+/* mozilla example - FF3.6+ */
+background-image: -moz-linear-gradient(
+	right center,
+	rgba(0, 0, 0,  0.9) 1%, 
+	rgba(40, 40, 40, 0.8) 20%,
+	rgba(0, 0, 0, 0.9) 34%,
+	rgba(40, 40, 40, 0.8) 50%,
+	rgba(0, 0, 0, 0.9) 65%,
+	rgba(40, 40, 40, 0.8) 85%,
+	rgba(0, 0, 0, 0.9) 97%
+);
+
+/* IE 5.5 - 7 */
+filter: progid:DXImageTransform.Microsoft.gradient(
+	gradientType=1, startColor=0, endColorStr=#FFFFFF
+);
+
+/* IE8 uses -ms-filter for whatever reason... */
+-ms-filter: progid:DXImageTransform.Microsoft.gradient(
+	gradientType=1, startColor=0, endColoStr=#FFFFFF
+);
+}
+
+
 /*lights*/
 
 
@@ -703,10 +744,11 @@ html body .new_task {
 		margin-left: auto;
 		padding-top:1em;
 		padding-bottom:1em;
-			margin-right: auto;
-			max-width: 30em;
-			background:rgba(280, 220, 180, 0.6);
-			text-align: left;
+		margin-right: auto;
+		max-width: 30em;
+		background:rgba(200, 200, 200, 0.7);
+		text-align: left;
+		box-shadow: 1px 1px 10px rgba(70,70,70,0.7);
 }
 .page  h1{
 	margin-top:0;
@@ -727,12 +769,6 @@ html body .new_task {
 
 /* General */
 
-.frame {
-	border:20px;
-	-webkit-border-image: url(/public/frame/frame.png) 10% repeat;
-	-moz-border-image: url(/public/frame/frame.png) 10% repeat;
-	margin:3em 1em;	
-}
 
 
 .ui-sortable-disabled.tasks li, .ui-sortable-disabled.tasks li:hover {
@@ -744,7 +780,7 @@ html body .new_task {
 	text-align:left;	
 	font-family:arial;
 	
-	font-size: 1.1em;
+	font-size: 0.9em;
 	width: 290px;
 	list-style: none;
 	padding: 10px;
@@ -767,17 +803,15 @@ html body .new_task {
 
 div.wall {
 	z-index:200;
-	opacity:0.6;
-	width:100%;
-	background:#222;
+	opacity:0.8;
 	color:#fff;
 	height:2em;
 	line-height:2em;
 	padding:0 2em 0 2.4em;
-	border-bottom:4px solid #333;
+	border-bottom:4px solid #000;
 	font-family: 'GothamBook';
-	background: -moz-linear-gradient(top,#111 0%,#000 40%,#111 100%);/* firefox */
-	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#111),color-stop(60%,#000	),color-stop(100%,#111));/* webkit */
+	background: -moz-linear-gradient(top,#000 0%,#000 40%,#111 100%);/* firefox */
+	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#000),color-stop(40%,#000	),color-stop(100%,#111));
 }
 
 
@@ -886,11 +920,4 @@ button.add {
 
 .hidden {
 	display:none;
-}
-
-#deleted {
-	border:1px solid #222222;
-	background: #444444;
-	width:94%;
-	margin:1em;
 }

@@ -1,16 +1,33 @@
 html {
-	overflow-x: hidden;	
-	overflow-y: none;
+	overflow: auto;
+	overflow-x:hidden;	
 	font-family: arial;
 	font-family: 'GothamBook';
 }
 
 body {
-	background: url(/public/img/gray-gradient.jpg) 50% 0% no-repeat #111;	
-	background-repeat:none;
+	background:#000;
 	margin: 0;
 	padding: 0;
+	background:	url(/public/img/gray-gradient.jpg) 50% 10% no-repeat rgba(20, 20, 20, 0.2);
 }
+
+#container
+{
+	background: #FEF7F4;
+	background-image: url(/public/img/corkBoard.jpg);
+	box-shadow: inset 0px 5px 10px 0.6px #555;
+	width: 100%;
+}
+
+.frame {
+	border:20px;
+	-webkit-border-image: url(/public/frame/frame.png) 10% repeat;
+	-moz-border-image: url(/public/frame/frame.png) 10% repeat;
+	margin:3em 2em;	
+}
+
+
 
 button,
 input[type="submit"] {
@@ -80,3 +97,25 @@ input[type="submit"] {
 	font-size:0.9em;
 	padding:0.3em 0 ;
 }
+
+#footer {
+	z-index:200;
+	opacity:0.8;
+	color:#fff;
+	height:2.5em;
+	line-height:2.5em;
+	padding:0 2em 0 2.4em;
+	border-top:4px solid #000;
+	font-family: 'GothamBook';
+	background: -moz-linear-gradient(top,#000 0%,#000 40%,#111 100%);/* firefox */
+	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#000),color-stop(40%,#000	),color-stop(100%,#111));/* webkit */
+	background: url(/public/img/gray-gradient.jpg) 50% 80% no-repeat #111;	
+	font-size:0.9em;
+	
+}
+
+#footer a {
+	color:#fff;
+	text-decoration:none;
+}
+

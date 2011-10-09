@@ -7,9 +7,37 @@ var checkPerm = function() {
 	
 };
 
-exports.home = function(req, res){
-	res.send('<a href="/lists/smm/wall.html">see demo list</a>');
+var header = function(req) {
+	var user = (req.user) ? req.user : '';
+	var image = (req.image) ? req.image : '';
+	if(user === "") {
+		return {partial: 'login.html'}
+	}else {
+		return {
+			partial: 'loggedIn.html',
+			classifyKeys: false,
+			data: [{
+				'.username': user,
+				'img src': image
+			}]
+		}
+	}
 };
+
+exports.home = function(req, res){
+	
+	res.render(__dirname+'/views/home.html', {
+		selectors : {
+			'.wall': 'Home',
+			'#header': header(req),
+			'#lights': {
+				className: 'off'
+			}
+		}
+	});
+};
+
+
 
 exports.urls = function(req, res) {
 	res.download('./urls.js');
@@ -47,22 +75,10 @@ exports.wall = function(req, res){
 			}
 //			console.log(status[result[c].status]);
 		}
-		var user = (req.user) ? req.user : '';
-		var image = (req.image) ? req.image : '';
-		var user = "simon";
 		res.render(__dirname+"/views/wall.html", {	
 			selectors: {
 				'title': 'dappado.com - your lists',
-				'#header': (user === "") ? {
-						partial: 'login.html',
-					} : {
-						partial: 'loggedIn.html',
-						classifyKeys: false,
-						data: [{
-							'.username': user,
-							'img src': image
-						}]
-					},
+				'#header': header(req),
 				'#notStarted': {
 					partial: 'task.html',
 					data: status.notStarted,
@@ -75,7 +91,7 @@ exports.wall = function(req, res){
 					partial: 'task.html', 
 					data: status.done
 				},
-				'#footer': {
+				'#hideaway': {
 					partial: 'bin.html'
 				},
 				'#deleted': {
@@ -92,10 +108,8 @@ exports.wall = function(req, res){
 				'input#list': {
 					value: params.list
 				}
-				
-				
 			}
-		});		
+		});
 	}, params);
 };
 
@@ -143,6 +157,9 @@ exports.users_new = function(req, res) {
 			},
 			'input:[name="username"]': {
 				value: 'BOB'
+			},
+			'#lights': {
+				className: 'off'
 			}
 		}
 	});
