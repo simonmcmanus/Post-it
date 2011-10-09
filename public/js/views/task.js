@@ -109,6 +109,11 @@ pi.views.task = function() {
 		$('div.edit').hide();
 //		$('ul.tasks li a.edit').removeClass('hidden');
 		$('#header').slideDown(900);
+		
+		that.domNode.removeAttr('data-original-top');
+		that.domNode.removeAttr('data-original-left');
+		that.domNode.removeAttr('data-original-width');
+		
 		that.domNode.find('.read').show();
 		that.domNode.removeClass('open');
 		$( "ul.tasks" ).sortable({"disabled": false});
