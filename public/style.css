@@ -404,6 +404,11 @@ border:1px solid #777;
 	margin: 0.2em 0 0 0;
 }
 
+#header .login h1 a {
+	color:#fff;
+	text-decoration:none;
+}
+
 #header .login h2{
 	font-size:6em;	
 }

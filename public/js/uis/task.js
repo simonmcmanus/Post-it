@@ -53,7 +53,7 @@ pi.ui.task = function(selector) {
 			width:20,
 			'margin-left':pos,
 			height: 20
-		}, 130, function() {
+		}, 100, function() {
 			that.domNode.parent().append($img);
 
 			$img.css({
@@ -70,10 +70,10 @@ pi.ui.task = function(selector) {
 				left:'-=60',
 			}, 400)
 			.animate({
-				top:$('#bin').offset().top	
+				top:$('#deleted').offset().top	
 			}, 400, function() {
 				$(this).fadeOut('fast');
-				that.domNode.appendTo('#bin').fadeIn().css({width:'auto'}).find('section').show();;
+				that.domNode.appendTo('#deleted').fadeIn().css({width:'auto'}).find('section').show();;
 			})
 
 		//	that.domNode.hide();
