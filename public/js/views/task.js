@@ -39,10 +39,10 @@ pi.views.task = function() {
 			that.editForm = new pi.ui.taskEdit(id);		
 		
 			var comments = new pi.ui.comments(id);
+			vtip2.close();
 			
 			pi.events.trigger('overlayOpen');
 			that.domNode.find('.read').hide();
-//			var top = that.domNode.offset().top;
 			var left = that.domNode.offset().left;
 			var top = that.domNode.position().top;
 			var width = $(that.domNode).width();
@@ -59,7 +59,7 @@ pi.views.task = function() {
 				position:'absolute'			
 			});
 			that.domNode.removeClass('task');
-//			$('html,body').animate({scrollTop:top-100},200);
+			$('html,body').animate({scrollTop:that.domNode.offset().top-100},160);
 			var status = that.domNode.parents('ul.tasks').attr('id');
 			if(status == 'notStarted'){
 				var l = left;
