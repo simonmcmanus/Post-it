@@ -44,6 +44,7 @@ pi.views.task = function() {
 			that.domNode.find('.read').hide();
 //			var top = that.domNode.offset().top;
 			var left = that.domNode.offset().left;
+			var top = that.domNode.position().top;
 			var width = $(that.domNode).width();
 			var height = $(that.domNode).height();
 			that.domNode.attr('data-original-top', top);
@@ -51,6 +52,7 @@ pi.views.task = function() {
 			that.domNode.attr('data-original-width', left);
 			that.domNode.css({
 				width:width,
+				top:top,
 				left:left,
 				height:height,
 				zIndex:100,
@@ -110,9 +112,6 @@ pi.views.task = function() {
 //		$('ul.tasks li a.edit').removeClass('hidden');
 		$('#header').slideDown(900);
 		
-		that.domNode.removeAttr('data-original-top');
-		that.domNode.removeAttr('data-original-left');
-		that.domNode.removeAttr('data-original-width');
 		
 		that.domNode.find('.read').show();
 		that.domNode.removeClass('open');
