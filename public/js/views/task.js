@@ -29,18 +29,15 @@ pi.views.task = function() {
 
 	that.open = function(id) {
 			that.domNode = $('#'+id);
+			
 			if(that.domNode.hasClass('open')){
 				return false;
 			}
 			$( "ul.tasks" ).sortable("disable" )
 			that.domNode.addClass('open');
-			var textareaId = that.domNode.attr('id')+'Text';
-		//	console.log('ef', editForm);
-			if(!that.editForm){
-				that.editForm = new pi.ui.taskEdit(id);		
-			}else {
-				that.editForm.show();
-			}
+			var textareaId = id+'Text';
+			that.editForm = new pi.ui.taskEdit(id);		
+		
 			var comments = new pi.ui.comments(id);
 			
 			pi.events.trigger('overlayOpen');
@@ -99,6 +96,9 @@ pi.views.task = function() {
 	var closeTask = function() {
 		pushStateClose();
 		$('.comments').hide();
+		var o=CKEDITOR.instances[that.domNode.attr('id')+'Textarea'];
+		if (o) o.destroy();
+		that.domNode.find('.edit').empty();
 		that.domNode.addClass('tilt').css({
 			top:0,
 			left:0,
@@ -109,7 +109,6 @@ pi.views.task = function() {
 		$('div.edit').hide();
 //		$('ul.tasks li a.edit').removeClass('hidden');
 		$('#header').slideDown(900);
-
 		that.domNode.find('.read').show();
 		that.domNode.removeClass('open');
 		$( "ul.tasks" ).sortable({"disabled": false});

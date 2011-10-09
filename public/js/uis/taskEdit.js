@@ -6,15 +6,10 @@ pi.ui.taskEdit = function(id) {
 	var init = function(id) {
 		that.id = id;
 		if(!that.domNode){
-			console.log(that.domNode);
 			get();			
 		}
 	};
-	
-		
 
-				
-				
 	var url = function() {
 		return pi.urls.task.replace('$id', that.id).replace('$board', $('.wall').html());
 	};

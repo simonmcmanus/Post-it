@@ -22,9 +22,7 @@ pi.views.board = function() {
 	};
 	
 	var setupLoggedInNav = function() {
-		
 		up($('li.user .sublinks'));
-		
 		$('li.user').click(function(e) {
 			e.preventDefault();
 			if($(this).find('.sublinks.down').length == 0){
@@ -33,8 +31,6 @@ pi.views.board = function() {
 				up($(this).find('.sublinks'));
 			}
 		});
-		
-		
 		$('li.user .sublinks a').click(function() {
 			window.location = $(this).attr('href');
 		});
