@@ -10,7 +10,7 @@ var checkPerm = function() {
 var header = function(req) {
 	var user = (req.user) ? req.user : '';
 	var image = (req.image) ? req.image : '';
-	user = 'simon';
+	//user = 'simon';
 	if(user === "") {
 		return {partial: 'login.html'}
 	}else {

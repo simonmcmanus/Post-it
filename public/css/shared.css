@@ -18,6 +18,7 @@ body {
 	background-image: url(/public/img/corkBoard.jpg);
 	box-shadow: inset 0px 5px 10px 0.6px #555;
 	width: 100%;
+	padding:1.5em 0;
 }
 
 .frame {
@@ -66,8 +67,7 @@ input[type="submit"]:hover{
 	/* For Internet Explorer 8 */
 	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#8b8784, endColorstr=#4f4e4a)";
 	border:1px solid #aaa !important;
-	color:#111;
-	
+	color:#111;	
 }
 
 input, 
@@ -86,7 +86,6 @@ textarea{
 	border: 1px solid #fff;
 	border-color: #88a;
 }
-
 
 input[type="submit"] {
 	width:auto;
@@ -111,7 +110,6 @@ input[type="submit"] {
 	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#000),color-stop(40%,#000	),color-stop(100%,#111));/* webkit */
 	background: url(/public/img/gray-gradient.jpg) 50% 80% no-repeat #111;	
 	font-size:0.9em;
-	
 }
 
 #footer a {
