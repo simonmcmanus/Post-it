@@ -3,7 +3,7 @@ var fs = require('fs');
 var	http = require('http');
 var url = require('url');
 var sizlate = require('../sizlate');
-var nowjs = require('now');
+//var nowjs = require('now');
 
 
 //var io = require('socket.io');
