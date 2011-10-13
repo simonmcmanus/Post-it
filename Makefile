@@ -9,4 +9,5 @@ install :
 
 
 start_app :
+	sudo stop dev.dappado
 	sudo start  --no-wait -q dev.dappado
