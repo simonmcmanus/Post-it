@@ -104,8 +104,8 @@ var app =  express.createServer(
 		callback(null, userId);
 	})
 );
-var everyone = require("now").initialize(app);
-everyone.now.urls = urls; // share urls with the client.
+//var everyone = require("now").initialize(app);
+//everyone.now.urls = urls; // share urls with the client.
 
 
 //everyone.now.build = urls.build; // share urls with the client.
