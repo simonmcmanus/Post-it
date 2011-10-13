@@ -1,6 +1,7 @@
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `lists` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `lists`;
 
+
 CREATE TABLE `comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `text` varchar(45) DEFAULT NULL COMMENT '  ',
@@ -72,6 +73,7 @@ CREATE TABLE `taskInCategory` (
   `order` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=310 DEFAULT CHARSET=latin1;
+
 
 
 
