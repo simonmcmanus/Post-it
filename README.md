@@ -91,3 +91,5 @@ cd node-v0.4.9
 ./configure
 make
 sudo make install
+
+export NODE_PATH="/usr/local/lib/node"
