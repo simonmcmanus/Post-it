@@ -1,4 +1,4 @@
-exports.port = 3000;
+exports.port = 80;
 exports.host = "dev.dappado.com";
 exports.host = "dev.dappado.com";
 
