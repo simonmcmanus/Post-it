@@ -25,7 +25,7 @@ var usersById = {};
 
 var sendResponse = function(res, data) {
 	var login = data.session.auth.userId;
-	res.redirect(urls.get('list', {list: login}));
+	res.redirect(urls.get('LIST', {list: login}));
 
 
 	// get user ? check username? then do the below in a callback?
