@@ -7,5 +7,15 @@ RewriteEngine On
 RewriteRule ^$ http://dev.dappado.com:3000/ [P]
 
 
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*) http://dev.dappado.com:3000/$1 [P]
+
+#RewriteRule ^(.*) http://simonmcmanus.com:3000/$1 [P]
+#RewriteRule (.*)/?$ index.php?workspace=$1&%{QUERY_STRING}	[L]
+
+#RewriteRule ^new(.+) http://simonmcmanus.com:3000$1 [P]
+
+
 
 
