@@ -46,7 +46,7 @@ everyauth
     .consumerSecret(config.auth.twitter.consumerSecret)
 	.findOrCreateUser( function (sess, accessTok, accessTokExtra, twitUser) {
 		console.log('fine or create user');
-		id = twitUser.name+"@twitter";
+		id = twitUser.name;
 		var user = {
 			id: id,
 			twitterUser: twitUser,
