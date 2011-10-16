@@ -25,16 +25,18 @@ var usersById = {};
 
 var sendResponse = function(res, data) {
 	var login = data.session.auth.userId;
-	console.log('Login Is', login);
+	res.redirect(urls.get('list', {list: login}));
+
+
 	// get user ? check username? then do the below in a callback?
 
-	ds.knownLogin(data.session.auth.userId, function(data) {
+//	ds.knownLogin(data.session.auth.userId, function(data) {
 			// known login
-			res.redirect(urls.get('list', {list: login}));
-		}, 	function(data) {
+//			res.redirect(urls.get('list', {list: login}));
+//		}, 	function(data) {
 			// unknown login
-			res.redirect(urls.USER_NEW);
-	});
+//			res.redirect(urls.USER_NEW);
+//	});
 };
 
 everyauth
@@ -51,45 +53,10 @@ everyauth
 			username: twitUser.name,
 			image: twitUser.profile_image_url
 		};
+		console.log(user);
 		usersById[id] = user;
 		return user;
 	})
-  .sendResponse(sendResponse);
-
-
-everyauth
-  .facebook
-    .myHostname('http://'+config.host+':'+config.port)
-    .appId(config.auth.facebook.appId)
-    .appSecret(config.auth.facebook.appSecret)
-   	.findOrCreateUser( function (sess, accessTok, accessTokExtra, fbUser) {
-		var id = fbUser.username+"@facebook";
-		var user = {
-			id: id,
-			facebookUser: fbUser,
-			username: fbUser.username
-		};
-		usersById[id] = user;
-		return user;
-	})
-  .sendResponse(sendResponse);
-
-  
-
-everyauth.google
-  .myHostname('http://'+config.host+':'+config.port)
-  .appId('3335216477.apps.googleusercontent.com')
-  .appSecret('HQ3dXWfmxMoJSZC987N6SeUn')
-  .scope('https://www.google.com/m8/feeds/')
-  .findOrCreateUser( function (sess, accessToken, extra, googleUser) {
-	var id = googleUser.id+"@google";
-	var user = {
-		id: id,
-		googleUser: googleUser,
-		username: id
-	}
-	return user;
-  })
   .sendResponse(sendResponse);
 
 

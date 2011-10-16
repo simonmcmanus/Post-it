@@ -11,6 +11,7 @@ var header = function(req) {
 	var user = (req.user) ? req.user : '';
 	var image = (req.image) ? req.image : '';
 	//user = 'simon';
+		return {partial: 'login.html'}
 	if(user === "") {
 		return {partial: 'login.html'}
 	}else {
