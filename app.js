@@ -25,6 +25,7 @@ var usersById = {};
 
 var sendResponse = function(res, data) {
 	var login = data.session.auth.userId;
+	console.log('Login Is', login);
 	// get user ? check username? then do the below in a callback?
 
 	ds.knownLogin(data.session.auth.userId, function(data) {
