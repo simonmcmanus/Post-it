@@ -1,0 +1,11 @@
+#turn on rewrite engine
+RewriteEngine On
+#rewrite if request path is not a directory
+
+
+
+RewriteRule ^$ http://dev.dappado.com:3000/ [P]
+
+
+
+
