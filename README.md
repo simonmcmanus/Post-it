@@ -96,3 +96,5 @@ export NODE_PATH="/usr/local/lib/node"
 
 sudo apt-get install apache2
 sudo a2enmod rewrite
+
+/etc/init.d/apache2 restart
