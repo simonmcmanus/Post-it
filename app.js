@@ -53,7 +53,7 @@ everyauth
 			username: twitUser.name,
 			image: twitUser.profile_image_url
 		};
-		console.log(user);
+		console.log('USER IS >>>> ',user);
 		usersById[id] = user;
 		return user;
 	})

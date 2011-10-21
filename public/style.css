@@ -228,43 +228,43 @@ ul.tasks li ul.subtasks li {
 	border: 2px solid #fff;
 	border-bottom: 8px solid #fff;
 }
-ul.tasks li.task:first-child {
+ul.tasks li.tilt:first-child {
 	-webkit-transform: rotate(-2deg);
 	-moz-transform: rotate(-2deg);
 	-o-transform: rotate(-2deg);
 }
-ul#inprogress.tasks li.task:first-child {
+ul#inprogress.tilt li.task:first-child {
 	-webkit-transform: rotate(8deg);
 	-moz-transform: rotate(8deg);
 	-o-transform: rotate(8deg);
 }
-ul.tasks li.task:nth-child(2n) {
+ul.tasks li.tilt:nth-child(2n) {
 	-webkit-transform: rotate(5deg);
 	-moz-transform: rotate(5deg);
 	-o-transform: rotate(5deg);
 }
 
-ul.tasks li.task:nth-child(3n) {
+ul.tasks li.tilt:nth-child(3n) {
 	-webkit-transform: rotate(-1deg);
 	-moz-transform: rotate(-1deg);
 	-o-transform: rotate(-1deg);
 }
-ul.tasks li.task:nth-child(5n) {
+ul.tasks li.tilt:nth-child(5n) {
 	-webkit-transform: rotate(-6deg);
 	-moz-transform: rotate(-6deg);
 	-o-transform: rotate(-6deg);
 }
-ul.tasks li.task:nth-child(7n) {
+ul.tasks li.tilt:nth-child(7n) {
 	-webkit-transform: rotate(-6deg);
 	-moz-transform: rotate(-6deg);
 	-o-transform: rotate(-6deg);
 }
-ul.tasks li.task:nth-child(11n) {
+ul.tasks li.tilt:nth-child(11n) {
 	-webkit-transform: rotate(2deg);
 	-moz-transform: rotate(2deg);
 	-o-transform: rotate(2deg);
 }
-ul.tasks li.task:nth-child(13n) {
+ul.tasks li.tilt:nth-child(13n) {
 	-webkit-transform: rotate(-4deg);
 	-moz-transform: rotate(-4deg);
 	-o-transform: rotate(-4deg);
@@ -308,6 +308,7 @@ html body .cke_skin_kama .cke_wrapper {
 #header, 
 div.wall
 {
+	
 	font-family:GothamBook,  NeverSayNeverRegular;
 	position:relative;
 	z-index:300;
@@ -458,12 +459,11 @@ text-decoration:none;
 }
 
 #header .login .note {
-	width:13.5em;
+	width:12em;
 	float:right;
 	margin-left:2em;
 	position:relative;
 	top:-3.5em;
-	right:2.5em;
 	position:relative;
 	-webkit-transform: rotate(6deg);
 	-moz-transform: rotate(6deg);
@@ -543,6 +543,8 @@ border:none;
 	width:31px;
 	height:31px;
 	position:absolute;
+	top:0;
+	right:1em;
 }
 
 #header ul.loggedIn .username {
@@ -568,9 +570,9 @@ border:none;
 	position: fixed;
 	text-align: center;
 	display: none;
-	
 	background: -webkit-gradient(radial, 40% 40%, 0, 40% 40%, 600, from(#000), to(#555));
-	background: -moz-radial-gradient(40% 40%, farthest-side, #eee, #555);	
+	background: -moz-radial-gradient(40% 40%, farthest-side, #eee, #555);
+	
 }
 
 /* #overlay */
@@ -624,9 +626,10 @@ html body .new_task {
 
 
 #lights.onetwothree {
+	/*
 	background-image:  -webkit-gradient(
 		linear, right top, left top, 
-		color-stop(1%, rgba(0, 0, 0,  0.5)),
+		color-stop(1%, rgba(200, 200, 200, 1)),
 		color-stop(20%, rgba(40, 40, 40, 0)),
 		color-stop(34%, rgba(0, 0, 0, 0.5)),
 		color-stop(50%, rgba(40, 40, 40, 0)),
@@ -634,6 +637,9 @@ html body .new_task {
 		color-stop(85%, rgba(40, 40, 40, 0)),
 		color-stop(97%, rgba(0, 0, 0, 0.5))
 	) 	;
+	
+	*/
+
 
 	/* mozilla example - FF3.6+ */
 	background-image: -moz-linear-gradient(
@@ -656,10 +662,12 @@ html body .new_task {
 	-ms-filter: progid:DXImageTransform.Microsoft.gradient(
 		gradientType=1, startColor=0, endColoStr=#FFFFFF
 	);
+	
 	}
 
 #lights.twothree {
 	/* webkit */
+	/*
 	background-image: -webkit-gradient(
 		linear, right top, left top, 
 		color-stop(1%, rgba(0, 0, 0,  0.5)),
@@ -670,7 +678,7 @@ html body .new_task {
 		color-stop(85%, rgba(0, 0, 0,  0.5)),
 		color-stop(97%, rgba(0, 0, 0,  0.5))
 	);
-
+*/
 	/* mozilla - FF3.6+ */
 	background-image: -moz-linear-gradient(
 		right center,
@@ -799,17 +807,13 @@ filter: progid:DXImageTransform.Microsoft.gradient(
 	padding: 10px;
 	margin: 5px;
 	
-	color: #555;/* For Internet Explorer 5.5 - 7 */
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0000FF,endColorstr=#FFFFFFFF);/* For Internet Explorer 8 */
-	-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF0000FF,endColorstr=#FFFFFFFF)";
-	background: -moz-linear-gradient(top,#ffd649 0%,#F1E999 40%,#F6F2C6 100%);/* firefox */
-	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#ffd649),color-stop(60%,#f4f886),color-stop(100%,#eff37e));/* webkit */
-	filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#F1EA9B',endColorstr='#F6F2C6',GradientType=0 );/* ie */
-	border:1px solid #777;
 	display:inline-block;
 	
 }
 
+.login .note {
+	font-size:1.1em;
+}
 .placeholder {
 	opacity: 0.5;
 }
@@ -825,6 +829,7 @@ div.wall {
 	font-family: 'GothamBook';
 	background: -moz-linear-gradient(top,#000 0%,#000 40%,#111 100%);/* firefox */
 	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#000),color-stop(40%,#000	),color-stop(100%,#111));
+	background:	url(/public/img/gray-gradient.jpg) 50% 10% no-repeat rgba(20, 20, 20, 0.2);
 }
 
 
